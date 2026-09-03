@@ -181,8 +181,9 @@ export default function Home() {
         <NavLink href="#about" icon={<User size={16} />} label={t.nav.about} />
         <NavLink href="#services" icon={<Layers size={16} />} label={t.nav.services} />
         <NavLink href="#projects" icon={<Code size={16} />} label={t.nav.work} />
-        <NavLink href="#certificates" icon={<Award size={16} />} label={t.nav.cert} />
+        <NavLink href="#experience" icon={<Briefcase size={16} />} label={t.nav.exp} />
         <NavLink href="#resume" icon={<FileText size={16} />} label={t.nav.resume} />
+        <NavLink href="#certificates" icon={<Award size={16} />} label={t.nav.cert} />
         <div className="h-4 w-[1px] bg-white/20"></div>
         <NavLink href={config.links.github} icon={<Github size={16} />} label={t.nav.git} external />
       </motion.nav>
@@ -289,20 +290,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* --- 💼 SECTION 3: EXPERIENCE TIMELINE --- */}
-        <section id="experience" className="py-32 relative">
-          <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
-          <div className="mt-20 relative max-w-3xl mx-auto">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
-              {t.experience.items.map((job, index) => (
-                <TimelineItem key={index} job={job} index={index} />
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* --- 🚀 SECTION 4: PROJECTS (Updated with Images) --- */}
+        {/* --- 🚀 SECTION 3: FEATURED PROJECTS --- */}
         <section id="projects" className="py-32 relative">
           <SectionHeader title={t.projects.header} icon={<FolderGit2 />} subtitle={t.projects.subtitle} />
           <div className="mt-16 grid md:grid-cols-2 gap-8">
@@ -320,21 +308,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* --- 🏆 SECTION 3.5: CERTIFICATES --- */}
-        <section id="certificates" className="py-32 relative">
-          <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.certificates.items.map((cert, index) => (
-              <CertificateCard 
-                key={index} 
-                cert={{ ...cert, ...config.certificates[index] }} 
-                t={t}
-              />
-            ))}
-          </motion.div>
+        {/* --- 💼 SECTION 4: EXPERIENCE TIMELINE --- */}
+        <section id="experience" className="py-32 relative border-t border-white/5">
+          <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
+          <div className="mt-20 relative max-w-3xl mx-auto">
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
+              {t.experience.items.map((job, index) => (
+                <TimelineItem key={index} job={job} index={index} />
+              ))}
+            </motion.div>
+          </div>
         </section>
 
-        {/* --- 📄 SECTION 4: RESUME VIEWER --- */}
+        {/* --- 📄 SECTION 5: RESUME & CV VIEWER --- */}
         <section id="resume" className="py-32 relative border-t border-white/5">
           <SectionHeader title={t.resume.header} icon={<FileText />} subtitle={t.resume.subtitle} />
           
@@ -404,46 +391,19 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* --- Fullscreen Resume Modal Overlay --- */}
-        <AnimatePresence>
-          {isResumeModalOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex flex-col p-4 md:p-8"
-            >
-              <div className="flex justify-between items-center pb-4 mb-4 border-b border-white/10 max-w-6xl mx-auto w-full">
-                <div className="flex items-center gap-3">
-                  <FileText className="text-purple-400" size={24} />
-                  <h4 className="text-lg font-bold text-white font-mono">{t.resume.header}</h4>
-                </div>
-                <div className="flex items-center gap-4">
-                  <a
-                    href="/Resume_Satetapong_Sanguansuk.pdf"
-                    download="Resume_Satetapong_Sanguansuk.pdf"
-                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl transition-colors"
-                  >
-                    <Download size={16} /> {t.resume.downloadBtn}
-                  </a>
-                  <button
-                    onClick={() => setIsResumeModalOpen(false)}
-                    className="p-2 text-gray-400 hover:text-white transition-colors"
-                  >
-                    <X size={28} />
-                  </button>
-                </div>
-              </div>
-              <div className="flex-grow w-full max-w-6xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <iframe
-                  src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
-                  className="w-full h-full border-0 bg-[#0d0d12]"
-                  title="Satetapong Sanguansuk Resume PDF Fullscreen"
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* --- 🏆 SECTION 6: CERTIFICATES & AWARDS --- */}
+        <section id="certificates" className="py-32 relative border-t border-white/5">
+          <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.certificates.items.map((cert, index) => (
+              <CertificateCard 
+                key={index} 
+                cert={{ ...cert, ...config.certificates[index] }} 
+                t={t}
+              />
+            ))}
+          </motion.div>
+        </section>
 
         {/* --- 💬 SECTION 4.5: TESTIMONIALS --- */}
         <section className="py-32 relative border-t border-white/5">

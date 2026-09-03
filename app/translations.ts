@@ -6,8 +6,9 @@ export const translations = {
       about: "เกี่ยวกับ",
       services: "บริการ",
       work: "ผลงาน",
-      cert: "เกียรติบัตร",
+      exp: "ประสบการณ์",
       resume: "เรซูเม่",
+      cert: "เกียรติบัตร",
       git: "GitHub"
     },
     hero: {
@@ -157,8 +158,9 @@ export const translations = {
       about: "About",
       services: "Services",
       work: "Work",
-      cert: "Certificates",
+      exp: "Experience",
       resume: "Resume",
+      cert: "Certificates",
       git: "Git"
     },
     hero: {
