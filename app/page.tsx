@@ -112,6 +112,7 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lang, setLang] = useState<Language>('en');
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('projects');
   const t = translations[lang];
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -132,8 +133,16 @@ export default function Home() {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  const handleTabSwitch = (tabId: string) => {
+    setActiveTab(tabId);
+    const dashboardElem = document.getElementById('dashboard-content');
+    if (dashboardElem) {
+      dashboardElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <main ref={containerRef} onMouseMove={handleMouseMove} className="min-h-screen bg-[#050505] text-white relative overflow-hidden scroll-smooth selection:bg-purple-500/30">
+    <main ref={containerRef} onMouseMove={handleMouseMove} className="min-h-screen bg-[#050505] text-white relative overflow-hidden scroll-smooth selection:bg-purple-500/30 pb-24">
 
       <DevLogo />
       <LanguageToggle lang={lang} setLang={setLang} />
@@ -178,69 +187,87 @@ export default function Home() {
         transition={{ duration: 0.3 }}
         className="fixed top-4 inset-x-0 mx-auto max-w-fit z-50 px-6 py-3 rounded-full bg-black/40 border border-white/10 backdrop-blur-lg shadow-lg flex items-center gap-6 text-sm font-mono"
       >
-        <NavLink href="#about" icon={<User size={16} />} label={t.nav.about} />
-        <NavLink href="#services" icon={<Layers size={16} />} label={t.nav.services} />
-        <NavLink href="#projects" icon={<Code size={16} />} label={t.nav.work} />
-        <NavLink href="#experience" icon={<Briefcase size={16} />} label={t.nav.exp} />
-        <NavLink href="#resume" icon={<FileText size={16} />} label={t.nav.resume} />
-        <NavLink href="#certificates" icon={<Award size={16} />} label={t.nav.cert} />
+        <button onClick={() => handleTabSwitch('projects')} className={`flex items-center gap-2 transition-colors ${activeTab === 'projects' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
+          <Code size={16} /> <span>{t.nav.work}</span>
+        </button>
+        <button onClick={() => handleTabSwitch('resume')} className={`flex items-center gap-2 transition-colors ${activeTab === 'resume' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
+          <FileText size={16} /> <span>{t.nav.resume}</span>
+        </button>
+        <button onClick={() => handleTabSwitch('experience')} className={`flex items-center gap-2 transition-colors ${activeTab === 'experience' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
+          <Briefcase size={16} /> <span>{t.nav.exp}</span>
+        </button>
+        <button onClick={() => handleTabSwitch('about')} className={`flex items-center gap-2 transition-colors ${activeTab === 'about' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
+          <User size={16} /> <span>{t.nav.about}</span>
+        </button>
+        <button onClick={() => handleTabSwitch('certificates')} className={`flex items-center gap-2 transition-colors ${activeTab === 'certificates' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
+          <Award size={16} /> <span>{t.nav.cert}</span>
+        </button>
         <div className="h-4 w-[1px] bg-white/20"></div>
         <NavLink href={config.links.github} icon={<Github size={16} />} label={t.nav.git} external />
       </motion.nav>
 
       <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-5xl">
 
-        {/* --- 🦸‍♂️ SECTION 1: HERO --- */}
-        <section className="min-h-screen flex flex-col justify-center items-center text-center pt-20 pb-20 relative">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-8 relative z-20">
+        {/* --- 🦸‍♂️ COMPACT TECH HERO BANNER --- */}
+        <section className="pt-20 pb-8 text-center relative">
+          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
 
-            <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-sm text-green-400 font-mono cursor-crosshair">
-              <span className="relative flex h-3 w-3">
+            <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-xs text-green-400 font-mono cursor-crosshair">
+              <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
               </span>
               <span>{t.hero.status}</span>
             </motion.div>
 
             <div className="space-y-2">
-              <motion.h1 variants={fadeInUp} className="text-7xl md:text-9xl font-extrabold tracking-tighter">
+              <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-extrabold tracking-tighter">
                 {t.hero.greeting} <span className="relative inline-block">
                   <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 opacity-70"></span>
                   <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">{config.name}</span>
                 </span>
               </motion.h1>
-              <motion.div variants={fadeInUp} className="text-2xl md:text-4xl font-light text-gray-300 h-[40px] flex justify-center items-center font-mono">
+              <motion.div variants={fadeInUp} className="text-xl md:text-2xl font-light text-gray-300 h-[36px] flex justify-center items-center font-mono">
                 <span>{t.hero.subGreeting}&nbsp;</span>
                 <TypeAnimation key={lang} sequence={config.titles} wrapper="span" speed={50} repeat={Infinity} className="font-bold text-purple-400" />
               </motion.div>
             </div>
 
-            <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-gray-400 text-xl leading-relaxed font-light">{t.hero.bio}</motion.p>
+            <motion.p variants={fadeInUp} className="max-w-xl mx-auto text-gray-400 text-base leading-relaxed font-light">{t.hero.bio}</motion.p>
 
-            {/* ✅✅✅ NEW: SOCIAL BAR ABOVE BUTTONS ✅✅✅ */}
-            <motion.div variants={fadeInUp} className="flex gap-6 justify-center items-center mt-4 mb-4">
-              <SocialIconBtn href={config.links.github} icon={<Github size={22} />} />
-              <SocialIconBtn href={config.links.linkedin} icon={<Linkedin size={22} />} />
-              <SocialIconBtn href={config.links.facebook} icon={<Facebook size={22} />} />
-              <SocialIconBtn href={config.links.instagram} icon={<Instagram size={22} />} />
+            {/* Social Links */}
+            <motion.div variants={fadeInUp} className="flex gap-4 justify-center items-center mt-2 mb-2">
+              <SocialIconBtn href={config.links.github} icon={<Github size={20} />} />
+              <SocialIconBtn href={config.links.linkedin} icon={<Linkedin size={20} />} />
+              <SocialIconBtn href={config.links.facebook} icon={<Facebook size={20} />} />
+              <SocialIconBtn href={config.links.instagram} icon={<Instagram size={20} />} />
             </motion.div>
 
-            {/* CTAs */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-5">
-              <MainButton href="#projects" icon={<Code />} label={t.hero.btnWork} primary />
-              <MainButton href="#resume" icon={<FileText />} label={t.nav.resume} />
-              <MainButton href={config.links.email} icon={<Mail />} label={t.hero.btnContact} isCopy />
+            {/* Quick Hero CTAs */}
+            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 pt-2">
+              <button
+                onClick={() => handleTabSwitch('projects')}
+                className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all cursor-pointer"
+              >
+                <Code size={18} />
+                <span>{t.hero.btnWork}</span>
+              </button>
+              <button
+                onClick={() => handleTabSwitch('resume')}
+                className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-purple-600/80 hover:bg-purple-500 text-white font-bold text-sm border border-purple-400/50 shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
+              >
+                <FileText size={18} />
+                <span>{t.nav.resume}</span>
+              </button>
+              <MainButton href={config.links.email} icon={<Mail size={18} />} label={t.hero.btnContact} isCopy />
             </motion.div>
 
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, 15, 0] }} transition={{ delay: 2.5, duration: 2, repeat: Infinity }} className="absolute bottom-10 text-gray-500 flex flex-col items-center gap-2">
-            <span className="text-xs font-mono uppercase tracking-widest">{t.hero.scroll}</span><ArrowDown size={24} className="text-purple-500" />
           </motion.div>
         </section>
 
-        {/* --- 📊 SECTION 1.5: IMPACT STATS --- */}
-        <section className="py-10 border-y border-white/5 bg-white/[0.02]">
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {/* --- 📊 COMPACT IMPACT STATS --- */}
+        <section className="py-6 border-y border-white/5 bg-white/[0.02] rounded-2xl my-6 backdrop-blur-md">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {config.stats.map((stat, index) => {
                const labels = [t.stats.exp, t.stats.projects, t.stats.code, t.stats.coffee];
                return <StatsItem key={index} stat={{ ...stat, label: labels[index] }} index={index} />;
@@ -248,175 +275,291 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* --- 🧠 SECTION 2: ABOUT & CATEGORIZED SKILLS --- */}
-        <section id="about" className="py-32 relative">
-          <SectionHeader title={t.about.header} icon={<User />} subtitle={t.about.subtitle} />
-          <div className="grid lg:grid-cols-5 gap-12 items-start mt-16">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="lg:col-span-2 relative group rounded-3xl p-[1px]">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700 pointer-events-none"></div>
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative h-full bg-[#0a0a0a] p-8 rounded-3xl border border-white/10 z-10 overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-xs text-right pointer-events-none"><p>class Developer {"{"}</p><p>&nbsp;&nbsp;this.passion = true;</p><p>{"}"}</p></div>
-                <h3 className="text-2xl font-bold text-white flex items-center gap-2 mb-4"><Terminal size={20} className="text-purple-400 group-hover:text-cyan-400 transition-colors" /> {t.about.storyTitle}</h3>
-                <p className="text-gray-300 leading-relaxed text-lg font-light group-hover:text-white transition-colors">{t.about.bioLong}</p>
-              </div>
-            </motion.div>
-            <div className="lg:col-span-3 space-y-8">
-              {config.skillCategories.map((category, catIndex) => {
-                const categoryTitles = [t.about.skillFrontend, t.about.skillBackend, t.about.skillDevOps];
-                return (
-                  <motion.div key={catIndex} variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                    <h4 className="text-lg font-mono text-purple-300 mb-4 flex items-center gap-2"><span className="h-[1px] w-4 bg-purple-500 inline-block"></span> {categoryTitles[catIndex]}</h4>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {category.skills.map((skill, index) => (<SkillCard key={index} skill={skill} />))}
+        {/* --- 🎛️ TECH HORIZONTAL DASHBOARD TABS --- */}
+        <div id="dashboard-content" className="sticky top-4 z-40 my-8 py-3 px-4 rounded-2xl bg-[#09090d]/90 border border-white/10 backdrop-blur-xl shadow-2xl">
+          <div className="flex items-center justify-start md:justify-center gap-2 md:gap-3 overflow-x-auto no-scrollbar py-1">
+            <TabButton
+              id="projects"
+              label={t.nav.work}
+              icon={<Code size={16} />}
+              active={activeTab === 'projects'}
+              onClick={() => setActiveTab('projects')}
+            />
+            <TabButton
+              id="resume"
+              label={t.nav.resume}
+              icon={<FileText size={16} />}
+              active={activeTab === 'resume'}
+              onClick={() => setActiveTab('resume')}
+            />
+            <TabButton
+              id="experience"
+              label={t.nav.exp}
+              icon={<Briefcase size={16} />}
+              active={activeTab === 'experience'}
+              onClick={() => setActiveTab('experience')}
+            />
+            <TabButton
+              id="about"
+              label={t.nav.about}
+              icon={<User size={16} />}
+              active={activeTab === 'about'}
+              onClick={() => setActiveTab('about')}
+            />
+            <TabButton
+              id="certificates"
+              label={t.nav.cert}
+              icon={<Award size={16} />}
+              active={activeTab === 'certificates'}
+              onClick={() => setActiveTab('certificates')}
+            />
+            <TabButton
+              id="services"
+              label={t.nav.services}
+              icon={<Layers size={16} />}
+              active={activeTab === 'services'}
+              onClick={() => setActiveTab('services')}
+            />
+            <TabButton
+              id="all"
+              label={lang === 'th' ? "📜 แสดงทั้งหมด" : "📜 View All"}
+              icon={<Layers size={16} />}
+              active={activeTab === 'all'}
+              onClick={() => setActiveTab('all')}
+            />
+          </div>
+        </div>
+
+        {/* --- 💻 DASHBOARD CONTENT PANELS --- */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="min-h-[500px]"
+          >
+            {/* 🚀 TAB 1: PROJECTS */}
+            {(activeTab === 'projects' || activeTab === 'all') && (
+              <section id="projects" className="py-8 relative">
+                <SectionHeader title={t.projects.header} icon={<FolderGit2 />} subtitle={t.projects.subtitle} />
+                <div className="mt-12 grid md:grid-cols-2 gap-8">
+                  {t.projects.items.map((project, index) => (
+                    <ProjectCard 
+                      key={index} 
+                      project={{ 
+                        ...project, 
+                        ...config.projects[index]
+                      }} 
+                      index={index} 
+                      t={t}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 📄 TAB 2: RESUME VIEWER */}
+            {(activeTab === 'resume' || activeTab === 'all') && (
+              <section id="resume" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
+                <SectionHeader title={t.resume.header} icon={<FileText />} subtitle={t.resume.subtitle} />
+                
+                <div className="mt-12 max-w-4xl mx-auto space-y-6">
+                  {/* Control Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:border-purple-500/30 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 rounded-xl bg-purple-500/20 text-purple-400">
+                        <FileText size={24} />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-bold text-white font-mono">Resume_Satetapong_Sanguansuk.pdf</h4>
+                        <p className="text-xs text-purple-300/70 font-mono">Official PDF Document</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <motion.a
+                        href="/Resume_Satetapong_Sanguansuk.pdf"
+                        download="Resume_Satetapong_Sanguansuk.pdf"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
+                      >
+                        <Download size={16} />
+                        <span>{t.resume.downloadBtn}</span>
+                      </motion.a>
+
+                      <motion.a
+                        href="/Resume_Satetapong_Sanguansuk.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
+                      >
+                        <ExternalLink size={16} />
+                        <span>{t.resume.viewOnline}</span>
+                      </motion.a>
+
+                      <motion.button
+                        onClick={() => setIsResumeModalOpen(true)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
+                      >
+                        <Maximize2 size={16} />
+                        <span>{t.resume.openBtn}</span>
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  {/* Embedded Interactive PDF Viewer */}
+                  <div className="relative w-full rounded-3xl border border-white/10 overflow-hidden shadow-2xl bg-[#0d0d12]">
+                    <iframe
+                      src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
+                      className="w-full h-[650px] md:h-[800px] border-0"
+                      title="Satetapong Sanguansuk Resume PDF"
+                    />
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* 💼 TAB 3: EXPERIENCE TIMELINE */}
+            {(activeTab === 'experience' || activeTab === 'all') && (
+              <section id="experience" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
+                <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
+                <div className="mt-16 relative max-w-3xl mx-auto">
+                  <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
+                  <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
+                    {t.experience.items.map((job, index) => (
+                      <TimelineItem key={index} job={job} index={index} />
+                    ))}
+                  </motion.div>
+                </div>
+              </section>
+            )}
+
+            {/* 🧠 TAB 4: ABOUT & SKILLS */}
+            {(activeTab === 'about' || activeTab === 'all') && (
+              <section id="about" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
+                <SectionHeader title={t.about.header} icon={<User />} subtitle={t.about.subtitle} />
+                <div className="grid lg:grid-cols-5 gap-12 items-start mt-12">
+                  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="lg:col-span-2 relative group rounded-3xl p-[1px]">
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700 pointer-events-none"></div>
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative h-full bg-[#0a0a0a] p-8 rounded-3xl border border-white/10 z-10 overflow-hidden">
+                      <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-xs text-right pointer-events-none"><p>class Developer {"{"}</p><p>&nbsp;&nbsp;this.passion = true;</p><p>{"}"}</p></div>
+                      <h3 className="text-2xl font-bold text-white flex items-center gap-2 mb-4"><Terminal size={20} className="text-purple-400 group-hover:text-cyan-400 transition-colors" /> {t.about.storyTitle}</h3>
+                      <p className="text-gray-300 leading-relaxed text-lg font-light group-hover:text-white transition-colors">{t.about.bioLong}</p>
                     </div>
                   </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+                  <div className="lg:col-span-3 space-y-8">
+                    {config.skillCategories.map((category, catIndex) => {
+                      const categoryTitles = [t.about.skillFrontend, t.about.skillBackend, t.about.skillDevOps];
+                      return (
+                        <motion.div key={catIndex} variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                          <h4 className="text-lg font-mono text-purple-300 mb-4 flex items-center gap-2"><span className="h-[1px] w-4 bg-purple-500 inline-block"></span> {categoryTitles[catIndex]}</h4>
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            {category.skills.map((skill, index) => (<SkillCard key={index} skill={skill} />))}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </section>
+            )}
 
-        {/* --- 🛠️ SECTION 2.5: SERVICES --- */}
-        <section id="services" className="py-20 relative">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="mb-12 text-center">
-            <h3 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2"><Layers className="text-purple-400" /> {t.services.header}</h3>
-            <p className="text-gray-400">{t.services.subtitle}</p>
+            {/* 🏆 TAB 5: CERTIFICATES */}
+            {(activeTab === 'certificates' || activeTab === 'all') && (
+              <section id="certificates" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
+                <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
+                <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {t.certificates.items.map((cert, index) => (
+                    <CertificateCard 
+                      key={index} 
+                      cert={{ ...cert, ...config.certificates[index] }} 
+                      t={t}
+                    />
+                  ))}
+                </motion.div>
+              </section>
+            )}
+
+            {/* 🛠️ TAB 6: SERVICES */}
+            {(activeTab === 'services' || activeTab === 'all') && (
+              <section id="services" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="mb-12 text-center">
+                  <h3 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2"><Layers className="text-purple-400" /> {t.services.header}</h3>
+                  <p className="text-gray-400">{t.services.subtitle}</p>
+                </motion.div>
+                <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {t.services.items.map((service, index) => (
+                    <ServiceCard key={index} service={{ ...service, icon: config.services[index].icon }} index={index} />
+                  ))}
+                </motion.div>
+              </section>
+            )}
+
+            {/* 💬 TESTIMONIALS (Shown on 'all' or 'about' tab) */}
+            {(activeTab === 'all' || activeTab === 'about') && (
+              <section className="py-16 relative border-t border-white/5 mt-12">
+                <SectionHeader title={t.testimonials.header} icon={<MessageSquareQuote />} subtitle={t.testimonials.subtitle} />
+                <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {t.testimonials.items.map((item, index) => (
+                    <TestimonialCard key={index} item={{ ...item, ...config.testimonials[index] }} />
+                  ))}
+                </motion.div>
+              </section>
+            )}
           </motion.div>
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.services.items.map((service, index) => (
-              <ServiceCard key={index} service={{ ...service, icon: config.services[index].icon }} index={index} />
-            ))}
-          </motion.div>
-        </section>
+        </AnimatePresence>
 
-        {/* --- 🚀 SECTION 3: FEATURED PROJECTS --- */}
-        <section id="projects" className="py-32 relative">
-          <SectionHeader title={t.projects.header} icon={<FolderGit2 />} subtitle={t.projects.subtitle} />
-          <div className="mt-16 grid md:grid-cols-2 gap-8">
-            {t.projects.items.map((project, index) => (
-              <ProjectCard 
-                key={index} 
-                project={{ 
-                  ...project, 
-                  ...config.projects[index]
-                }} 
-                index={index} 
-                t={t}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* --- 💼 SECTION 4: EXPERIENCE TIMELINE --- */}
-        <section id="experience" className="py-32 relative border-t border-white/5">
-          <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
-          <div className="mt-20 relative max-w-3xl mx-auto">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
-              {t.experience.items.map((job, index) => (
-                <TimelineItem key={index} job={job} index={index} />
-              ))}
+        {/* --- Fullscreen Resume Modal Overlay --- */}
+        <AnimatePresence>
+          {isResumeModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex flex-col p-4 md:p-8"
+            >
+              <div className="flex justify-between items-center pb-4 mb-4 border-b border-white/10 max-w-6xl mx-auto w-full">
+                <div className="flex items-center gap-3">
+                  <FileText className="text-purple-400" size={24} />
+                  <h4 className="text-lg font-bold text-white font-mono">{t.resume.header}</h4>
+                </div>
+                <div className="flex items-center gap-4">
+                  <a
+                    href="/Resume_Satetapong_Sanguansuk.pdf"
+                    download="Resume_Satetapong_Sanguansuk.pdf"
+                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl transition-colors"
+                  >
+                    <Download size={16} /> {t.resume.downloadBtn}
+                  </a>
+                  <button
+                    onClick={() => setIsResumeModalOpen(false)}
+                    className="p-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <X size={28} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-grow w-full max-w-6xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <iframe
+                  src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
+                  className="w-full h-full border-0 bg-[#0d0d12]"
+                  title="Satetapong Sanguansuk Resume PDF Fullscreen"
+                />
+              </div>
             </motion.div>
-          </div>
-        </section>
-
-        {/* --- 📄 SECTION 5: RESUME & CV VIEWER --- */}
-        <section id="resume" className="py-32 relative border-t border-white/5">
-          <SectionHeader title={t.resume.header} icon={<FileText />} subtitle={t.resume.subtitle} />
-          
-          <motion.div 
-            variants={fadeInUp} 
-            initial="hidden" 
-            whileInView="visible" 
-            viewport={{ once: true }} 
-            className="mt-16 max-w-4xl mx-auto space-y-6"
-          >
-            {/* Control Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:border-purple-500/30 transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-purple-500/20 text-purple-400">
-                  <FileText size={24} />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-white font-mono">Resume_Satetapong_Sanguansuk.pdf</h4>
-                  <p className="text-xs text-purple-300/70 font-mono">Official PDF Document</p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <motion.a
-                  href="/Resume_Satetapong_Sanguansuk.pdf"
-                  download="Resume_Satetapong_Sanguansuk.pdf"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
-                >
-                  <Download size={16} />
-                  <span>{t.resume.downloadBtn}</span>
-                </motion.a>
-
-                <motion.a
-                  href="/Resume_Satetapong_Sanguansuk.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
-                >
-                  <ExternalLink size={16} />
-                  <span>{t.resume.viewOnline}</span>
-                </motion.a>
-
-                <motion.button
-                  onClick={() => setIsResumeModalOpen(true)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
-                >
-                  <Maximize2 size={16} />
-                  <span>{t.resume.openBtn}</span>
-                </motion.button>
-              </div>
-            </div>
-
-            {/* Embedded Interactive PDF Viewer */}
-            <div className="relative w-full rounded-3xl border border-white/10 overflow-hidden shadow-2xl bg-[#0d0d12]">
-              <iframe
-                src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
-                className="w-full h-[650px] md:h-[800px] border-0"
-                title="Satetapong Sanguansuk Resume PDF"
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* --- 🏆 SECTION 6: CERTIFICATES & AWARDS --- */}
-        <section id="certificates" className="py-32 relative border-t border-white/5">
-          <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.certificates.items.map((cert, index) => (
-              <CertificateCard 
-                key={index} 
-                cert={{ ...cert, ...config.certificates[index] }} 
-                t={t}
-              />
-            ))}
-          </motion.div>
-        </section>
-
-        {/* --- 💬 SECTION 4.5: TESTIMONIALS --- */}
-        <section className="py-32 relative border-t border-white/5">
-          <SectionHeader title={t.testimonials.header} icon={<MessageSquareQuote />} subtitle={t.testimonials.subtitle} />
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-16 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {t.testimonials.items.map((item, index) => (
-              <TestimonialCard key={index} item={{ ...item, ...config.testimonials[index] }} />
-            ))}
-          </motion.div>
-        </section>
+          )}
+        </AnimatePresence>
 
         {/* --- 📬 SECTION 5: FOOTER --- */}
-        <section className="py-40 text-center relative">
+        <section className="py-24 text-center relative border-t border-white/5 mt-16">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none -z-10"></div>
           <motion.h3 
             initial="hidden" 
@@ -425,10 +568,10 @@ export default function Home() {
             className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 mb-6"
             dangerouslySetInnerHTML={{ __html: t.footer.ready }}
           />
-          <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} className="pt-8">
+          <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} className="pt-6">
             <MainButton href={config.links.email} icon={<Mail size={20} />} label={t.footer.btn} primary size="large" isCopy toast={t.footer.toast} />
           </motion.div>
-          <footer className="mt-32 pt-8 border-t border-white/5 text-gray-500 text-sm font-mono flex flex-col md:flex-row justify-between items-center gap-4">
+          <footer className="mt-20 pt-8 border-t border-white/5 text-gray-500 text-sm font-mono flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex gap-4"><Link href={config.links.github} className="hover:text-white"><Github size={18} /></Link><Link href={config.links.linkedin} className="hover:text-white"><Linkedin size={18} /></Link></div>
             <p>© {new Date().getFullYear()} {config.name} <span className="text-purple-500">::</span> {t.footer.copy}.</p>
           </footer>
@@ -818,4 +961,30 @@ function MainButton({ href, icon, label, primary = false, size = "normal", isCop
         <span>{label}</span>
       </motion.a>
     )
+}
+
+// 🎛️ Tab Button Subcomponent
+function TabButton({ id, label, icon, active, onClick }: { id: string, label: string, icon: React.ReactNode, active: boolean, onClick: () => void }) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+      className={`relative px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold font-mono transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap ${
+        active 
+          ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-400/80' 
+          : 'bg-white/5 text-gray-400 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/10'
+      }`}
+    >
+      <span className={active ? 'text-white' : 'text-purple-400'}>{icon}</span>
+      <span>{label}</span>
+      {active && (
+        <motion.div
+          layoutId="activeTabGlow"
+          className="absolute -bottom-1 left-3 right-3 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
+          transition={{ type: "spring", stiffness: 500, damping: 35 }}
+        />
+      )}
+    </motion.button>
+  );
 }
