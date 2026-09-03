@@ -979,13 +979,6 @@ function TabButton({ id, label, icon, active, onClick }: { id: string, label: st
     >
       <span className={active ? 'text-white' : 'text-purple-400'}>{icon}</span>
       <span className="truncate">{label}</span>
-      {active && (
-        <motion.div
-          layoutId="activeTabGlow"
-          className="absolute -bottom-1 left-2 right-2 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
-          transition={{ type: "spring", stiffness: 500, damping: 35 }}
-        />
-      )}
     </motion.button>
   );
 }
