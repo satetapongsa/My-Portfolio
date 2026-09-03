@@ -65,25 +65,25 @@ const config = {
   experience: [{}, {}, {}],
   projects: [
     {
-      tech: ["Next.js 14", "Python", "TensorFlow", "FastAPI", "Socket.io", "Tailwind CSS"],
-      link: "https://myriox.vercel.app/", 
-      github: "https://github.com/satetapongsa/MYRIOX-AI", 
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+      link: "https://goomairu.vercel.app/", 
+      github: "https://github.com/satetapongsa/Goomairu.git", 
       featured: true,
-      image: "/mai.png"
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2832&auto=format&fit=crop"
     },
     {
-      tech: ["React", "Web3.js", "Tailwind CSS", "Chart.js"],
-      link: "https://nexus-cowork.vercel.app/", 
-      github: "https://github.com/satetapongsa/Nexus-Cowork", 
+      tech: ["React", "TypeScript", "Crypto API", "Chart.js", "Tailwind CSS"],
+      link: "https://data-crypto-pulse.vercel.app/", 
+      github: "https://github.com/satetapongsa/DATA_CRYPTO_PULSE.git", 
       featured: false,
       image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop"
     },
     {
-      tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Lucide React", "tsparticles"],
-      link: "https://satetapong-portfolio.vercel.app/", 
-      github: "https://github.com/satetapongsa/my-portfolio", 
+      tech: ["Next.js", "Node.js", "Tailwind CSS", "REST API", "Vercel"],
+      link: "https://milk-roads.vercel.app/", 
+      github: "https://github.com/satetapongsa/Milk-Road.git", 
       featured: false,
-      image: "/portfolio.png"
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2832&auto=format&fit=crop"
     },
   ],
   testimonials: [

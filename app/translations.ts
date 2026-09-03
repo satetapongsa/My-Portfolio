@@ -93,16 +93,16 @@ export const translations = {
       standard: "โปรเจกต์",
       items: [
         {
-          title: "Project MYRIOX ENTERPRISE AI",
-          description: "แพลตฟอร์ม AI Data Analytics ที่ทรงพลังที่สุด มาพร้อมแดชบอร์ดแสดงผลข้อมูลแบบ Real-time และระบบ AI Chat อัจฉริยะที่ช่วยวิเคราะห์ข้อมูลเชิงลึกได้อย่างแม่นยำ พร้อมการโต้ตอบที่ลื่นไหล"
+          title: "Goomairu",
+          description: "เว็บแอปพลิเคชันสายเทคอัจฉริยะ โครงสร้าง Next.js พัฒนาด้วยเทคโนโลยีทันสมัย มาพร้อมระบบที่ลื่นไหลและการประมวลผลข้อมูล Real-time"
         },
         {
-          title: "Nexus Cowork",
-          description: "แพลตฟอร์มสำหรับเขียนโน้ตและจัดการงานที่มาพร้อมฟังก์ชันการสร้างพื้นที่ทำงาน (Workspace) แบบรวมศูนย์ ช่วยให้การจัดการโปรเจคในระดับ Enterprise เป็นเรื่องง่ายและมีประสิทธิภาพ"
+          title: "Data Crypto Pulse",
+          description: "ระบบติดตามและวิเคราะห์ข้อมูลคริปโทเคอร์เรนซี Real-time Dashboard แสดงแนวโน้มราคาและสถิติตลาดคริปโทด้วยความแม่นยำสูง"
         },
         {
-          title: "DevPortfolio Ultimate",
-          description: "เว็บไซต์พอร์ตโฟลิโอส่วนตัวเวอร์ชันล่าสุดที่ออกแบบมาอย่างพิถีพิถัน เน้นประสบการณ์ผู้ใช้ (UX) ที่ลื่นไหลด้วยแอนิเมชันขั้นสูง พร้อมการปรับแต่งประสิทธิภาพและ SEO เพื่อให้เข้าถึงผู้คนได้ดีที่สุด"
+          title: "Milk Road",
+          description: "เว็บแอปพลิเคชัน Milk Road สำหรับบริหารจัดการข้อมูลและบริการครบวงจร เชื่อมต่อ APIs ทรงพลังและอินเทอร์เฟซตอบสนองทันใจ"
         }
       ]
     },
@@ -245,16 +245,16 @@ export const translations = {
       standard: "Project",
       items: [
         {
-          title: "Project MYRIOX ENTERPRISE AI",
-          description: "The most powerful AI Data Analytics platform. Features real-time dashboards and intelligent AI Chat for precise deep data analysis with fluid interaction."
+          title: "Goomairu",
+          description: "Smart tech web application built with Next.js modern architecture, fluid user interface, and real-time data processing."
         },
         {
-          title: "Nexus Cowork",
-          description: "Note-taking and task management platform with centralized workspace functions. Simplifies enterprise-level project management with high efficiency."
+          title: "Data Crypto Pulse",
+          description: "Real-time cryptocurrency analytics & market data tracking dashboard with live price trends and high-precision data insights."
         },
         {
-          title: "DevPortfolio Ultimate",
-          description: "The latest meticulously designed personal portfolio. Focuses on fluid user experience (UX) with advanced animations, performance tuning, and SEO."
+          title: "Milk Road",
+          description: "Milk Road web application for end-to-end data management and services with high-performance API integration and responsive UX."
         }
       ]
     },
