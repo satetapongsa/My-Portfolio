@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring, useMotionTemplate, useMotionValue, Variants, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2 } from "lucide-react";
+import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2, LayoutGrid, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect, MouseEvent, useCallback } from "react";
 import { TypeAnimation } from 'react-type-animation';
@@ -144,11 +144,9 @@ export default function Home() {
   return (
     <main ref={containerRef} onMouseMove={handleMouseMove} className="min-h-screen bg-[#050505] text-white relative overflow-hidden scroll-smooth selection:bg-purple-500/30 pb-24">
 
-      <DevLogo />
-      <LanguageToggle lang={lang} setLang={setLang} />
       <BackToTopButton isScrolled={isScrolled} onClick={scrollToTop} />
 
-      {/* --- 🌟 BACKGROUND SYSTEMS --- */}
+      {/* --- BACKGROUND SYSTEMS --- */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Particles
           id="tsparticles"
@@ -180,36 +178,94 @@ export default function Home() {
         <Spotlight mouseX={mouseX} mouseY={mouseY} />
       </div>
 
-      {/* --- 🧭 FLOATING NAVBAR --- */}
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: isScrolled ? 0 : -100, opacity: isScrolled ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="fixed top-4 inset-x-0 mx-auto max-w-fit z-50 px-6 py-3 rounded-full bg-black/40 border border-white/10 backdrop-blur-lg shadow-lg flex items-center gap-6 text-sm font-mono"
-      >
-        <button onClick={() => handleTabSwitch('projects')} className={`flex items-center gap-2 transition-colors ${activeTab === 'projects' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
-          <Code size={16} /> <span>{t.nav.work}</span>
-        </button>
-        <button onClick={() => handleTabSwitch('resume')} className={`flex items-center gap-2 transition-colors ${activeTab === 'resume' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
-          <FileText size={16} /> <span>{t.nav.resume}</span>
-        </button>
-        <button onClick={() => handleTabSwitch('experience')} className={`flex items-center gap-2 transition-colors ${activeTab === 'experience' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
-          <Briefcase size={16} /> <span>{t.nav.exp}</span>
-        </button>
-        <button onClick={() => handleTabSwitch('about')} className={`flex items-center gap-2 transition-colors ${activeTab === 'about' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
-          <User size={16} /> <span>{t.nav.about}</span>
-        </button>
-        <button onClick={() => handleTabSwitch('certificates')} className={`flex items-center gap-2 transition-colors ${activeTab === 'certificates' ? 'text-purple-400 font-bold' : 'text-gray-400 hover:text-white'}`}>
-          <Award size={16} /> <span>{t.nav.cert}</span>
-        </button>
-        <div className="h-4 w-[1px] bg-white/20"></div>
-        <NavLink href={config.links.github} icon={<Github size={16} />} label={t.nav.git} external />
-      </motion.nav>
+      {/* --- STICKY TOP HEADER NAVBAR (Single Permanent Sticky Top Header) --- */}
+      <header className="sticky top-0 z-50 w-full bg-[#08080c]/95 border-b border-white/10 backdrop-blur-xl shadow-2xl py-2.5 px-4 md:px-8">
+        <div className="container mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
+          
+          {/* Brand Logo & Name */}
+          <div className="flex items-center gap-3">
+            <DevLogoInline />
+            <span className="font-mono text-sm font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
+              {config.name}
+            </span>
+          </div>
+
+          {/* Center Tabs Navigation */}
+          <div id="dashboard-content" className="flex-1 max-w-3xl w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 w-full">
+              <TabButton
+                id="projects"
+                label={t.nav.work}
+                icon={<Code size={15} />}
+                active={activeTab === 'projects'}
+                onClick={() => handleTabSwitch('projects')}
+              />
+              <TabButton
+                id="resume"
+                label={t.nav.resume}
+                icon={<FileText size={15} />}
+                active={activeTab === 'resume'}
+                onClick={() => handleTabSwitch('resume')}
+              />
+              <TabButton
+                id="experience"
+                label={t.nav.exp}
+                icon={<Briefcase size={15} />}
+                active={activeTab === 'experience'}
+                onClick={() => handleTabSwitch('experience')}
+              />
+              <TabButton
+                id="about"
+                label={t.nav.about}
+                icon={<User size={15} />}
+                active={activeTab === 'about'}
+                onClick={() => handleTabSwitch('about')}
+              />
+              <TabButton
+                id="certificates"
+                label={t.nav.cert}
+                icon={<Award size={15} />}
+                active={activeTab === 'certificates'}
+                onClick={() => handleTabSwitch('certificates')}
+              />
+              <TabButton
+                id="services"
+                label={t.nav.services}
+                icon={<Layers size={15} />}
+                active={activeTab === 'services'}
+                onClick={() => handleTabSwitch('services')}
+              />
+              <TabButton
+                id="all"
+                label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
+                icon={<LayoutGrid size={15} />}
+                active={activeTab === 'all'}
+                onClick={() => handleTabSwitch('all')}
+              />
+            </div>
+          </div>
+
+          {/* Right Action Tools */}
+          <div className="flex items-center gap-3">
+            <a
+              href={config.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="GitHub Repository"
+            >
+              <Github size={18} />
+            </a>
+            <LanguageToggle lang={lang} setLang={setLang} inline />
+          </div>
+
+        </div>
+      </header>
 
       <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-5xl">
 
-        {/* --- 🦸‍♂️ COMPACT TECH HERO BANNER --- */}
-        <section className="pt-20 pb-8 text-center relative">
+        {/* --- COMPACT TECH HERO BANNER --- */}
+        <section className="pt-12 pb-8 text-center relative">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
 
             <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-xs text-green-400 font-mono cursor-crosshair">
@@ -265,7 +321,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* --- 📊 COMPACT IMPACT STATS --- */}
+        {/* --- COMPACT IMPACT STATS --- */}
         <section className="py-6 border-y border-white/5 bg-white/[0.02] rounded-2xl my-6 backdrop-blur-md">
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {config.stats.map((stat, index) => {
@@ -275,62 +331,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* --- 🎛️ TECH HORIZONTAL DASHBOARD TABS --- */}
-        <div id="dashboard-content" className="sticky top-4 z-40 my-8 p-2.5 md:p-3 rounded-2xl bg-[#09090d]/90 border border-white/10 backdrop-blur-xl shadow-2xl w-full">
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 w-full">
-            <TabButton
-              id="projects"
-              label={t.nav.work}
-              icon={<Code size={16} />}
-              active={activeTab === 'projects'}
-              onClick={() => setActiveTab('projects')}
-            />
-            <TabButton
-              id="resume"
-              label={t.nav.resume}
-              icon={<FileText size={16} />}
-              active={activeTab === 'resume'}
-              onClick={() => setActiveTab('resume')}
-            />
-            <TabButton
-              id="experience"
-              label={t.nav.exp}
-              icon={<Briefcase size={16} />}
-              active={activeTab === 'experience'}
-              onClick={() => setActiveTab('experience')}
-            />
-            <TabButton
-              id="about"
-              label={t.nav.about}
-              icon={<User size={16} />}
-              active={activeTab === 'about'}
-              onClick={() => setActiveTab('about')}
-            />
-            <TabButton
-              id="certificates"
-              label={t.nav.cert}
-              icon={<Award size={16} />}
-              active={activeTab === 'certificates'}
-              onClick={() => setActiveTab('certificates')}
-            />
-            <TabButton
-              id="services"
-              label={t.nav.services}
-              icon={<Layers size={16} />}
-              active={activeTab === 'services'}
-              onClick={() => setActiveTab('services')}
-            />
-            <TabButton
-              id="all"
-              label={lang === 'th' ? "📜 แสดงทั้งหมด" : "📜 View All"}
-              icon={<Layers size={16} />}
-              active={activeTab === 'all'}
-              onClick={() => setActiveTab('all')}
-            />
-          </div>
-        </div>
-
-        {/* --- 💻 DASHBOARD CONTENT PANELS --- */}
+        {/* --- DASHBOARD CONTENT PANELS --- */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -340,7 +341,7 @@ export default function Home() {
             transition={{ duration: 0.3 }}
             className="min-h-[500px]"
           >
-            {/* 🚀 TAB 1: PROJECTS */}
+            {/* TAB 1: PROJECTS */}
             {(activeTab === 'projects' || activeTab === 'all') && (
               <section id="projects" className="py-8 relative">
                 <SectionHeader title={t.projects.header} icon={<FolderGit2 />} subtitle={t.projects.subtitle} />
@@ -360,7 +361,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 📄 TAB 2: RESUME VIEWER */}
+            {/* TAB 2: RESUME VIEWER */}
             {(activeTab === 'resume' || activeTab === 'all') && (
               <section id="resume" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.resume.header} icon={<FileText />} subtitle={t.resume.subtitle} />
@@ -426,7 +427,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 💼 TAB 3: EXPERIENCE TIMELINE */}
+            {/* TAB 3: EXPERIENCE TIMELINE */}
             {(activeTab === 'experience' || activeTab === 'all') && (
               <section id="experience" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
@@ -441,7 +442,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 🧠 TAB 4: ABOUT & SKILLS */}
+            {/* TAB 4: ABOUT & SKILLS */}
             {(activeTab === 'about' || activeTab === 'all') && (
               <section id="about" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.about.header} icon={<User />} subtitle={t.about.subtitle} />
@@ -472,7 +473,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 🏆 TAB 5: CERTIFICATES */}
+            {/* TAB 5: CERTIFICATES */}
             {(activeTab === 'certificates' || activeTab === 'all') && (
               <section id="certificates" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
@@ -488,7 +489,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 🛠️ TAB 6: SERVICES */}
+            {/* TAB 6: SERVICES */}
             {(activeTab === 'services' || activeTab === 'all') && (
               <section id="services" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="mb-12 text-center">
@@ -503,7 +504,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* 💬 TESTIMONIALS (Shown on 'all' or 'about' tab) */}
+            {/* TESTIMONIALS (Shown on 'all' or 'about' tab) */}
             {(activeTab === 'all' || activeTab === 'about') && (
               <section className="py-16 relative border-t border-white/5 mt-12">
                 <SectionHeader title={t.testimonials.header} icon={<MessageSquareQuote />} subtitle={t.testimonials.subtitle} />
@@ -558,7 +559,7 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* --- 📬 SECTION 5: FOOTER --- */}
+        {/* --- SECTION 5: FOOTER --- */}
         <section className="py-24 text-center relative border-t border-white/5 mt-16">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none -z-10"></div>
           <motion.h3 
@@ -582,10 +583,10 @@ export default function Home() {
 }
 
 // =========================================
-// 🧩 SUB-COMPONENTS
+// SUB-COMPONENTS
 // =========================================
 
-// ✅ แก้ไข: ใช้ motion.a เพื่อให้ลิ้งค์ภายนอกทำงานได้สมบูรณ์
+// Note: Use motion.a for external links
 function SocialIconBtn({ href, icon }: { href: string; icon: React.ReactNode }) {
   return (
     <motion.a
@@ -710,7 +711,7 @@ function TimelineItem({ job, index }: { job: any, index: number }) {
   )
 }
 
-// 📌 Updated ProjectCard to support Images and Translations
+// ProjectCard component without emojis
 function ProjectCard({ project, index, t }: { project: any, index: number, t: any }) {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -720,7 +721,7 @@ function ProjectCard({ project, index, t }: { project: any, index: number, t: an
       whileHover={{ y: -10 }}
       className={`group relative bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-purple-500/50 hover:shadow-[0_10px_30px_-10px_rgba(168,85,247,0.2)] ${project.featured ? 'md:col-span-2 md:flex md:gap-8 bg-gradient-to-br from-[#111] to-[#0a0a0a]' : ''}`}
     >
-      {/* --- 🖼️ Image Section --- */}
+      {/* Image Section */}
       <div
         className={`h-48 w-full relative overflow-hidden bg-gray-900 cursor-pointer ${project.featured ? 'md:h-auto md:w-2/5' : ''}`}
         onClick={() => setShowOptions(true)}
@@ -732,8 +733,9 @@ function ProjectCard({ project, index, t }: { project: any, index: number, t: an
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-60"></div>
 
-        <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-gray-300 backdrop-blur-md z-10 shadow-lg">
-          {project.featured ? t.projects.featured : t.projects.standard}
+        <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-gray-300 backdrop-blur-md z-10 shadow-lg">
+          {project.featured ? <Sparkles size={13} className="text-yellow-400" /> : <FolderGit2 size={13} className="text-purple-400" />}
+          <span>{project.featured ? t.projects.featured : t.projects.standard}</span>
         </div>
 
         {/* --- Selection Overlay --- */}
@@ -784,7 +786,7 @@ function ProjectCard({ project, index, t }: { project: any, index: number, t: an
         </AnimatePresence>
       </div>
 
-      {/* --- 📝 Content Section --- */}
+      {/* --- Content Section --- */}
       <div className={`p-8 flex flex-col relative z-10 ${project.featured ? 'md:w-3/5 md:py-12' : ''}`}>
         <div className="flex justify-between items-start mb-4">
           <h4 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 group-hover:from-purple-300 group-hover:to-blue-300 transition-all">{project.title}</h4>
@@ -832,16 +834,29 @@ function NavLink({ href, icon, label, external }: { href: string, icon: React.Re
   )
 }
 
-function LanguageToggle({ lang, setLang }: { lang: Language, setLang: (l: Language) => void }) {
+function DevLogoInline() {
   return (
-    <div className="fixed top-6 right-6 z-50 flex gap-2">
+    <div className="flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+        <defs><linearGradient id="dev-grad-inline" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#22d3ee" /><stop offset="50%" stopColor="#a855f7" /><stop offset="100%" stopColor="#ec4899" /></linearGradient></defs>
+        <path d="M10 20L4 12L10 4" stroke="url(#dev-grad-inline)" />
+        <path d="M14 4L20 12L14 20" stroke="url(#dev-grad-inline)" />
+        <path d="M8 21L16 3" stroke="url(#dev-grad-inline)" className="opacity-50" />
+      </svg>
+    </div>
+  );
+}
+
+function LanguageToggle({ lang, setLang, inline = false }: { lang: Language, setLang: (l: Language) => void, inline?: boolean }) {
+  return (
+    <div className={inline ? "flex gap-1.5" : "fixed top-6 right-6 z-50 flex gap-2"}>
       {(['th', 'en'] as const).map((l) => (
         <motion.button
           key={l}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => setLang(l)}
-          className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${lang === l ? 'bg-purple-600 border-purple-400 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'bg-black/50 border-white/10 text-gray-400 hover:text-white'}`}
+          className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${lang === l ? 'bg-purple-600 border-purple-400 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'bg-black/50 border-white/10 text-gray-400 hover:text-white'}`}
         >
           {l.toUpperCase()}
         </motion.button>
@@ -919,7 +934,7 @@ function CertificateCard({ cert, t }: { cert: any, t: any }) {
   );
 }
 
-// ✅ แก้ไข: เพิ่ม prop toast ให้แสดงข้อความภาษาตามที่กำหนด
+// Main button component with copy support
 function MainButton({ href, icon, label, primary = false, size = "normal", isCopy = false, toast = "Email Copied!" } : { href: string, icon: React.ReactNode, label: string, primary?: boolean, size?: "normal" | "large", isCopy?: boolean, toast?: string }) {
     const isLarge = size === "large";
     const [copied, setCopied] = useState(false);
@@ -963,7 +978,7 @@ function MainButton({ href, icon, label, primary = false, size = "normal", isCop
     )
 }
 
-// 🎛️ Tab Button Subcomponent (Full Width Responsive)
+// Tab Button Subcomponent (Full Width Responsive)
 function TabButton({ id, label, icon, active, onClick }: { id: string, label: string, icon: React.ReactNode, active: boolean, onClick: () => void }) {
   return (
     <motion.button

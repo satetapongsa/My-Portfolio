@@ -89,8 +89,8 @@ export const translations = {
       live: "เข้าชมเว็บไซต์จริง",
       github: "ดู Code บน GitHub",
       comingSoon: "กำลังดำเนินการ...",
-      featured: "🌟 ผลงานโดดเด่น",
-      standard: "📂 โปรเจกต์",
+      featured: "ผลงานโดดเด่น",
+      standard: "โปรเจกต์",
       items: [
         {
           title: "Project MYRIOX ENTERPRISE AI",
@@ -241,8 +241,8 @@ export const translations = {
       live: "Open Live Website",
       github: "View on GitHub",
       comingSoon: "Links coming soon...",
-      featured: "🌟 Featured Build",
-      standard: "📂 Project",
+      featured: "Featured Build",
+      standard: "Project",
       items: [
         {
           title: "Project MYRIOX ENTERPRISE AI",
