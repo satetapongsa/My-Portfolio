@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring, useMotionTemplate, useMotionValue, Variants, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X } from "lucide-react";
+import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect, MouseEvent, useCallback } from "react";
 import { TypeAnimation } from 'react-type-animation';
@@ -111,6 +111,7 @@ export default function Home() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [lang, setLang] = useState<Language>('en');
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const t = translations[lang];
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -181,6 +182,7 @@ export default function Home() {
         <NavLink href="#services" icon={<Layers size={16} />} label={t.nav.services} />
         <NavLink href="#projects" icon={<Code size={16} />} label={t.nav.work} />
         <NavLink href="#certificates" icon={<Award size={16} />} label={t.nav.cert} />
+        <NavLink href="#resume" icon={<FileText size={16} />} label={t.nav.resume} />
         <div className="h-4 w-[1px] bg-white/20"></div>
         <NavLink href={config.links.github} icon={<Github size={16} />} label={t.nav.git} external />
       </motion.nav>
@@ -225,6 +227,7 @@ export default function Home() {
             {/* CTAs */}
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-5">
               <MainButton href="#projects" icon={<Code />} label={t.hero.btnWork} primary />
+              <MainButton href="#resume" icon={<FileText />} label={t.nav.resume} />
               <MainButton href={config.links.email} icon={<Mail />} label={t.hero.btnContact} isCopy />
             </motion.div>
 
@@ -330,6 +333,117 @@ export default function Home() {
             ))}
           </motion.div>
         </section>
+
+        {/* --- 📄 SECTION 4: RESUME VIEWER --- */}
+        <section id="resume" className="py-32 relative border-t border-white/5">
+          <SectionHeader title={t.resume.header} icon={<FileText />} subtitle={t.resume.subtitle} />
+          
+          <motion.div 
+            variants={fadeInUp} 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            className="mt-16 max-w-4xl mx-auto space-y-6"
+          >
+            {/* Control Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:border-purple-500/30 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-xl bg-purple-500/20 text-purple-400">
+                  <FileText size={24} />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white font-mono">Resume_Satetapong_Sanguansuk.pdf</h4>
+                  <p className="text-xs text-purple-300/70 font-mono">Official PDF Document</p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <motion.a
+                  href="/Resume_Satetapong_Sanguansuk.pdf"
+                  download="Resume_Satetapong_Sanguansuk.pdf"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
+                >
+                  <Download size={16} />
+                  <span>{t.resume.downloadBtn}</span>
+                </motion.a>
+
+                <motion.a
+                  href="/Resume_Satetapong_Sanguansuk.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
+                >
+                  <ExternalLink size={16} />
+                  <span>{t.resume.viewOnline}</span>
+                </motion.a>
+
+                <motion.button
+                  onClick={() => setIsResumeModalOpen(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white rounded-xl text-xs font-bold backdrop-blur-md transition-all cursor-pointer"
+                >
+                  <Maximize2 size={16} />
+                  <span>{t.resume.openBtn}</span>
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Embedded Interactive PDF Viewer */}
+            <div className="relative w-full rounded-3xl border border-white/10 overflow-hidden shadow-2xl bg-[#0d0d12]">
+              <iframe
+                src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
+                className="w-full h-[650px] md:h-[800px] border-0"
+                title="Satetapong Sanguansuk Resume PDF"
+              />
+            </div>
+          </motion.div>
+        </section>
+
+        {/* --- Fullscreen Resume Modal Overlay --- */}
+        <AnimatePresence>
+          {isResumeModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex flex-col p-4 md:p-8"
+            >
+              <div className="flex justify-between items-center pb-4 mb-4 border-b border-white/10 max-w-6xl mx-auto w-full">
+                <div className="flex items-center gap-3">
+                  <FileText className="text-purple-400" size={24} />
+                  <h4 className="text-lg font-bold text-white font-mono">{t.resume.header}</h4>
+                </div>
+                <div className="flex items-center gap-4">
+                  <a
+                    href="/Resume_Satetapong_Sanguansuk.pdf"
+                    download="Resume_Satetapong_Sanguansuk.pdf"
+                    className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl transition-colors"
+                  >
+                    <Download size={16} /> {t.resume.downloadBtn}
+                  </a>
+                  <button
+                    onClick={() => setIsResumeModalOpen(false)}
+                    className="p-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <X size={28} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-grow w-full max-w-6xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <iframe
+                  src="/Resume_Satetapong_Sanguansuk.pdf#toolbar=1"
+                  className="w-full h-full border-0 bg-[#0d0d12]"
+                  title="Satetapong Sanguansuk Resume PDF Fullscreen"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* --- 💬 SECTION 4.5: TESTIMONIALS --- */}
         <section className="py-32 relative border-t border-white/5">

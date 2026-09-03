@@ -7,6 +7,7 @@ export const translations = {
       services: "บริการ",
       work: "ผลงาน",
       cert: "เกียรติบัตร",
+      resume: "เรซูเม่",
       git: "GitHub"
     },
     hero: {
@@ -141,6 +142,14 @@ export const translations = {
         { title: "WordPress CMS Development", issuer: "Coursera" },
         { title: "Gemini AI Specialist (Mock)", issuer: "ของปลอมทำเล่นๆ แต่จะพัฒนาตัวเองเพื่อเอาของจริงมาให้ได้!" }
       ]
+    },
+    resume: {
+      header: "ประวัติส่วนตัว & เรซูเม่",
+      subtitle: "เปิดอ่านเอกสาร Resume ได้โดยตรงบนเว็บไซต์ หรือดาวน์โหลดเก็บไว้",
+      downloadBtn: "ดาวน์โหลด Resume (PDF)",
+      openBtn: "เปิดดูแบบเต็มหน้าจอ",
+      viewOnline: "เปิดในแท็บใหม่",
+      closeBtn: "ปิดหน้าต่าง"
     }
   },
   en: {
@@ -149,6 +158,7 @@ export const translations = {
       services: "Services",
       work: "Work",
       cert: "Certificates",
+      resume: "Resume",
       git: "Git"
     },
     hero: {
@@ -283,6 +293,14 @@ export const translations = {
         { title: "WordPress CMS Development", issuer: "Coursera" },
         { title: "Gemini AI Specialist (Mock)", issuer: "Fake one, but I'll thrive till I get the real one!" }
       ]
+    },
+    resume: {
+      header: "Resume & Curriculum Vitae",
+      subtitle: "Read the complete resume directly on-site or download as PDF",
+      downloadBtn: "Download Resume (PDF)",
+      openBtn: "View Fullscreen",
+      viewOnline: "Open in New Tab",
+      closeBtn: "Close Window"
     }
   }
 };
