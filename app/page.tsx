@@ -559,24 +559,10 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* --- SECTION 5: FOOTER --- */}
-        <section className="py-24 text-center relative border-t border-white/5 mt-16">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none -z-10"></div>
-          <motion.h3 
-            initial="hidden" 
-            whileInView="visible" 
-            variants={fadeInUp} 
-            className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 mb-6"
-            dangerouslySetInnerHTML={{ __html: t.footer.ready }}
-          />
-          <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} className="pt-6">
-            <MainButton href={config.links.email} icon={<Mail size={20} />} label={t.footer.btn} primary size="large" isCopy toast={t.footer.toast} />
-          </motion.div>
-          <footer className="mt-20 pt-8 border-t border-white/5 text-gray-500 text-sm font-mono flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex gap-4"><Link href={config.links.github} className="hover:text-white"><Github size={18} /></Link><Link href={config.links.linkedin} className="hover:text-white"><Linkedin size={18} /></Link></div>
-            <p>© {new Date().getFullYear()} {config.name} <span className="text-purple-500">::</span> {t.footer.copy}.</p>
-          </footer>
-        </section>
+        {/* --- FOOTER --- */}
+        <footer className="mt-16 py-8 border-t border-white/5 text-gray-500 text-sm font-mono text-center">
+          <p>© {new Date().getFullYear()} {config.name} <span className="text-purple-500">::</span> {t.footer.copy}.</p>
+        </footer>
       </div>
     </main>
   );
