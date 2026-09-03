@@ -21,7 +21,7 @@ const config = {
   links: {
     github: "https://github.com/satetapongsa",
     linkedin: "https://www.linkedin.com/in/satetapong-sanguansuk/",
-    instagram: "https://www.instagram.com/manhideyi/",
+    instagram: "https://www.instagram.com/wkhirro/",
     facebook: "https://www.facebook.com/wirburus.h.ng.lok.sinangein.kheiyw/",
     email: "mailto:satetapongs@gmail.com",
   },
