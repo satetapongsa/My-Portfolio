@@ -179,13 +179,13 @@ export default function Home() {
       </div>
 
       {/* --- STICKY TOP HEADER NAVBAR (Single Permanent Sticky Top Header) --- */}
-      <header className="sticky top-0 z-50 w-full bg-[#08080c]/95 border-b border-white/10 backdrop-blur-xl shadow-2xl py-2.5 px-4 md:px-8">
-        <div className="container mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 w-full bg-[#08080c]/95 border-b border-white/10 backdrop-blur-xl shadow-2xl py-2 sm:py-2.5 px-3 sm:px-4 md:px-8">
+        <div className="container mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <DevLogoInline />
-            <span className="font-mono text-sm font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
+            <span className="font-mono text-xs sm:text-sm font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
               {config.name}
             </span>
           </div>
@@ -241,12 +241,13 @@ export default function Home() {
                 icon={<LayoutGrid size={15} />}
                 active={activeTab === 'all'}
                 onClick={() => handleTabSwitch('all')}
+                className="col-span-2 sm:col-span-2 lg:col-span-1"
               />
             </div>
           </div>
 
           {/* Right Action Tools */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <a
               href={config.links.github}
               target="_blank"
@@ -262,7 +263,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="relative z-10 container mx-auto px-6 md:px-12 max-w-5xl">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
 
         {/* --- COMPACT TECH HERO BANNER --- */}
         <section className="pt-12 pb-8 text-center relative">
@@ -277,13 +278,13 @@ export default function Home() {
             </motion.div>
 
             <div className="space-y-2">
-              <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-extrabold tracking-tighter">
+              <motion.h1 variants={fadeInUp} className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter break-words">
                 {t.hero.greeting} <span className="relative inline-block">
                   <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 opacity-70"></span>
                   <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">{config.name}</span>
                 </span>
               </motion.h1>
-              <motion.div variants={fadeInUp} className="text-xl md:text-2xl font-light text-gray-300 h-[36px] flex justify-center items-center font-mono">
+              <motion.div variants={fadeInUp} className="text-base sm:text-xl md:text-2xl font-light text-gray-300 min-h-[36px] flex flex-wrap justify-center items-center font-mono">
                 <span>{t.hero.subGreeting}&nbsp;</span>
                 <TypeAnimation key={lang} sequence={config.titles} wrapper="span" speed={50} repeat={Infinity} className="font-bold text-purple-400" />
               </motion.div>
@@ -965,17 +966,17 @@ function MainButton({ href, icon, label, primary = false, size = "normal", isCop
 }
 
 // Tab Button Subcomponent (Full Width Responsive)
-function TabButton({ id, label, icon, active, onClick }: { id: string, label: string, icon: React.ReactNode, active: boolean, onClick: () => void }) {
+function TabButton({ id, label, icon, active, onClick, className = "" }: { id: string, label: string, icon: React.ReactNode, active: boolean, onClick: () => void, className?: string }) {
   return (
     <motion.button
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       onClick={onClick}
-      className={`relative w-full px-2 md:px-3 py-2.5 rounded-xl text-xs md:text-sm font-bold font-mono transition-all flex items-center justify-center gap-1.5 md:gap-2 cursor-pointer ${
+      className={`relative w-full px-2 md:px-3 py-2 sm:py-2.5 rounded-xl text-xs md:text-sm font-bold font-mono transition-all flex items-center justify-center gap-1.5 md:gap-2 cursor-pointer ${
         active 
           ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-400/80' 
           : 'bg-white/5 text-gray-400 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/10'
-      }`}
+      } ${className}`}
     >
       <span className={active ? 'text-white' : 'text-purple-400'}>{icon}</span>
       <span className="truncate">{label}</span>
