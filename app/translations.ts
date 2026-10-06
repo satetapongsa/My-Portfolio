@@ -93,16 +93,16 @@ export const translations = {
       standard: "โปรเจกต์",
       items: [
         {
-          title: "Goomairu",
-          description: "เว็บแอปพลิเคชันสายเทคอัจฉริยะ โครงสร้าง Next.js พัฒนาด้วยเทคโนโลยีทันสมัย มาพร้อมระบบที่ลื่นไหลและการประมวลผลข้อมูล Real-time"
+          title: "FinGuard AI",
+          description: "แพลตฟอร์มตรวจสอบความถูกต้องธุรกรรมทางการเงินและ Compliance อัจฉริยะ (BFSI) รองรับ ACID Double-Entry, ตรวจจับการปลอมแปลงด้วย SHA-256 และ DeepSeek AI"
         },
         {
-          title: "Data Crypto Pulse",
-          description: "ระบบติดตามและวิเคราะห์ข้อมูลคริปโทเคอร์เรนซี Real-time Dashboard แสดงแนวโน้มราคาและสถิติตลาดคริปโทด้วยความแม่นยำสูง"
+          title: "Zyntra",
+          description: "ระบบ Enterprise Self-Hosted AI Orchestration Platform เชื่อมต่อโมเดล LLMs หลากหลายค่าย รองรับ SSE Token Streaming, RBAC และเกตเวย์ความปลอดภัยสูง"
         },
         {
-          title: "Milk Road",
-          description: "เว็บแอปพลิเคชัน Milk Road สำหรับบริหารจัดการข้อมูลและบริการครบวงจร เชื่อมต่อ APIs ทรงพลังและอินเทอร์เฟซตอบสนองทันใจ"
+          title: "AlertBKK",
+          description: "แพลตฟอร์มติดตามสถานการณ์น้ำท่วม เหตุฉุกเฉิน และการจราจร กทม. 50 เขต แบบเรียลไทม์ พร้อมเรดาร์ฝน โทรมาตรระดับน้ำ และตัวจำลองความเสี่ยงตามรุ่นรถ"
         }
       ]
     },
@@ -245,16 +245,16 @@ export const translations = {
       standard: "Project",
       items: [
         {
-          title: "Goomairu",
-          description: "Smart tech web application built with Next.js modern architecture, fluid user interface, and real-time data processing."
+          title: "FinGuard AI",
+          description: "Autonomous financial compliance & transaction intelligence platform with ACID double-entry ledger, SHA-256 tamper detection, and DeepSeek AI Copilot."
         },
         {
-          title: "Data Crypto Pulse",
-          description: "Real-time cryptocurrency analytics & market data tracking dashboard with live price trends and high-precision data insights."
+          title: "Zyntra",
+          description: "Enterprise self-hosted AI conversation orchestration platform featuring unified multi-LLM gateways, backpressure SSE token streaming, and RBAC."
         },
         {
-          title: "Milk Road",
-          description: "Milk Road web application for end-to-end data management and services with high-performance API integration and responsive UX."
+          title: "AlertBKK",
+          description: "Bangkok real-time emergency, flood situation, and incident intelligence platform with live Doppler radar, water telemetry, and vehicle clearance simulator."
         }
       ]
     },

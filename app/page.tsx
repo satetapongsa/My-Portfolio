@@ -65,25 +65,25 @@ const config = {
   experience: [{}, {}, {}],
   projects: [
     {
-      tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-      link: "https://goomairu.vercel.app/", 
-      github: "https://github.com/satetapongsa/Goomairu.git", 
+      tech: ["Next.js 15", "React 19", "Prisma", "Neon Postgres", "DeepSeek AI"],
+      link: "https://github.com/satetapongsa/Finguard-Ai", 
+      github: "https://github.com/satetapongsa/Finguard-Ai", 
       featured: true,
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2832&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2832&auto=format&fit=crop"
     },
     {
-      tech: ["React", "TypeScript", "Crypto API", "Chart.js", "Tailwind CSS"],
-      link: "https://data-crypto-pulse.vercel.app/", 
-      github: "https://github.com/satetapongsa/DATA_CRYPTO_PULSE.git", 
-      featured: false,
-      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop"
-    },
-    {
-      tech: ["Next.js", "Node.js", "Tailwind CSS", "REST API", "Vercel"],
-      link: "https://milk-roads.vercel.app/", 
-      github: "https://github.com/satetapongsa/Milk-Road.git", 
+      tech: ["Next.js 15", "TypeScript", "PostgreSQL", "Prisma", "LLM Gateway"],
+      link: "https://github.com/satetapongsa/Zyntra", 
+      github: "https://github.com/satetapongsa/Zyntra", 
       featured: false,
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["Next.js", "TypeScript", "Leaflet/Map", "Telemetry API", "Tailwind CSS"],
+      link: "https://github.com/satetapongsa/alertbkk-map", 
+      github: "https://github.com/satetapongsa/alertbkk-map", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2832&auto=format&fit=crop"
     },
   ],
   testimonials: [
