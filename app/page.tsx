@@ -269,6 +269,22 @@ export default function Home() {
         <section className="pt-12 pb-8 text-center relative">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
 
+            {/* Profile Avatar */}
+            <motion.div variants={fadeInUp} className="flex justify-center">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full blur-md opacity-70 group-hover:opacity-100 transition duration-500 group-hover:scale-105"></div>
+                <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 shadow-2xl">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-black/80 border-2 border-white/20 relative">
+                    <img
+                      src="/profile.png"
+                      alt={config.name}
+                      className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
             <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-xs text-green-400 font-mono cursor-crosshair">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
