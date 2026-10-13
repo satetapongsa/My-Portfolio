@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring, useMotionTemplate, useMotionValue, Variants, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2, LayoutGrid, Sparkles } from "lucide-react";
+import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2, LayoutGrid, Sparkles, Menu, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect, MouseEvent, useCallback } from "react";
 import { TypeAnimation } from 'react-type-animation';
@@ -113,6 +113,7 @@ export default function Home() {
   const [lang, setLang] = useState<Language>('en');
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('projects');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = translations[lang];
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -178,75 +179,75 @@ export default function Home() {
         <Spotlight mouseX={mouseX} mouseY={mouseY} />
       </div>
 
-      {/* --- STICKY TOP HEADER NAVBAR (Single Permanent Sticky Top Header) --- */}
-      <header className="sticky top-0 z-50 w-full bg-[#08080c]/95 border-b border-white/10 backdrop-blur-xl shadow-2xl py-2 sm:py-2.5 px-3 sm:px-4 md:px-8">
-        <div className="container mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+      {/* --- STICKY TOP HEADER NAVBAR --- */}
+      <header className="sticky top-0 z-50 w-full bg-[#08080c]/90 border-b border-white/10 backdrop-blur-xl shadow-2xl py-2.5 px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto max-w-6xl flex items-center justify-between gap-4">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <button 
+            onClick={() => scrollToTop()} 
+            className="flex items-center gap-2.5 group cursor-pointer focus:outline-none"
+          >
             <DevLogoInline />
-            <span className="font-mono text-xs sm:text-sm font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
+            <span className="font-mono text-sm sm:text-base font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 group-hover:opacity-80 transition-opacity">
               {config.name}
             </span>
-          </div>
+          </button>
 
-          {/* Center Tabs Navigation */}
-          <div id="dashboard-content" className="flex-1 max-w-3xl w-full">
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 w-full">
-              <TabButton
-                id="projects"
-                label={t.nav.work}
-                icon={<Code size={15} />}
-                active={activeTab === 'projects'}
-                onClick={() => handleTabSwitch('projects')}
-              />
-              <TabButton
-                id="resume"
-                label={t.nav.resume}
-                icon={<FileText size={15} />}
-                active={activeTab === 'resume'}
-                onClick={() => handleTabSwitch('resume')}
-              />
-              <TabButton
-                id="experience"
-                label={t.nav.exp}
-                icon={<Briefcase size={15} />}
-                active={activeTab === 'experience'}
-                onClick={() => handleTabSwitch('experience')}
-              />
-              <TabButton
-                id="about"
-                label={t.nav.about}
-                icon={<User size={15} />}
-                active={activeTab === 'about'}
-                onClick={() => handleTabSwitch('about')}
-              />
-              <TabButton
-                id="certificates"
-                label={t.nav.cert}
-                icon={<Award size={15} />}
-                active={activeTab === 'certificates'}
-                onClick={() => handleTabSwitch('certificates')}
-              />
-              <TabButton
-                id="services"
-                label={t.nav.services}
-                icon={<Layers size={15} />}
-                active={activeTab === 'services'}
-                onClick={() => handleTabSwitch('services')}
-              />
-              <TabButton
-                id="all"
-                label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
-                icon={<LayoutGrid size={15} />}
-                active={activeTab === 'all'}
-                onClick={() => handleTabSwitch('all')}
-                className="col-span-2 sm:col-span-2 lg:col-span-1"
-              />
-            </div>
-          </div>
+          {/* Desktop Tabs Navigation (Hidden on mobile/tablet screens < lg) */}
+          <nav id="dashboard-content" className="hidden lg:flex items-center gap-1.5 bg-white/[0.03] border border-white/10 p-1 rounded-2xl backdrop-blur-md">
+            <TabButton
+              id="projects"
+              label={t.nav.work}
+              icon={<Code size={14} />}
+              active={activeTab === 'projects'}
+              onClick={() => handleTabSwitch('projects')}
+            />
+            <TabButton
+              id="resume"
+              label={t.nav.resume}
+              icon={<FileText size={14} />}
+              active={activeTab === 'resume'}
+              onClick={() => handleTabSwitch('resume')}
+            />
+            <TabButton
+              id="experience"
+              label={t.nav.exp}
+              icon={<Briefcase size={14} />}
+              active={activeTab === 'experience'}
+              onClick={() => handleTabSwitch('experience')}
+            />
+            <TabButton
+              id="about"
+              label={t.nav.about}
+              icon={<User size={14} />}
+              active={activeTab === 'about'}
+              onClick={() => handleTabSwitch('about')}
+            />
+            <TabButton
+              id="certificates"
+              label={t.nav.cert}
+              icon={<Award size={14} />}
+              active={activeTab === 'certificates'}
+              onClick={() => handleTabSwitch('certificates')}
+            />
+            <TabButton
+              id="services"
+              label={t.nav.services}
+              icon={<Layers size={14} />}
+              active={activeTab === 'services'}
+              onClick={() => handleTabSwitch('services')}
+            />
+            <TabButton
+              id="all"
+              label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
+              icon={<LayoutGrid size={14} />}
+              active={activeTab === 'all'}
+              onClick={() => handleTabSwitch('all')}
+            />
+          </nav>
 
-          {/* Right Action Tools */}
+          {/* Right Action Tools + Mobile Menu Button */}
           <div className="flex items-center gap-2 sm:gap-3">
             <a
               href={config.links.github}
@@ -258,27 +259,101 @@ export default function Home() {
               <Github size={18} />
             </a>
             <LanguageToggle lang={lang} setLang={setLang} inline />
+
+            {/* Mobile / Tablet Menu Hamburger Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+              className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
 
         </div>
+
+        {/* Mobile Dropdown Navigation Drawer */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="lg:hidden overflow-hidden border-t border-white/10 mt-2.5 pt-3"
+            >
+              <div className="grid grid-cols-2 gap-2 pb-2">
+                <TabButton
+                  id="projects"
+                  label={t.nav.work}
+                  icon={<Code size={15} />}
+                  active={activeTab === 'projects'}
+                  onClick={() => { handleTabSwitch('projects'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="resume"
+                  label={t.nav.resume}
+                  icon={<FileText size={15} />}
+                  active={activeTab === 'resume'}
+                  onClick={() => { handleTabSwitch('resume'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="experience"
+                  label={t.nav.exp}
+                  icon={<Briefcase size={15} />}
+                  active={activeTab === 'experience'}
+                  onClick={() => { handleTabSwitch('experience'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="about"
+                  label={t.nav.about}
+                  icon={<User size={15} />}
+                  active={activeTab === 'about'}
+                  onClick={() => { handleTabSwitch('about'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="certificates"
+                  label={t.nav.cert}
+                  icon={<Award size={15} />}
+                  active={activeTab === 'certificates'}
+                  onClick={() => { handleTabSwitch('certificates'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="services"
+                  label={t.nav.services}
+                  icon={<Layers size={15} />}
+                  active={activeTab === 'services'}
+                  onClick={() => { handleTabSwitch('services'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
+                  id="all"
+                  label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
+                  icon={<LayoutGrid size={15} />}
+                  active={activeTab === 'all'}
+                  onClick={() => { handleTabSwitch('all'); setIsMobileMenuOpen(false); }}
+                  className="col-span-2"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
 
         {/* --- COMPACT TECH HERO BANNER --- */}
-        <section className="pt-12 pb-8 text-center relative">
+        <section className="pt-10 sm:pt-14 pb-8 text-center relative">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
 
-            {/* Profile Avatar */}
+            {/* Profile Avatar - Clean Minimalist White Border */}
             <motion.div variants={fadeInUp} className="flex justify-center">
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full blur-md opacity-70 group-hover:opacity-100 transition duration-500 group-hover:scale-105"></div>
-                <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 shadow-2xl">
-                  <div className="w-full h-full rounded-full overflow-hidden bg-black/80 border-2 border-white/20 relative">
+                <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-white/20 border-2 border-white shadow-[0_0_25px_rgba(255,255,255,0.15)] group-hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-300">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-neutral-900 relative">
                     <img
                       src="/profile.png"
                       alt={config.name}
-                      className="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>
@@ -981,21 +1056,21 @@ function MainButton({ href, icon, label, primary = false, size = "normal", isCop
     )
 }
 
-// Tab Button Subcomponent (Full Width Responsive)
+// Tab Button Subcomponent (Clean & Responsive)
 function TabButton({ id, label, icon, active, onClick, className = "" }: { id: string, label: string, icon: React.ReactNode, active: boolean, onClick: () => void, className?: string }) {
   return (
     <motion.button
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className={`relative w-full px-2 md:px-3 py-2 sm:py-2.5 rounded-xl text-xs md:text-sm font-bold font-mono transition-all flex items-center justify-center gap-1.5 md:gap-2 cursor-pointer ${
+      className={`relative px-3 py-2 rounded-xl text-xs md:text-sm font-semibold font-mono transition-all flex items-center justify-center gap-2 cursor-pointer ${
         active 
-          ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-400/80' 
-          : 'bg-white/5 text-gray-400 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/10'
+          ? 'bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)] border border-purple-400/60' 
+          : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10'
       } ${className}`}
     >
       <span className={active ? 'text-white' : 'text-purple-400'}>{icon}</span>
-      <span className="truncate">{label}</span>
+      <span className="whitespace-nowrap">{label}</span>
     </motion.button>
   );
 }
