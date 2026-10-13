@@ -3,6 +3,7 @@ export type Language = 'th' | 'en';
 export const translations = {
   th: {
     nav: {
+      home: "หน้าแรก",
       about: "เกี่ยวกับ",
       services: "บริการ",
       work: "ผลงาน",
@@ -155,6 +156,7 @@ export const translations = {
   },
   en: {
     nav: {
+      home: "Home",
       about: "About",
       services: "Services",
       work: "Work",

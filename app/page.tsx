@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring, useMotionTemplate, useMotionValue, Variants, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2, LayoutGrid, Sparkles, Menu, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail, Terminal, Code2, Database, Cpu, Layers, Server, ArrowDown, ExternalLink, Briefcase, User, Code, FolderGit2, MessageSquareQuote, ArrowUp, Facebook, Instagram, Award, ZoomIn, X, FileText, Download, Maximize2, LayoutGrid, Sparkles, Menu, ChevronDown, Home as HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect, MouseEvent, useCallback } from "react";
 import { TypeAnimation } from 'react-type-animation';
@@ -112,7 +112,7 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lang, setLang] = useState<Language>('en');
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>('projects');
+  const [activeTab, setActiveTab] = useState<string>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = translations[lang];
 
@@ -136,10 +136,7 @@ export default function Home() {
 
   const handleTabSwitch = (tabId: string) => {
     setActiveTab(tabId);
-    const dashboardElem = document.getElementById('dashboard-content');
-    if (dashboardElem) {
-      dashboardElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -196,6 +193,13 @@ export default function Home() {
 
           {/* Desktop Tabs Navigation (Hidden on mobile/tablet screens < lg) */}
           <nav id="dashboard-content" className="hidden lg:flex items-center gap-1.5 bg-white/[0.03] border border-white/10 p-1 rounded-2xl backdrop-blur-md">
+            <TabButton
+              id="home"
+              label={t.nav.home}
+              icon={<HomeIcon size={14} />}
+              active={activeTab === 'home'}
+              onClick={() => handleTabSwitch('home')}
+            />
             <TabButton
               id="projects"
               label={t.nav.work}
@@ -284,6 +288,13 @@ export default function Home() {
             >
               <div className="grid grid-cols-2 gap-2 pb-2">
                 <TabButton
+                  id="home"
+                  label={t.nav.home}
+                  icon={<HomeIcon size={15} />}
+                  active={activeTab === 'home'}
+                  onClick={() => { handleTabSwitch('home'); setIsMobileMenuOpen(false); }}
+                />
+                <TabButton
                   id="projects"
                   label={t.nav.work}
                   icon={<Code size={15} />}
@@ -331,7 +342,6 @@ export default function Home() {
                   icon={<LayoutGrid size={15} />}
                   active={activeTab === 'all'}
                   onClick={() => { handleTabSwitch('all'); setIsMobileMenuOpen(false); }}
-                  className="col-span-2"
                 />
               </div>
             </motion.div>
@@ -341,87 +351,91 @@ export default function Home() {
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
 
-        {/* --- COMPACT TECH HERO BANNER --- */}
-        <section className="pt-10 sm:pt-14 pb-8 text-center relative">
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
+        {/* --- COMPACT TECH HERO BANNER (Shown on Home and View All) --- */}
+        {(activeTab === 'home' || activeTab === 'all') && (
+          <section className="pt-10 sm:pt-14 pb-8 text-center relative">
+            <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 relative z-20">
 
-            {/* Profile Avatar - Clean Minimalist White Border */}
-            <motion.div variants={fadeInUp} className="flex justify-center">
-              <div className="relative group">
-                <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-white/20 border-2 border-white shadow-[0_0_25px_rgba(255,255,255,0.15)] group-hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-300">
-                  <div className="w-full h-full rounded-full overflow-hidden bg-neutral-900 relative">
-                    <img
-                      src="/profile.png"
-                      alt={config.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    />
+              {/* Profile Avatar - Clean Minimalist White Border */}
+              <motion.div variants={fadeInUp} className="flex justify-center">
+                <div className="relative group">
+                  <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-white/20 border-2 border-white shadow-[0_0_25px_rgba(255,255,255,0.15)] group-hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all duration-300">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-neutral-900 relative">
+                      <img
+                        src="/profile.png"
+                        alt={config.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-xs text-green-400 font-mono cursor-crosshair">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-              </span>
-              <span>{t.hero.status}</span>
-            </motion.div>
-
-            <div className="space-y-2">
-              <motion.h1 variants={fadeInUp} className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter break-words">
-                {t.hero.greeting} <span className="relative inline-block">
-                  <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 opacity-70"></span>
-                  <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">{config.name}</span>
-                </span>
-              </motion.h1>
-              <motion.div variants={fadeInUp} className="text-base sm:text-xl md:text-2xl font-light text-gray-300 min-h-[36px] flex flex-wrap justify-center items-center font-mono">
-                <span>{t.hero.subGreeting}&nbsp;</span>
-                <TypeAnimation key={lang} sequence={config.titles} wrapper="span" speed={50} repeat={Infinity} className="font-bold text-purple-400" />
               </motion.div>
-            </div>
 
-            <motion.p variants={fadeInUp} className="max-w-xl mx-auto text-gray-400 text-base leading-relaxed font-light">{t.hero.bio}</motion.p>
+              <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] backdrop-blur-md text-xs text-green-400 font-mono cursor-crosshair">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+                <span>{t.hero.status}</span>
+              </motion.div>
 
-            {/* Social Links */}
-            <motion.div variants={fadeInUp} className="flex gap-4 justify-center items-center mt-2 mb-2">
-              <SocialIconBtn href={config.links.github} icon={<Github size={20} />} />
-              <SocialIconBtn href={config.links.linkedin} icon={<Linkedin size={20} />} />
-              <SocialIconBtn href={config.links.facebook} icon={<Facebook size={20} />} />
-              <SocialIconBtn href={config.links.instagram} icon={<Instagram size={20} />} />
+              <div className="space-y-2">
+                <motion.h1 variants={fadeInUp} className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter break-words">
+                  {t.hero.greeting} <span className="relative inline-block">
+                    <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 opacity-70"></span>
+                    <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">{config.name}</span>
+                  </span>
+                </motion.h1>
+                <motion.div variants={fadeInUp} className="text-base sm:text-xl md:text-2xl font-light text-gray-300 min-h-[36px] flex flex-wrap justify-center items-center font-mono">
+                  <span>{t.hero.subGreeting}&nbsp;</span>
+                  <TypeAnimation key={lang} sequence={config.titles} wrapper="span" speed={50} repeat={Infinity} className="font-bold text-purple-400" />
+                </motion.div>
+              </div>
+
+              <motion.p variants={fadeInUp} className="max-w-xl mx-auto text-gray-400 text-base leading-relaxed font-light">{t.hero.bio}</motion.p>
+
+              {/* Social Links */}
+              <motion.div variants={fadeInUp} className="flex gap-4 justify-center items-center mt-2 mb-2">
+                <SocialIconBtn href={config.links.github} icon={<Github size={20} />} />
+                <SocialIconBtn href={config.links.linkedin} icon={<Linkedin size={20} />} />
+                <SocialIconBtn href={config.links.facebook} icon={<Facebook size={20} />} />
+                <SocialIconBtn href={config.links.instagram} icon={<Instagram size={20} />} />
+              </motion.div>
+
+              {/* Quick Hero CTAs */}
+              <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 pt-2">
+                <button
+                  onClick={() => handleTabSwitch('projects')}
+                  className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all cursor-pointer"
+                >
+                  <Code size={18} />
+                  <span>{t.hero.btnWork}</span>
+                </button>
+                <button
+                  onClick={() => handleTabSwitch('resume')}
+                  className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-purple-600/80 hover:bg-purple-500 text-white font-bold text-sm border border-purple-400/50 shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
+                >
+                  <FileText size={18} />
+                  <span>{t.nav.resume}</span>
+                </button>
+                <MainButton href={config.links.email} icon={<Mail size={18} />} label={t.hero.btnContact} isCopy />
+              </motion.div>
+
             </motion.div>
+          </section>
+        )}
 
-            {/* Quick Hero CTAs */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 pt-2">
-              <button
-                onClick={() => handleTabSwitch('projects')}
-                className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-black font-bold text-sm hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all cursor-pointer"
-              >
-                <Code size={18} />
-                <span>{t.hero.btnWork}</span>
-              </button>
-              <button
-                onClick={() => handleTabSwitch('resume')}
-                className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-purple-600/80 hover:bg-purple-500 text-white font-bold text-sm border border-purple-400/50 shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all cursor-pointer"
-              >
-                <FileText size={18} />
-                <span>{t.nav.resume}</span>
-              </button>
-              <MainButton href={config.links.email} icon={<Mail size={18} />} label={t.hero.btnContact} isCopy />
+        {/* --- COMPACT IMPACT STATS (Shown on Home and View All) --- */}
+        {(activeTab === 'home' || activeTab === 'all') && (
+          <section className="py-6 border-y border-white/5 bg-white/[0.02] rounded-2xl my-6 backdrop-blur-md">
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {config.stats.map((stat, index) => {
+                 const labels = [t.stats.exp, t.stats.projects, t.stats.code, t.stats.coffee];
+                 return <StatsItem key={index} stat={{ ...stat, label: labels[index] }} index={index} />;
+              })}
             </motion.div>
-
-          </motion.div>
-        </section>
-
-        {/* --- COMPACT IMPACT STATS --- */}
-        <section className="py-6 border-y border-white/5 bg-white/[0.02] rounded-2xl my-6 backdrop-blur-md">
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {config.stats.map((stat, index) => {
-               const labels = [t.stats.exp, t.stats.projects, t.stats.code, t.stats.coffee];
-               return <StatsItem key={index} stat={{ ...stat, label: labels[index] }} index={index} />;
-            })}
-          </motion.div>
-        </section>
+          </section>
+        )}
 
         {/* --- DASHBOARD CONTENT PANELS --- */}
         <AnimatePresence mode="wait">
