@@ -4,12 +4,10 @@ export const translations = {
   th: {
     nav: {
       home: "หน้าแรก",
-      about: "เกี่ยวกับ",
-      services: "บริการ",
       work: "ผลงาน",
-      exp: "ประสบการณ์",
-      resume: "เรซูเม่",
+      about: "เกี่ยวกับ & สกิล",
       cert: "เกียรติบัตร",
+      resume: "เรซูเม่",
       git: "GitHub"
     },
     hero: {
@@ -209,12 +207,10 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
-      about: "About",
-      services: "Services",
       work: "Work",
-      exp: "Experience",
-      resume: "Resume",
+      about: "About & Skills",
       cert: "Certificates",
+      resume: "Resume",
       git: "Git"
     },
     hero: {

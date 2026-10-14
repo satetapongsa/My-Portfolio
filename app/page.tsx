@@ -299,20 +299,6 @@ export default function Home() {
               onClick={() => handleTabSwitch('projects')}
             />
             <TabButton
-              id="resume"
-              label={t.nav.resume}
-              icon={<FileText size={14} />}
-              active={activeTab === 'resume'}
-              onClick={() => handleTabSwitch('resume')}
-            />
-            <TabButton
-              id="experience"
-              label={t.nav.exp}
-              icon={<Briefcase size={14} />}
-              active={activeTab === 'experience'}
-              onClick={() => handleTabSwitch('experience')}
-            />
-            <TabButton
               id="about"
               label={t.nav.about}
               icon={<User size={14} />}
@@ -327,18 +313,11 @@ export default function Home() {
               onClick={() => handleTabSwitch('certificates')}
             />
             <TabButton
-              id="services"
-              label={t.nav.services}
-              icon={<Layers size={14} />}
-              active={activeTab === 'services'}
-              onClick={() => handleTabSwitch('services')}
-            />
-            <TabButton
-              id="all"
-              label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
-              icon={<LayoutGrid size={14} />}
-              active={activeTab === 'all'}
-              onClick={() => handleTabSwitch('all')}
+              id="resume"
+              label={t.nav.resume}
+              icon={<FileText size={14} />}
+              active={activeTab === 'resume'}
+              onClick={() => handleTabSwitch('resume')}
             />
           </nav>
 
@@ -377,7 +356,7 @@ export default function Home() {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               className="lg:hidden overflow-hidden border-t border-white/10 mt-2.5 pt-3"
             >
-              <div className="grid grid-cols-2 gap-2 pb-2">
+              <div className="flex flex-col gap-2 pb-2">
                 <TabButton
                   id="home"
                   label={t.nav.home}
@@ -391,20 +370,6 @@ export default function Home() {
                   icon={<Code size={15} />}
                   active={activeTab === 'projects'}
                   onClick={() => { handleTabSwitch('projects'); setIsMobileMenuOpen(false); }}
-                />
-                <TabButton
-                  id="resume"
-                  label={t.nav.resume}
-                  icon={<FileText size={15} />}
-                  active={activeTab === 'resume'}
-                  onClick={() => { handleTabSwitch('resume'); setIsMobileMenuOpen(false); }}
-                />
-                <TabButton
-                  id="experience"
-                  label={t.nav.exp}
-                  icon={<Briefcase size={15} />}
-                  active={activeTab === 'experience'}
-                  onClick={() => { handleTabSwitch('experience'); setIsMobileMenuOpen(false); }}
                 />
                 <TabButton
                   id="about"
@@ -421,18 +386,11 @@ export default function Home() {
                   onClick={() => { handleTabSwitch('certificates'); setIsMobileMenuOpen(false); }}
                 />
                 <TabButton
-                  id="services"
-                  label={t.nav.services}
-                  icon={<Layers size={15} />}
-                  active={activeTab === 'services'}
-                  onClick={() => { handleTabSwitch('services'); setIsMobileMenuOpen(false); }}
-                />
-                <TabButton
-                  id="all"
-                  label={lang === 'th' ? "แสดงทั้งหมด" : "View All"}
-                  icon={<LayoutGrid size={15} />}
-                  active={activeTab === 'all'}
-                  onClick={() => { handleTabSwitch('all'); setIsMobileMenuOpen(false); }}
+                  id="resume"
+                  label={t.nav.resume}
+                  icon={<FileText size={15} />}
+                  active={activeTab === 'resume'}
+                  onClick={() => { handleTabSwitch('resume'); setIsMobileMenuOpen(false); }}
                 />
               </div>
             </motion.div>
@@ -624,25 +582,12 @@ export default function Home() {
               </section>
             )}
 
-            {/* TAB 3: EXPERIENCE TIMELINE */}
-            {(activeTab === 'experience' || activeTab === 'all') && (
-              <section id="experience" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
-                <SectionHeader title={t.experience.header} icon={<Briefcase />} subtitle={t.experience.subtitle} />
-                <div className="mt-16 relative max-w-3xl mx-auto">
-                  <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
-                  <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
-                    {t.experience.items.map((job, index) => (
-                      <TimelineItem key={index} job={job} index={index} />
-                    ))}
-                  </motion.div>
-                </div>
-              </section>
-            )}
-
-            {/* TAB 4: ABOUT & SKILLS */}
+            {/* TAB 3: ABOUT, SKILLS & CAREER JOURNEY */}
             {(activeTab === 'about' || activeTab === 'all') && (
               <section id="about" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.about.header} icon={<User />} subtitle={t.about.subtitle} />
+                
+                {/* Story & Skill Categories Grid */}
                 <div className="grid lg:grid-cols-5 gap-12 items-start mt-12">
                   <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="lg:col-span-2 relative group rounded-3xl p-[1px]">
                     <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700 pointer-events-none"></div>
@@ -650,7 +595,7 @@ export default function Home() {
                     <div className="relative h-full bg-[#0a0a0a] p-8 rounded-3xl border border-white/10 z-10 overflow-hidden">
                       <div className="absolute top-0 right-0 p-4 opacity-10 font-mono text-xs text-right pointer-events-none"><p>class Developer {"{"}</p><p>&nbsp;&nbsp;this.passion = true;</p><p>{"}"}</p></div>
                       <h3 className="text-2xl font-bold text-white flex items-center gap-2 mb-4"><Terminal size={20} className="text-purple-400 group-hover:text-cyan-400 transition-colors" /> {t.about.storyTitle}</h3>
-                      <p className="text-gray-300 leading-relaxed text-lg font-light group-hover:text-white transition-colors">{t.about.bioLong}</p>
+                      <p className="text-gray-300 leading-relaxed text-base font-light group-hover:text-white transition-colors">{t.about.bioLong}</p>
                     </div>
                   </motion.div>
                   <div className="lg:col-span-3 space-y-8">
@@ -667,10 +612,43 @@ export default function Home() {
                     })}
                   </div>
                 </div>
+
+                {/* Integrated Career Experience Timeline */}
+                <div className="mt-20 pt-12 border-t border-white/5">
+                  <div className="text-center mb-10">
+                    <h4 className="text-2xl md:text-3xl font-bold text-white flex items-center justify-center gap-2">
+                      <Briefcase className="text-purple-400" size={24} /> {t.experience.header}
+                    </h4>
+                    <p className="text-gray-400 text-sm mt-1">{t.experience.subtitle}</p>
+                  </div>
+                  <div className="relative max-w-3xl mx-auto">
+                    <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-transparent opacity-30 md:-translate-x-1/2"></div>
+                    <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="space-y-12">
+                      {t.experience.items.map((job, index) => (
+                        <TimelineItem key={index} job={job} index={index} />
+                      ))}
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Integrated Core Expertise Cards */}
+                <div className="mt-20 pt-12 border-t border-white/5">
+                  <div className="text-center mb-10">
+                    <h4 className="text-2xl md:text-3xl font-bold text-white flex items-center justify-center gap-2">
+                      <Layers className="text-purple-400" size={24} /> {t.services.header}
+                    </h4>
+                    <p className="text-gray-400 text-sm mt-1">{t.services.subtitle}</p>
+                  </div>
+                  <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {t.services.items.map((service, index) => (
+                      <ServiceCard key={index} service={{ ...service, icon: config.services[index].icon }} index={index} />
+                    ))}
+                  </motion.div>
+                </div>
               </section>
             )}
 
-            {/* TAB 5: CERTIFICATES */}
+            {/* TAB 4: CERTIFICATES */}
             {(activeTab === 'certificates' || activeTab === 'all') && (
               <section id="certificates" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
                 <SectionHeader title={t.certificates.header} icon={<Award />} subtitle={t.certificates.subtitle} />
@@ -681,21 +659,6 @@ export default function Home() {
                       cert={{ ...cert, ...config.certificates[index] }} 
                       t={t}
                     />
-                  ))}
-                </motion.div>
-              </section>
-            )}
-
-            {/* TAB 6: SERVICES */}
-            {(activeTab === 'services' || activeTab === 'all') && (
-              <section id="services" className={`py-8 relative ${activeTab === 'all' ? 'border-t border-white/5 mt-16' : ''}`}>
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="mb-12 text-center">
-                  <h3 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2"><Layers className="text-purple-400" /> {t.services.header}</h3>
-                  <p className="text-gray-400">{t.services.subtitle}</p>
-                </motion.div>
-                <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {t.services.items.map((service, index) => (
-                    <ServiceCard key={index} service={{ ...service, icon: config.services[index].icon }} index={index} />
                   ))}
                 </motion.div>
               </section>
