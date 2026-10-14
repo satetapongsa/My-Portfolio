@@ -186,13 +186,14 @@ export const translations = {
       items: [
         { title: "Network Penetration Testing", issuer: "NCSA (สกมช.)" },
         { title: "Cyber Security Analyst", issuer: "NCSA (สกมช.)" },
+        { title: "Fortinet NSE 3 Certified in Cybersecurity", issuer: "Fortinet Training Institute" },
+        { title: "CC Domain 5: Security Operations", issuer: "ISC2 (International Information System Security Certification Consortium)" },
         { title: "Critical Infrastructure Protection", issuer: "OPSWAT Academy" },
         { title: "Network Security Excellence", issuer: "Success Network Security" },
         { title: "Foundations of Data Science", issuer: "Data Science Academy" },
         { title: "Cybersecurity Analyst", issuer: "Coursera & Google" },
         { title: "Cyber Security Fundamentals", issuer: "Cyber Defense Foundation" },
-        { title: "WordPress CMS Development", issuer: "Coursera" },
-        { title: "Gemini AI Specialist (Mock)", issuer: "ของปลอมทำเล่นๆ แต่จะพัฒนาตัวเองเพื่อเอาของจริงมาให้ได้!" }
+        { title: "WordPress CMS Development", issuer: "Coursera" }
       ]
     },
     resume: {
@@ -389,13 +390,14 @@ export const translations = {
       items: [
         { title: "Network Penetration Testing", issuer: "NCSA" },
         { title: "Cyber Security Analyst", issuer: "NCSA" },
+        { title: "Fortinet NSE 3 Certified in Cybersecurity", issuer: "Fortinet Training Institute" },
+        { title: "CC Domain 5: Security Operations", issuer: "ISC2" },
         { title: "Critical Infrastructure Protection", issuer: "OPSWAT" },
         { title: "Network Security Excellence", issuer: "Success Network Security" },
         { title: "Foundations of Data Science", issuer: "Data Science Academy" },
         { title: "Cybersecurity Analyst", issuer: "Coursera & Google" },
         { title: "Cyber Security Fundamentals", issuer: "Cyber Defense Foundation" },
-        { title: "WordPress CMS Development", issuer: "Coursera" },
-        { title: "Gemini AI Specialist (Mock)", issuer: "Fake one, but I'll thrive till I get the real one!" }
+        { title: "WordPress CMS Development", issuer: "Coursera" }
       ]
     },
     resume: {

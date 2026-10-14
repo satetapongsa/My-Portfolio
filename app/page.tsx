@@ -184,13 +184,14 @@ const config = {
   certificates: [
     { image: "/certificate/THNCA Pentest.png" },
     { image: "/certificate/THNCA Cyber Security Analyst.png" },
+    { image: "/certificate/Fortinet NSE 3 Certified in Cybersecurity-1.png" },
+    { image: "/certificate/a7b6ba2f-c753-4b6f-b1ec-7ffeb5abc899-1.png" },
     { image: "/certificate/introduction_ICIP.png" },
     { image: "/certificate/Success Network Security.png" },
     { image: "/certificate/Data Science.png" },
     { image: "/certificate/Coursera CyberSecurity.png" },
     { image: "/certificate/Cyber Security Fundemental.png" },
-    { image: "/certificate/coursena_wordpress.png" },
-    { image: "/certificate/Gemini_Cer.png" }
+    { image: "/certificate/coursena_wordpress.png" }
   ]
 };
 
