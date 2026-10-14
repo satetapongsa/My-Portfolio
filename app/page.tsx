@@ -72,6 +72,13 @@ const config = {
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2832&auto=format&fit=crop"
     },
     {
+      tech: ["TypeScript", "Distributed Systems", "AI Scaling", "Next.js"],
+      link: "https://github.com/satetapongsa/Modern-CatchySPU", 
+      github: "https://github.com/satetapongsa/Modern-CatchySPU", 
+      featured: true,
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
       tech: ["Next.js 15", "TypeScript", "PostgreSQL", "Prisma", "LLM Gateway"],
       link: "https://github.com/satetapongsa/Zyntra", 
       github: "https://github.com/satetapongsa/Zyntra", 
@@ -84,6 +91,90 @@ const config = {
       github: "https://github.com/satetapongsa/alertbkk-map", 
       featured: false,
       image: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "Computer Vision", "YOLO / AI", "React"],
+      link: "https://github.com/satetapongsa/AI-Parcel-Box-Damage-Detection-System", 
+      github: "https://github.com/satetapongsa/AI-Parcel-Box-Damage-Detection-System", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "Web IDE", "Virtual Terminal", "Monaco Editor"],
+      link: "https://github.com/satetapongsa/WAVY_IDE", 
+      github: "https://github.com/satetapongsa/WAVY_IDE", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["JavaScript", "IoT Hardware", "Mobile App", "HealthTech"],
+      link: "https://github.com/satetapongsa/smart-cushion-app", 
+      github: "https://github.com/satetapongsa/smart-cushion-app", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "Core Banking", "Security", "Express / Node"],
+      link: "https://github.com/satetapongsa/BANK-SYSTEM", 
+      github: "https://github.com/satetapongsa/BANK-SYSTEM", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "Next.js", "Vercel", "Tailwind CSS"],
+      link: "https://goomairu.vercel.app/", 
+      github: "https://github.com/satetapongsa/Goomairu", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["HTML / JS", "Cyber Security", "OSINT", "Network Recon"],
+      link: "https://github.com/satetapongsa/SpectreOSINT", 
+      github: "https://github.com/satetapongsa/SpectreOSINT", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["JavaScript", "PDF-Lib", "Client-side Processing", "Modern UI"],
+      link: "https://github.com/satetapongsa/ORBITA_MERGE_PDF", 
+      github: "https://github.com/satetapongsa/ORBITA_MERGE_PDF", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["Python", "Pandas", "Scikit-Learn", "Data Analytics"],
+      link: "https://github.com/satetapongsa/Telecom-Customer-Churn-Retention-Analytics", 
+      github: "https://github.com/satetapongsa/Telecom-Customer-Churn-Retention-Analytics", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["JavaScript", "Next.js", "Vercel", "Interactive UI"],
+      link: "https://milk-roads.vercel.app/", 
+      github: "https://github.com/satetapongsa/Milk-Road", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "FinTech", "Crypto / Digital Wallet", "Dashboard"],
+      link: "https://github.com/satetapongsa/Verteg_Wallet", 
+      github: "https://github.com/satetapongsa/Verteg_Wallet", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "Next.js", "PostgreSQL", "Full Stack"],
+      link: "https://github.com/satetapongsa/Clinic-Booking-Management-System", 
+      github: "https://github.com/satetapongsa/Clinic-Booking-Management-System", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2832&auto=format&fit=crop"
+    },
+    {
+      tech: ["TypeScript", "React / Next.js", "Health & Fitness", "Tailwind CSS"],
+      link: "https://github.com/satetapongsa/Fit-jang", 
+      github: "https://github.com/satetapongsa/Fit-jang", 
+      featured: false,
+      image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=2832&auto=format&fit=crop"
     },
   ],
   testimonials: [

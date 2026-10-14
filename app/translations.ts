@@ -95,7 +95,11 @@ export const translations = {
       items: [
         {
           title: "FinGuard AI",
-          description: "แพลตฟอร์มตรวจสอบความถูกต้องธุรกรรมทางการเงินและ Compliance อัจฉริยะ (BFSI) รองรับ ACID Double-Entry, ตรวจจับการปลอมแปลงด้วย SHA-256 และ DeepSeek AI"
+          description: "แพลตฟอร์มตรวจสอบความถูกต้องธุรกรรมทางการเงินและ Compliance อัจฉริยะ (BFSI) รองรับ ACID Double-Entry, ตรวจจับการปลอมแปลงด้วย SHA-256 และ DeepSeek AI Copilot"
+        },
+        {
+          title: "Modern-CatchySPU",
+          description: "Smart Distributed Registration & AI-Predictive Scaling System ระบบลงทะเบียนเรียนแบบกระจายศูนย์พร้อมโมเดล AI คาดการณ์ทราฟฟิกและสเกลทรัพยากรอัตโนมัติ"
         },
         {
           title: "Zyntra",
@@ -104,6 +108,54 @@ export const translations = {
         {
           title: "AlertBKK",
           description: "แพลตฟอร์มติดตามสถานการณ์น้ำท่วม เหตุฉุกเฉิน และการจราจร กทม. 50 เขต แบบเรียลไทม์ พร้อมเรดาร์ฝน โทรมาตรระดับน้ำ และตัวจำลองความเสี่ยงตามรุ่นรถ"
+        },
+        {
+          title: "AI-Parcel-Box-Damage-Detection",
+          description: "ระบบตรวจจับความเสียหายของกล่องพัสดุและรอยบุบชำรุดด้วย Computer Vision และ AI ช่วยคัดแยกและตรวจสอบคุณภาพสินค้าในสายการจัดส่ง"
+        },
+        {
+          title: "WAVY_IDE",
+          description: "Cloud & Web-based Integrated Development Environment (IDE) พร้อม Terminal เสมือน, Syntax Highlighting และระบบคอมไพล์โค้ดแบบเรียลไทม์"
+        },
+        {
+          title: "smart-cushion-app",
+          description: "แอปพลิเคชันเชื่อมต่อเบาะรองนั่งอัจฉริยะ IoT ตรวจวัดแรงกด พฤติกรรมการนั่ง และแจ้งเตือนปรับสรีระเพื่อป้องกันออฟฟิศซินโดรม"
+        },
+        {
+          title: "BANK-SYSTEM",
+          description: "ระบบธนาคารจำลอง (Core Banking Demo) รองรับธุรกรรมการเงิน บัญชีเงินฝาก โอนเงิน ตรวจสอบ Statement และการจัดการบัญชีผู้ใช้แบบปลอดภัย"
+        },
+        {
+          title: "Goomairu",
+          description: "เว็บแอปพลิเคชันและเครื่องมืออำนวยความสะดวกสำหรับนักพัฒนาและผู้ใช้งานทั่วไป มุ่งเน้นความเร็วและ UI/UX ที่เรียบหรู"
+        },
+        {
+          title: "SpectreOSINT",
+          description: "เครื่องมือ Open Source Intelligence (OSINT) สำหรับตรวจสอบและสืบค้นข้อมูลดิจิทัลทางไซเบอร์ เพื่อการวิเคราะห์ความมั่นคงปลอดภัย"
+        },
+        {
+          title: "ORBITA_MERGE_PDF",
+          description: "เว็บแอปพลิเคชันสำหรับรวมและจัดการเอกสาร PDF บนเบราว์เซอร์อย่างรวดเร็ว ปลอดภัย และไม่ต้องพึ่งพาเซิร์ฟเวอร์ภายนอก"
+        },
+        {
+          title: "Telecom-Customer-Churn",
+          description: "โมเดล Machine Learning วิเคราะห์และคาดการณ์อัตราการยกเลิกบริการของลูกค้าโทรคมนาคม (Churn Retention Analytics) เพื่อวางแผนกลยุทธ์รักษาลูกค้า"
+        },
+        {
+          title: "Milk-Road",
+          description: "เว็บแอปพลิเคชันและคอมมูนิตี้แพลตฟอร์มแบบ Interactive เพื่อการเรียนรู้และนำเสนอข้อมูลที่ใช้งานง่ายและลื่นไหล"
+        },
+        {
+          title: "Verteg_Wallet",
+          description: "เว็บแอปพลิเคชันกระเป๋าเงินดิจิทัล (Digital Wallet Dashboard) สำหรับติดตามสินทรัพย์ ธุรกรรมการเงิน และยอดคงเหลือแบบเรียลไทม์"
+        },
+        {
+          title: "Clinic-Booking-System",
+          description: "ระบบบริหารจัดการนัดหมายและตารางเวลาสำหรับคลินิก รองรับการจองคิวผู้ป่วย ประวัติการรักษา และการจัดสรรแพทย์ผู้ตรวจ"
+        },
+        {
+          title: "Fit-jang",
+          description: "แอปพลิเคชันดูแลสุขภาพและการออกกำลังกาย บันทึกแคลอรี่ วางแผนโปรแกรมออกกำลังกาย และติดตามความคืบหน้าของร่างกาย"
         }
       ]
     },
@@ -251,12 +303,64 @@ export const translations = {
           description: "Autonomous financial compliance & transaction intelligence platform with ACID double-entry ledger, SHA-256 tamper detection, and DeepSeek AI Copilot."
         },
         {
+          title: "Modern-CatchySPU",
+          description: "Smart Distributed Registration & AI-Predictive Scaling System designed for seamless student enrollment under high concurrent load with predictive autoscaling."
+        },
+        {
           title: "Zyntra",
           description: "Enterprise self-hosted AI conversation orchestration platform featuring unified multi-LLM gateways, backpressure SSE token streaming, and RBAC."
         },
         {
           title: "AlertBKK",
           description: "Bangkok real-time emergency, flood situation, and incident intelligence platform with live Doppler radar, water telemetry, and vehicle clearance simulator."
+        },
+        {
+          title: "AI-Parcel-Box-Damage-Detection",
+          description: "Computer Vision & AI system for automated parcel damage and dent detection, streamlining QA and triage in logistics pipelines."
+        },
+        {
+          title: "WAVY_IDE",
+          description: "Full-featured web-based cloud Integrated Development Environment with virtual terminal emulation, syntax highlighting, and instant code execution."
+        },
+        {
+          title: "smart-cushion-app",
+          description: "IoT-connected smart seating application monitoring sitting posture, pressure distribution, and ergonomic health alerts."
+        },
+        {
+          title: "BANK-SYSTEM",
+          description: "Core banking web demonstration platform with secure double-entry accounting, fund transfers, transaction statements, and user access control."
+        },
+        {
+          title: "Goomairu",
+          description: "Developer utility and modern web application with high responsiveness, clean aesthetics, and optimized client-side performance."
+        },
+        {
+          title: "SpectreOSINT",
+          description: "Open Source Intelligence (OSINT) reconnaissance tool engineered for cyber security investigations and digital footprint analysis."
+        },
+        {
+          title: "ORBITA_MERGE_PDF",
+          description: "Client-side PDF merging and document manipulation utility providing fast, zero-server document privacy and efficiency."
+        },
+        {
+          title: "Telecom-Customer-Churn",
+          description: "Machine Learning analytics model predicting telecommunications customer attrition and providing retention strategies based on behavioral data."
+        },
+        {
+          title: "Milk-Road",
+          description: "Interactive web platform offering educational content, intuitive UI workflows, and modern visual design."
+        },
+        {
+          title: "Verteg_Wallet",
+          description: "Digital wallet and financial asset tracking dashboard with real-time balance computation and transaction logs."
+        },
+        {
+          title: "Clinic-Booking-System",
+          description: "Medical clinic appointment and patient management system with scheduling, doctor allocation, and electronic record workflows."
+        },
+        {
+          title: "Fit-jang",
+          description: "Fitness and health tracking application providing workout routines, nutrition planning, and personal physical transformation analytics."
         }
       ]
     },
