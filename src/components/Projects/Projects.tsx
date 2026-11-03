@@ -1,31 +1,29 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { conceptProjects, featuredProjects, githubReposUrl, projectFilters } from '../../data/projects';
+import { githubReposUrl } from '../../data/projects';
 import type { Project, ProjectFilter } from '../../data/types';
+import { useI18n } from '../../i18n/I18nProvider';
 import { GitHubIcon } from '../ui/BrandIcons';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
-import { ProjectCard, STAGE_DOT } from './ProjectCard';
-import { ProjectCover } from './ProjectCover';
+import { ProjectCard } from './ProjectCard';
 import './projects.css';
 
 type FilterId = ProjectFilter | 'all';
 
 export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
+  const { t, content } = useI18n();
+  const { projects, projectFilters } = content;
   const [filter, setFilter] = useState<FilterId>('all');
 
   const counts = useMemo(() => {
-    const map = new Map<FilterId, number>([['all', featuredProjects.length]]);
-    featuredProjects.forEach((p) => map.set(p.filter, (map.get(p.filter) ?? 0) + 1));
+    const map = new Map<FilterId, number>([['all', projects.length]]);
+    projects.forEach((p) => map.set(p.filter, (map.get(p.filter) ?? 0) + 1));
     return map;
-  }, []);
+  }, [projects]);
 
-  const visible = useMemo(
-    () => (filter === 'all' ? featuredProjects : featuredProjects.filter((p) => p.filter === filter)),
-    [filter],
-  );
-  const activeLabel = projectFilters.find((f) => f.id === filter)?.label ?? 'All';
+  const visible = useMemo(() => (filter === 'all' ? projects : projects.filter((p) => p.filter === filter)), [filter, projects]);
+  const activeLabel = projectFilters.find((f) => f.id === filter)?.label ?? '';
 
   return (
     <section id="projects" className="section projects" aria-labelledby="projects-title">
@@ -33,17 +31,18 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
         <SectionHeader
           id="projects-title"
           index="03"
-          label="Featured Works"
+          label={t.projects.label}
           title={
             <>
-              Built, shipped, <span className="gradient-text">iterating</span>.
+              {t.projects.titleA} <span className="gradient-text">{t.projects.titleAccent}</span>
+              {t.common.dot}
             </>
           }
-          lead="Five projects selected from my GitHub for engineering depth and range. Screenshots come from each project’s own live deployment, and every status is stated as it is."
+          lead={t.projects.lead}
         />
 
         <Reveal className="projects__filters" y={12}>
-          <div role="group" aria-label="Filter projects by category" className="projects__filter-group">
+          <div role="group" aria-label={t.projects.filterGroup} className="projects__filter-group">
             {projectFilters.map((f) => {
               const count = counts.get(f.id) ?? 0;
               const isActive = f.id === filter;
@@ -63,14 +62,14 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
             })}
           </div>
           <p className="projects__result mono" aria-live="polite">
-            {visible.length} {visible.length === 1 ? 'project' : 'projects'} · {activeLabel}
+            {visible.length} {visible.length === 1 ? t.projects.one : t.projects.many} · {activeLabel}
           </p>
         </Reveal>
 
         <motion.div layout className="projects__grid">
           <AnimatePresence initial={false}>
-            {visible.map((project) => (
-              <ProjectCard key={project.id} project={project} onOpen={onOpen} />
+            {visible.map((project, i) => (
+              <ProjectCard key={project.id} project={project} onOpen={onOpen} priority={filter === 'all' && i < 2} />
             ))}
             {visible.length === 0 && (
               <motion.div
@@ -80,10 +79,10 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
               >
-                <p className="mono projects__empty-code">0 results</p>
-                <p>No featured {activeLabel.toLowerCase()} projects yet.</p>
+                <p className="mono projects__empty-code">0</p>
+                <p>{t.projects.empty}</p>
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setFilter('all')}>
-                  Show all projects
+                  {t.projects.showAll}
                 </button>
               </motion.div>
             )}
@@ -92,36 +91,10 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
 
         <Reveal className="projects__more" y={12}>
           <a className="btn btn--ghost" href={githubReposUrl} target="_blank" rel="noopener noreferrer">
-            <GitHubIcon /> View all repositories on GitHub
-            <span className="sr-only"> (opens in a new tab)</span>
+            <GitHubIcon /> {t.projects.viewAll}
+            <span className="sr-only"> {t.common.opensInNewTab}</span>
           </a>
         </Reveal>
-
-        {conceptProjects.length > 0 && (
-          <Reveal className="projects__concepts" y={16}>
-            <div className="projects__concepts-head">
-              <h3>Concepts in development</h3>
-              <p className="mono">design stage · no public repository yet</p>
-            </div>
-            <div className="projects__concepts-grid">
-              {conceptProjects.map((project) => (
-                <button key={project.id} type="button" className="concept-card glow-card" onClick={() => onOpen(project)}>
-                  <ProjectCover project={project} />
-                  <span>
-                    <span className="concept-card__title">{project.title}</span>
-                    <span className="concept-card__meta mono">
-                      <span className={`status-dot ${STAGE_DOT[project.status.stage]}`} aria-hidden="true" />
-                      {project.categoryLabel}
-                    </span>
-                    <span className="concept-card__cta">
-                      View concept <ArrowRight aria-hidden />
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </Reveal>
-        )}
       </div>
     </section>
   );

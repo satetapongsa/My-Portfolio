@@ -1,27 +1,26 @@
 import { motion } from 'motion/react';
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import type { Project, ProjectStage } from '../../data/types';
+import { useI18n } from '../../i18n/I18nProvider';
 import { isConfigured } from '../../utils/links';
 import { GitHubIcon } from '../ui/BrandIcons';
 import { ProjectCover } from './ProjectCover';
 
 export const STAGE_DOT: Record<ProjectStage, string> = {
-  concept: 'status-dot--violet',
-  design: 'status-dot--amber',
+  completed: '',
   'in-progress': 'status-dot--amber',
   experimental: 'status-dot--violet',
-  built: 'status-dot--cyan',
-  completed: '',
   archived: 'status-dot--muted',
 };
 
 /** Renders only when the URL is real — no dead or placeholder buttons. */
 export function ProjectLinkButton({ url, label, kind }: { url: string; label: string; kind: 'github' | 'demo' }) {
+  const { t } = useI18n();
   if (!isConfigured(url)) return null;
   return (
     <a className="btn btn--ghost btn--sm" href={url} target="_blank" rel="noopener noreferrer">
       {kind === 'github' ? <GitHubIcon /> : <ExternalLink aria-hidden />} {label}
-      <span className="sr-only"> (opens in a new tab)</span>
+      <span className="sr-only"> {t.common.opensInNewTab}</span>
     </a>
   );
 }
@@ -31,9 +30,11 @@ const MAX_CHIPS = 6;
 interface ProjectCardProps {
   project: Project;
   onOpen: (project: Project) => void;
+  priority?: boolean;
 }
 
-export function ProjectCard({ project, onOpen }: ProjectCardProps) {
+export function ProjectCard({ project, onOpen, priority }: ProjectCardProps) {
+  const { t } = useI18n();
   const extra = project.tech.length - MAX_CHIPS;
   return (
     <motion.article
@@ -46,7 +47,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
       aria-labelledby={`project-${project.id}`}
     >
       <button type="button" className="project-card__cover" onClick={() => onOpen(project)} tabIndex={-1} aria-hidden="true">
-        <ProjectCover project={project} />
+        <ProjectCover project={project} priority={priority} />
       </button>
 
       <div className="project-card__body">
@@ -62,27 +63,31 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
         <h3 id={`project-${project.id}`} className="project-card__title">
           {project.title}
         </h3>
+        {project.subtitle && <p className="project-card__subtitle">{project.subtitle}</p>}
         <p className="project-card__summary">{project.summary}</p>
 
-        <ul className="project-card__tech" aria-label="Technologies">
-          {project.tech.slice(0, MAX_CHIPS).map((t) => (
-            <li key={t} className="chip chip--accent">
-              {t}
+        <ul className="project-card__tech" aria-label={t.projects.technologies}>
+          {project.tech.slice(0, MAX_CHIPS).map((tech) => (
+            <li key={tech} className="chip chip--accent">
+              {tech}
             </li>
           ))}
           {extra > 0 && (
             <li className="chip" title={project.tech.slice(MAX_CHIPS).join(', ')}>
-              +{extra} more
+              +{extra} {t.projects.more}
             </li>
           )}
         </ul>
 
         <div className="project-card__actions">
           <button type="button" className="btn btn--primary btn--sm" onClick={() => onOpen(project)}>
-            View Details <ArrowUpRight aria-hidden />
-            <span className="sr-only"> about {project.title}</span>
+            {t.projects.viewDetails} <ArrowUpRight aria-hidden />
+            <span className="sr-only">
+              {' '}
+              {t.projects.about} {project.title}
+            </span>
           </button>
-          <ProjectLinkButton url={project.links.github.url} label="View Source" kind="github" />
+          <ProjectLinkButton url={project.links.github.url} label={t.projects.viewSource} kind="github" />
           <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
         </div>
       </div>

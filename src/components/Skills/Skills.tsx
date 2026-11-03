@@ -1,6 +1,7 @@
 import { Box, BrainCircuit, Code2, Cpu, Database, LayoutTemplate, Server, Wrench, type LucideIcon } from 'lucide-react';
-import { skillCategories, visibleSkills } from '../../data/skills';
+import { visibleSkills } from '../../data/skills';
 import type { ProficiencyLevel, SkillCategoryIcon } from '../../data/types';
+import { useI18n } from '../../i18n/I18nProvider';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
 import './skills.css';
@@ -31,29 +32,26 @@ function SignalBars({ level }: { level: ProficiencyLevel }) {
 }
 
 export function Skills() {
-  const active = skillCategories.filter((c) => visibleSkills(c).length > 0);
-  const pending = skillCategories.filter((c) => visibleSkills(c).length === 0);
+  const { t, content } = useI18n();
+  const s = t.skills;
+  const categories = content.skillCategories;
+  const active = categories.filter((c) => visibleSkills(c).length > 0);
+  const pending = categories.filter((c) => visibleSkills(c).length === 0);
 
   return (
     <section id="skills" className="section skills" aria-labelledby="skills-title">
       <div className="container">
-        <SectionHeader
-          id="skills-title"
-          index="02"
-          label="Skills & Technologies"
-          title="The toolkit, honestly labelled."
-          lead="Grouped by discipline. Proficiency is described in words, never invented percentages — skills tagged résumé are the ones listed on my CV."
-        />
+        <SectionHeader id="skills-title" index="02" label={s.label} title={s.title} lead={s.lead} />
 
         <Reveal className="skills__legend mono" y={12}>
-          <span className="skills__legend-title">Proficiency</span>
+          <span className="skills__legend-title">{s.proficiency}</span>
           {LEVELS.map((level) => (
             <span key={level} className="skills__legend-item">
-              <SignalBars level={level} /> {level}
+              <SignalBars level={level} /> {s.levels[level]}
             </span>
           ))}
           <span className="skills__legend-item">
-            <span className="skill-item__source">résumé</span> listed on my CV
+            <span className="skill-item__source">{s.resumeTag}</span> {s.resumeLegend}
           </span>
         </Reveal>
 
@@ -61,14 +59,14 @@ export function Skills() {
           {active.map((category, i) => {
             const Icon = ICONS[category.icon];
             return (
-              <Reveal key={category.id} delay={i * 0.08} className="skill-card glow-card">
+              <Reveal key={category.id} delay={(i % 2) * 0.08} className="skill-card glow-card">
                 <article aria-labelledby={`skill-${category.id}`}>
                   <header className="skill-card__head">
                     <span className="skill-card__icon">
                       <Icon aria-hidden />
                     </span>
                     <span className="skill-card__count mono">
-                      {String(visibleSkills(category).length).padStart(2, '0')} entries
+                      {String(visibleSkills(category).length).padStart(2, '0')} {s.entries}
                     </span>
                   </header>
                   <h3 id={`skill-${category.id}`}>{category.title}</h3>
@@ -81,10 +79,12 @@ export function Skills() {
                           {skill.level ? (
                             <>
                               <SignalBars level={skill.level} />
-                              {skill.level}
+                              {s.levels[skill.level]}
                             </>
                           ) : (
-                            <span className="skill-item__source" title="Listed on my résumé">résumé</span>
+                            <span className="skill-item__source" title={s.resumeTitle}>
+                              {s.resumeTag}
+                            </span>
                           )}
                         </span>
                       </li>
@@ -99,7 +99,7 @@ export function Skills() {
         {pending.length > 0 && (
           <Reveal className="skills__pending" y={16}>
             <p className="skills__pending-label mono">
-              <span className="status-dot status-dot--amber" aria-hidden="true" /> Awaiting entries
+              <span className="status-dot status-dot--amber" aria-hidden="true" /> {s.awaiting}
             </p>
             <ul className="skills__pending-list">
               {pending.map((category) => {

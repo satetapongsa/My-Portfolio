@@ -1,6 +1,6 @@
 import { Compass, FileDown, FileText, GraduationCap, Lightbulb, Target, type LucideIcon } from 'lucide-react';
-import { profile } from '../../data/portfolio';
 import type { InfoBlock } from '../../data/types';
+import { useI18n } from '../../i18n/I18nProvider';
 import { hasResume, isConfigured } from '../../utils/links';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
@@ -14,16 +14,19 @@ const ICONS: Record<InfoBlock['icon'], LucideIcon> = {
 };
 
 export function About() {
+  const { t, content } = useI18n();
+  const { profile } = content;
+  const a = t.about;
   const spec: [string, string][] = [
-    ['full name', profile.fullName],
-    ['nickname', profile.nickname],
-    ['field', profile.education.field],
-    ['university', profile.education.university],
-    ['campus', profile.education.campus],
-    ['role', 'Student & Developer'],
+    [a.spec.fullName, profile.fullName],
+    [a.spec.nickname, profile.nickname],
+    [a.spec.field, profile.education.field],
+    [a.spec.university, profile.education.university],
+    [a.spec.campus, profile.education.campus],
+    [a.spec.role, a.roleValue],
   ];
-  if (isConfigured(profile.education.period)) spec.push(['period', profile.education.period]);
-  if (isConfigured(profile.contact.location)) spec.push(['location', profile.contact.location]);
+  if (isConfigured(profile.education.period)) spec.push([a.spec.period, profile.education.period]);
+  if (isConfigured(profile.contact.location)) spec.push([a.spec.location, profile.contact.location]);
 
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
@@ -31,10 +34,11 @@ export function About() {
         <SectionHeader
           id="about-title"
           index="01"
-          label="About"
+          label={a.label}
           title={
             <>
-              Curious by default. <span className="gradient-text">Engineer</span> by training.
+              {a.titleA} <span className="gradient-text">{a.titleAccent}</span> {a.titleB}
+              {t.common.dot}
             </>
           }
         />
@@ -46,11 +50,11 @@ export function About() {
             {hasResume() && (
               <div className="about__resume">
                 <a className="btn btn--primary" href={profile.resumePath} target="_blank" rel="noopener noreferrer">
-                  <FileText aria-hidden /> View My CV
-                  <span className="sr-only"> (PDF, opens in a new tab)</span>
+                  <FileText aria-hidden /> {a.viewCv}
+                  <span className="sr-only"> {a.pdfNewTab}</span>
                 </a>
                 <a className="btn btn--ghost" href={profile.resumePath} download="Resume_Satetapong_Sanguansuk.pdf">
-                  <FileDown aria-hidden /> Download Resume
+                  <FileDown aria-hidden /> {a.downloadResume}
                   <span className="sr-only"> (PDF)</span>
                 </a>
               </div>
@@ -74,7 +78,7 @@ export function About() {
             <div className="about__spec-head mono">
               <span>identity.json</span>
               <span className="about__spec-live">
-                <span className="status-dot" aria-hidden="true" /> live
+                <span className="status-dot" aria-hidden="true" /> {a.live}
               </span>
             </div>
             <dl className="about__spec-list mono">
@@ -92,7 +96,7 @@ export function About() {
           {profile.infoBlocks.map((block, i) => {
             const Icon = ICONS[block.icon];
             return (
-              <Reveal as="li" key={block.title} delay={i * 0.08} className="about__block glow-card">
+              <Reveal as="li" key={block.icon} delay={i * 0.08} className="about__block glow-card">
                 <div className="about__block-head">
                   <span className="about__block-icon">
                     <Icon aria-hidden />

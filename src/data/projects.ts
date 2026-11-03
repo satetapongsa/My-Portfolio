@@ -1,17 +1,18 @@
 /**
- * Projects. To add one, append an object to `projects`.
+ * Projects — only real repositories from github.com/satetapongsa.
  *
- * Featured works (featured: true) were selected from github.com/satetapongsa after
- * inspecting each repository's README, manifests and source. Every technology,
- * feature and status below is backed by repository evidence; screenshots were
- * captured from the projects' own live deployments (November 2026).
+ * Selected after reviewing each repository's README, manifests and source.
+ * Names match the README titles; technologies, features and statuses are
+ * backed by repository evidence. Screenshots were captured from each
+ * project's own live deployment (November 2026) and optimized to WebP by
+ * `npm run images`. A project without a real screenshot gets no image.
  *
- * - Images live in /public/assets/projects/<id>/ and are referenced via `asset()`.
- * - Links: leave `url: ''` until a repo/demo is actually public.
- * - `onRawPage: true` lists the project on the unstyled intro page as well.
+ * To add a project: put screenshots in /public/assets/projects/<id>/, run
+ * `npm run images`, then append an entry here (and its Thai text in
+ * src/i18n/content.th.ts).
  */
 import { asset } from '../utils/asset';
-import type { Project, ProjectFilter } from './types';
+import type { Project, ProjectFilter, ProjectImage } from './types';
 
 export const projectFilters: { id: ProjectFilter | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -22,22 +23,28 @@ export const projectFilters: { id: ProjectFilter | 'all'; label: string }[] = [
   { id: 'interactive', label: 'Interactive' },
 ];
 
-const img = (path: string) => asset(`assets/projects/${path}`);
+/** A 1440×900 screenshot with its 720 px card thumbnail. */
+const shot = (path: string): ProjectImage => ({
+  src: asset(`assets/projects/${path}-1440.webp`),
+  thumb: asset(`assets/projects/${path}-720.webp`),
+  width: 1440,
+  height: 900,
+});
 
 export const projects: Project[] = [
-  // ── Featured works (from GitHub) ────────────────────────────────────────────
   {
     id: 'finguard-ai',
-    featured: true,
     code: 'PRJ-01',
     title: 'FinGuard AI',
+    subtitle: 'Autonomous Regulatory Intelligence & Policy Mapping Agent',
+    repo: 'Finguard-Ai',
     summary:
       'A multi-agent regulatory intelligence workflow for banking compliance: it detects Bank of Thailand regulation changes, diffs them, maps the impact onto internal policies and holds every remediation for human approval.',
     filter: 'ai',
     categoryLabel: 'AI Agents / FinTech Compliance',
     tech: ['Next.js 15', 'React 19', 'TypeScript', 'Prisma', 'PostgreSQL + pgvector', 'Vercel AI SDK', 'NextAuth', 'Zustand', 'Zod'],
     status: { label: 'In development · live demo on synthetic data', stage: 'in-progress' },
-    cover: { src: img('finguard-ai/dashboard.png'), alt: 'FinGuard AI compliance dashboard showing the detect, diff, impact, review and audit workflow', kind: 'screenshot', placeholder: 'generic' },
+    cover: { ...shot('finguard-ai/dashboard'), alt: 'FinGuard AI compliance dashboard showing the detect, diff, impact, review and audit workflow' },
     links: {
       github: { url: 'https://github.com/satetapongsa/Finguard-Ai', label: 'Source' },
       demo: { url: 'https://finguard-ai-one.vercel.app/dashboard', label: 'Live Demo' },
@@ -62,23 +69,21 @@ export const projects: Project[] = [
         'Role-based access with NextAuth',
         'Agent activity log and compliance-gap review dashboard',
       ],
-      screenshots: [{ src: img('finguard-ai/dashboard.png'), caption: 'Live demo — compliance overview with the five-stage agent workflow', width: 1440, height: 900 }],
-      process: [],
-      challenges: [],
+      screenshots: [{ ...shot('finguard-ai/dashboard'), caption: 'Live demo — compliance overview with the five-stage agent workflow' }],
     },
   },
   {
     id: 'wavy-ide',
-    featured: true,
     code: 'PRJ-02',
     title: 'WAVY IDE',
+    repo: 'WAVY_IDE',
     summary:
       'A browser-based development environment with a Monaco editor, an IndexedDB virtual file system, an xterm.js terminal, in-browser JSX/TSX transpilation with live preview, and an AI coding agent whose edits are reviewed in a diff view.',
     filter: 'tools',
     categoryLabel: 'Developer Tools / Web IDE',
     tech: ['Next.js 16', 'React 19', 'TypeScript', 'Monaco Editor', 'xterm.js', 'IndexedDB (idb-keyval)', 'Sucrase', 'Zustand', 'Vitest'],
     status: { label: 'Experimental · v0.1.0 · live demo', stage: 'experimental' },
-    cover: { src: img('wavy-ide/workspace.png'), alt: 'WAVY IDE workspace with file explorer, editor tabs and the integrated terminal', kind: 'screenshot', placeholder: 'generic' },
+    cover: { ...shot('wavy-ide/workspace'), alt: 'WAVY IDE workspace with file explorer, editor tabs and the integrated terminal' },
     links: {
       github: { url: 'https://github.com/satetapongsa/WAVY_IDE', label: 'Source' },
       demo: { url: 'https://wavy-ide-beige.vercel.app', label: 'Live Demo' },
@@ -104,23 +109,21 @@ export const projects: Project[] = [
         'AI coding agent with diff review before changes are applied',
         'Automated tests with Vitest',
       ],
-      screenshots: [{ src: img('wavy-ide/workspace.png'), caption: 'Live demo — empty workspace, editor tabs and integrated terminal', width: 1440, height: 900 }],
-      process: [],
-      challenges: [],
+      screenshots: [{ ...shot('wavy-ide/workspace'), caption: 'Live demo — empty workspace, editor tabs and integrated terminal' }],
     },
   },
   {
     id: 'parcel-damage-detection',
-    featured: true,
     code: 'PRJ-03',
-    title: 'AI Parcel Damage Detection System',
+    title: 'AI Parcel Box Damage Detection System',
+    repo: 'parcel-damage-detection',
     summary:
       'An end-to-end inspection line that sorts damaged parcels before shipping: cameras and a YOLOv11n model classify boxes, an ESP32 drives sensors and a pusher, and an offline-capable edge gateway syncs results to a cloud API and dashboards.',
     filter: 'iot',
     categoryLabel: 'Edge AI / IoT / Embedded',
     tech: ['Python', 'YOLOv11n', 'OpenCV', 'CiRA CORE', 'ESP32 (Arduino)', 'MQTT (Aedes)', 'Node.js / Express', 'SQLite', 'Neon Postgres', 'React 19', 'Vite'],
     status: { label: 'In progress · dashboards live in demo mode', stage: 'in-progress' },
-    cover: { src: img('parcel-damage-detection/inspector-dashboard.png'), alt: 'AI Parcel Damage Inspector dashboard with pass/reject counts, hourly volume chart and station status', kind: 'screenshot', placeholder: 'generic' },
+    cover: { ...shot('parcel-damage-detection/inspector-dashboard'), alt: 'AI Parcel Damage Inspector dashboard with pass/reject counts, hourly volume chart and station status' },
     links: {
       github: { url: 'https://github.com/satetapongsa/parcel-damage-detection', label: 'Source' },
       demo: { url: 'https://parcel-damage-detection.vercel.app', label: 'Live Demo' },
@@ -147,25 +150,23 @@ export const projects: Project[] = [
         'Full hardware simulator for demos without the rig',
       ],
       screenshots: [
-        { src: img('parcel-damage-detection/inspector-dashboard.png'), caption: 'Inspector dashboard (demo mode — simulated station data)', width: 1440, height: 900 },
-        { src: img('parcel-damage-detection/conveyor-hub.png'), caption: 'Conveyor inspection hub from the companion dashboard repository', width: 1440, height: 900 },
+        { ...shot('parcel-damage-detection/inspector-dashboard'), caption: 'Inspector dashboard (demo mode — simulated station data)' },
+        { ...shot('parcel-damage-detection/conveyor-hub'), caption: 'Conveyor inspection hub from the companion dashboard repository' },
       ],
-      process: [],
-      challenges: [],
     },
   },
   {
     id: 'mirrix',
-    featured: true,
     code: 'PRJ-04',
-    title: 'MIRRIX — Real-World Intelligence',
+    title: 'MIRRIX',
+    subtitle: 'Real-World Intelligence',
+    repo: 'alertbkk-map',
     summary:
       'A geospatial situational-awareness dashboard for Bangkok that layers incidents, traffic cameras, flood zones and critical services on a MapLibre map, backed by an ingestion pipeline with geocoding, deduplication and data-age tracking.',
     filter: 'web',
     categoryLabel: 'Geospatial / Real-Time Dashboard',
     tech: ['Next.js 16', 'React 19', 'TypeScript', 'MapLibre GL', 'Turf.js', 'WebSocket (ws)'],
     status: { label: 'Experimental prototype · seeded sample data', stage: 'experimental' },
-    cover: { src: img('mirrix/artwork.jpg'), alt: 'MIRRIX project artwork — a holographic globe with the title Real-World Intelligence', kind: 'artwork', placeholder: 'generic' },
     links: {
       github: { url: 'https://github.com/satetapongsa/alertbkk-map', label: 'Source' },
       demo: { url: '', label: 'Live Demo' },
@@ -189,22 +190,21 @@ export const projects: Project[] = [
         'Source health and provenance tracking',
       ],
       screenshots: [],
-      process: [],
-      challenges: [],
     },
   },
   {
     id: 'spare-change',
-    featured: true,
     code: 'PRJ-05',
-    title: 'SPARE CHANGE — Street Life Simulator',
+    title: 'SPARE CHANGE',
+    subtitle: 'A Street Life Simulator',
+    repo: 'beggarsrole',
     summary:
       'A narrative browser game about surviving homelessness: every run generates a new life in one of 15 real cities, where daily choices, needs and hundreds of events lead toward a way off the street — or not.',
     filter: 'interactive',
     categoryLabel: 'Interactive / Browser Game',
     tech: ['Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'Neon Postgres', 'html-to-image'],
     status: { label: 'Completed · playable online (v1.25)', stage: 'completed' },
-    cover: { src: img('spare-change/title-screen.png'), alt: 'SPARE CHANGE title screen with pixel-art character under a street lamp', kind: 'screenshot', placeholder: 'generic' },
+    cover: { ...shot('spare-change/title-screen'), alt: 'SPARE CHANGE title screen with pixel-art character under a street lamp' },
     links: {
       github: { url: 'https://github.com/satetapongsa/beggarsrole', label: 'Source' },
       demo: { url: 'https://beggarsrole.vercel.app/', label: 'Play Online' },
@@ -229,113 +229,10 @@ export const projects: Project[] = [
         'Thai / English with one-click switching',
         'Full keyboard control',
       ],
-      screenshots: [{ src: img('spare-change/title-screen.png'), caption: 'Live game — title screen (Thai UI)', width: 1440, height: 900 }],
-      process: [],
-      challenges: [],
-    },
-  },
-
-  // ── Concepts in development (no public repository yet) ──────────────────────
-  {
-    id: 'liquid-mixing',
-    code: 'CON-01',
-    onRawPage: true,
-    title: 'Automatic Liquid Mixing & Tank Control System',
-    summary:
-      'An industrial process simulation concept involving automatic and manual operating modes, alarm management, process trends, and historical data.',
-    filter: 'iot',
-    categoryLabel: 'Industrial Automation / PLC',
-    tech: ['PLC', 'HMI', 'WECON PI Studio'],
-    status: { label: 'System Design / In Progress', stage: 'concept' },
-    cover: { src: '', alt: 'Automatic liquid mixing and tank control system', placeholder: 'tank-system' },
-    links: {
-      github: { url: '', label: 'Source' },
-      demo: { url: '', label: 'Live Demo' },
-    },
-    details: {
-      overview:
-        'A control system concept for an automated liquid mixing process. It pairs PLC control logic with an HMI built in WECON PI Studio so an operator can monitor tanks, switch between operating modes and respond to alarms.',
-      objective:
-        'Design a realistic simulation of an industrial mixing process that demonstrates structured control logic, safe operator interaction and clear process visibility.',
-      architecture: [
-        { name: 'Process I/O', detail: 'Tank level, valve and pump signals for the mixing process.' },
-        { name: 'PLC Logic', detail: 'Sequencing for Auto mode, manual overrides and alarm conditions.' },
-        { name: 'HMI — WECON PI Studio', detail: 'Operator screens for control, alarms, trends and history.' },
-        { name: 'Data & History', detail: 'Process trends and historical records for review.' },
-      ],
-      features: ['Auto and Manual operating modes', 'Alarm management', 'Real-time process trends', 'Historical data visualization'],
-      screenshots: [],
-      process: [
-        'Define the mixing process and its operating sequence',
-        'Design control logic for Auto and Manual modes',
-        'Build HMI screens in WECON PI Studio',
-        'Add alarms, trends and history views',
-        'Test and refine the full sequence',
-      ],
-      challenges: [
-        {
-          challenge: 'Switching safely between Auto and Manual modes.',
-          approach: 'Treat mode changes as explicit states in the control logic so outputs never conflict.',
-        },
-        {
-          challenge: 'Making alarms meaningful instead of noisy.',
-          approach: 'Plan clear alarm conditions and acknowledgement flow on the HMI.',
-        },
-      ],
-    },
-  },
-  {
-    id: 'ue5-penthouse',
-    code: 'CON-02',
-    onRawPage: true,
-    title: 'Unreal Engine 5 Penthouse Viewer',
-    summary:
-      'An interactive 3D architectural visualization concept designed to let visitors explore a realistic penthouse environment from a first-person perspective.',
-    filter: 'interactive',
-    categoryLabel: '3D Interactive Experience',
-    tech: ['Unreal Engine 5', '3D Visualization', 'Interactive Environment'],
-    status: { label: 'Concept / In Progress', stage: 'concept' },
-    cover: { src: '', alt: 'Unreal Engine 5 penthouse interior viewer', placeholder: 'penthouse' },
-    links: {
-      github: { url: '', label: 'Source' },
-      demo: { url: '', label: 'Live Demo' },
-    },
-    details: {
-      overview:
-        'A real-time interior visualization of a penthouse built in Unreal Engine 5. Visitors move through the space in first person to get a realistic sense of layout, materials and light.',
-      objective:
-        'Create an explorable, realistic interior environment — and, in the long term, make it accessible in a web browser through streaming technology.',
-      architecture: [
-        { name: 'Environment', detail: 'Penthouse interior scene, materials and lighting in UE5.' },
-        { name: 'Interaction', detail: 'First-person navigation through the space.' },
-        { name: 'Rendering', detail: 'Real-time rendering inside Unreal Engine 5.' },
-        { name: 'Delivery (planned)', detail: 'Web-based streaming so the experience runs in a browser.' },
-      ],
-      features: ['First-person exploration', 'Realistic interior environment', 'Real-time 3D visualization', 'Planned web-based streaming delivery'],
-      screenshots: [],
-      process: [
-        'Plan the interior layout and scope',
-        'Build the environment in Unreal Engine 5',
-        'Add first-person navigation',
-        'Refine lighting and materials',
-        'Research web-based streaming delivery',
-      ],
-      challenges: [
-        {
-          challenge: 'Balancing visual realism with real-time performance.',
-          approach: 'Iterate on lighting and asset detail while profiling the scene.',
-        },
-        {
-          challenge: 'Bringing a UE5 experience to the web.',
-          approach: 'Investigate streaming-based delivery as a later project phase.',
-        },
-      ],
+      screenshots: [{ ...shot('spare-change/title-screen'), caption: 'Live game — title screen (Thai UI)' }],
     },
   },
 ];
-
-export const featuredProjects = projects.filter((p) => p.featured);
-export const conceptProjects = projects.filter((p) => !p.featured);
 
 /** Link to every public repository, for the "view all" button. */
 export const githubReposUrl = 'https://github.com/satetapongsa?tab=repositories';

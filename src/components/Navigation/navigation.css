@@ -213,29 +213,105 @@
   color: var(--c-cyan);
 }
 
-@media (max-width: 1060px) {
-  .nav__palette-label {
-    display: none;
-  }
-  .nav__link {
-    padding: 0 12px;
-  }
+/* Language segmented switch + theme toggle */
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 11px;
+  border: 1px solid var(--c-line);
+  background: var(--c-glass);
 }
 
-@media (max-width: 899px) {
-  .nav__links {
-    display: none;
-  }
-  .nav__menu-btn {
-    display: inline-grid;
+.seg__btn {
+  min-width: 38px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--c-text-2);
+  transition: color 0.2s, background 0.2s;
+}
+
+.seg__btn:hover {
+  color: var(--c-text);
+}
+
+.seg__btn.is-active {
+  color: var(--c-text);
+  background: var(--c-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--c-accent-line);
+}
+
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
+.theme-toggle--wide {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 11px;
+  border: 1px solid var(--c-line);
+  background: var(--c-glass);
+  color: var(--c-text);
+  font-size: 14px;
+}
+
+.nav__mobile-prefs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.nav__mobile-prefs .seg__btn {
+  min-width: 52px;
+  height: 44px;
+}
+
+/* Tighten the desktop bar before it collapses into the menu */
+@media (max-width: 1240px) {
+  .nav__link {
+    padding: 0 11px;
+    font-size: 13.5px;
   }
   .nav__palette kbd {
     display: none;
   }
   .nav__palette {
-    width: 44px;
-    height: 44px;
+    width: 40px;
     padding: 0;
     justify-content: center;
+  }
+}
+
+@media (max-width: 1099px) {
+  .nav__links,
+  .nav__desktop-only {
+    display: none;
+  }
+  .nav__menu-btn {
+    display: inline-grid;
+  }
+  .nav__palette {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav__mobile-link {
+    font-size: 19px;
+    padding: 14px 4px;
+  }
+  .logo__text {
+    font-size: 13px;
+    letter-spacing: 0.26em;
   }
 }

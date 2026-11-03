@@ -162,3 +162,33 @@
     display: none;
   }
 }
+
+.palette__close {
+  display: none;
+  flex: none;
+  width: 40px;
+  height: 40px;
+}
+
+/* Touch screens: no Esc key, so show a real close button and roomier rows */
+@media (max-width: 560px), (hover: none) {
+  .palette__close {
+    display: inline-grid;
+  }
+  .palette__esc {
+    display: none;
+  }
+  .palette__option {
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dialog--palette {
+    padding: 12px;
+    padding-top: 12px;
+  }
+  .palette__list {
+    max-height: calc(100dvh - 120px);
+  }
+}

@@ -350,6 +350,7 @@
   }
   .filter-btn {
     flex: none;
+    height: 44px;
   }
   .project-card__body {
     padding: 20px;
@@ -466,4 +467,51 @@
 
 .concept-card__title {
   display: block;
+}
+
+.project-card__subtitle {
+  margin-top: 4px;
+  color: var(--c-text-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Text fallback for projects without a real screenshot */
+.cover--fallback {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: clamp(18px, 4vw, 32px);
+  background:
+    linear-gradient(rgba(0, 217, 255, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(0, 217, 255, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(80% 90% at 80% 10%, rgba(139, 92, 246, 0.14), transparent 60%),
+    var(--c-cover-bg, #0b0f16);
+}
+
+.cover__fallback-code {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--c-cyan);
+}
+
+.cover__fallback-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+}
+
+.cover__fallback-sub {
+  font-size: 14px;
+  color: var(--c-text-2);
+}
+
+.cover__fallback-tech {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--c-text-3);
 }

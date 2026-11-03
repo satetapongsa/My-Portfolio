@@ -1,22 +1,25 @@
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { autocomplete, runCommand, type TerminalActions } from './commands';
 import './terminal.css';
 
 interface Line {
   id: number;
-  kind: 'input' | 'output' | 'error' | 'system';
+  kind: 'input' | 'output' | 'error' | 'system' | 'welcome1' | 'welcome2';
   content: ReactNode;
 }
 
 const QUICK_COMMANDS = ['help', 'about', 'skills', 'projects', 'contact'];
 
+// Welcome lines are rendered from the active language at display time.
 const WELCOME: Line[] = [
-  { id: 0, kind: 'system', content: 'wave-os v1.0 · interactive shell' },
-  { id: 1, kind: 'system', content: 'Type "help" to see what I can tell you.' },
+  { id: 0, kind: 'welcome1', content: null },
+  { id: 1, kind: 'welcome2', content: null },
 ];
 
 /** A real command interpreter over the portfolio data — not a typing animation. */
 export function Terminal({ actions }: { actions: TerminalActions }) {
+  const { t, content, lang } = useI18n();
   const [lines, setLines] = useState<Line[]>(WELCOME);
   const [value, setValue] = useState('');
   const [history, setHistory] = useState<string[]>([]);
@@ -40,7 +43,7 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
         setLines((l) => [...l, { id: id(), kind: 'input', content: '' }]);
         return;
       }
-      const result = runCommand(command, actions, history);
+      const result = runCommand(command, { actions, history, t, content, lang });
       setHistory((h) => [...h, command].slice(-50));
       setCursor(null);
       if (result.clear) {
@@ -53,7 +56,7 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
         return next.slice(-80);
       });
     },
-    [actions, history],
+    [actions, history, t, content, lang],
   );
 
   const onSubmit = (event: FormEvent) => {
@@ -79,7 +82,7 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
         setValue(history[next]);
       }
     } else if (event.key === 'Tab') {
-      const completion = autocomplete(value);
+      const completion = autocomplete(value, content);
       if (completion) {
         event.preventDefault();
         setValue(completion + (completion.includes(' ') ? '' : ' '));
@@ -109,10 +112,14 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
           if (!window.getSelection()?.toString()) inputRef.current?.focus({ preventScroll: true });
         }}
       >
-        <div role="log" aria-live="polite" aria-label="Terminal output">
+        <div role="log" aria-live="polite" aria-label={t.terminal.output}>
           {lines.map((line) => (
-            <div key={line.id} className={`term-line term-line--${line.kind}`}>
-              {line.kind === 'input' ? (
+            <div key={line.id} className={`term-line term-line--${line.kind === 'welcome1' || line.kind === 'welcome2' ? 'system' : line.kind}`}>
+              {line.kind === 'welcome1' ? (
+                t.terminal.welcome1
+              ) : line.kind === 'welcome2' ? (
+                t.terminal.welcome2
+              ) : line.kind === 'input' ? (
                 <>
                   <span className="term-prompt" aria-hidden="true">
                     ❯
@@ -129,7 +136,7 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
         <form className="term-input" onSubmit={onSubmit}>
           <label htmlFor={inputId} className="term-prompt">
             <span aria-hidden="true">❯</span>
-            <span className="sr-only">Terminal command</span>
+            <span className="sr-only">{t.terminal.inputLabel}</span>
           </label>
           <input
             ref={inputRef}
@@ -142,12 +149,12 @@ export function Terminal({ actions }: { actions: TerminalActions }) {
             autoCorrect="off"
             spellCheck={false}
             enterKeyHint="send"
-            placeholder="type a command…"
+            placeholder={t.terminal.placeholder}
           />
         </form>
       </div>
 
-      <div className="terminal__quick" aria-label="Quick commands">
+      <div className="terminal__quick" aria-label={t.terminal.quick}>
         {QUICK_COMMANDS.map((cmd) => (
           <button key={cmd} type="button" className="terminal__chip mono" onClick={() => execute(cmd)}>
             {cmd}

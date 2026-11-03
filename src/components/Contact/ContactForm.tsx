@@ -1,16 +1,20 @@
 import { CircleAlert, LoaderCircle, Send } from 'lucide-react';
 import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
-import { getDeliveryMode, sendContactMessage, validateContact, type ContactErrors, type ContactMessage } from '../../services/contact';
+import { useI18n } from '../../i18n/I18nProvider';
+import { fill } from '../../i18n/ui';
+import { getDeliveryMode, sendContactMessage, validateContact, type ContactErrors, type ContactMessage, type SendResult } from '../../services/contact';
 
 type Status =
   | { state: 'idle' }
   | { state: 'sending' }
   | { state: 'sent'; mode: 'endpoint' | 'mailto' }
-  | { state: 'error'; message: string };
+  | { state: 'error'; result: Extract<SendResult, { ok: false }> };
 
 const EMPTY: ContactMessage = { name: '', email: '', message: '' };
 
 export function ContactForm() {
+  const { t } = useI18n();
+  const f = t.contact.form;
   const mode = getDeliveryMode();
   const [values, setValues] = useState<ContactMessage>(EMPTY);
   const [errors, setErrors] = useState<ContactErrors>({});
@@ -30,7 +34,7 @@ export function ContactForm() {
       if (touched[name]) setErrors(validateContact(next));
     },
     onBlur: () => {
-      setTouched((t) => ({ ...t, [name]: true }));
+      setTouched((prev) => ({ ...prev, [name]: true }));
       setErrors(validateContact(values));
     },
   });
@@ -46,7 +50,7 @@ export function ContactForm() {
       return;
     }
     setStatus({ state: 'sending' });
-    const result = await sendContactMessage(values);
+    const result = await sendContactMessage(values, fill(f.subject, { name: values.name.trim() }));
     if (result.ok) {
       setStatus({ state: 'sent', mode: result.mode });
       if (result.mode === 'endpoint') {
@@ -54,46 +58,51 @@ export function ContactForm() {
         setTouched({});
       }
     } else {
-      setStatus({ state: 'error', message: result.error });
+      setStatus({ state: 'error', result });
     }
   };
 
-  const renderError = (name: keyof ContactMessage) =>
-    touched[name] && errors[name] ? (
+  const errorText = (result: Extract<SendResult, { ok: false }>) =>
+    result.error === 'server' ? fill(f.errors.server, { status: result.status }) : f.errors[result.error];
+
+  const renderError = (name: keyof ContactMessage) => {
+    const code = errors[name];
+    return touched[name] && code ? (
       <p id={`${uid}-${name}-error`} className="form-field__error">
-        <CircleAlert aria-hidden /> {errors[name]}
+        <CircleAlert aria-hidden /> {f.errors[code]}
       </p>
     ) : null;
+  };
 
   const disabled = mode === 'unavailable' || status.state === 'sending';
 
   return (
     <form className="contact-form glow-card" onSubmit={onSubmit} noValidate aria-describedby={`${uid}-mode`}>
       <div className="contact-form__head">
-        <h3>Send a message</h3>
+        <h3>{f.title}</h3>
         <p id={`${uid}-mode`} className="contact-form__mode mono">
-          {mode === 'endpoint' && 'Delivered directly to my inbox.'}
-          {mode === 'mailto' && 'Opens your email app with the message drafted.'}
-          {mode === 'unavailable' && 'The contact form activates once an email or form endpoint is configured.'}
+          {mode === 'endpoint' && f.modeEndpoint}
+          {mode === 'mailto' && f.modeMailto}
+          {mode === 'unavailable' && f.modeUnavailable}
         </p>
       </div>
 
       <div className="form-row">
         <div className="form-field">
-          <label htmlFor={`${uid}-name`}>Name</label>
-          <input type="text" autoComplete="name" placeholder="Your name" disabled={mode === 'unavailable'} {...field('name')} />
+          <label htmlFor={`${uid}-name`}>{f.name}</label>
+          <input type="text" autoComplete="name" placeholder={f.namePlaceholder} disabled={mode === 'unavailable'} {...field('name')} />
           {renderError('name')}
         </div>
         <div className="form-field">
-          <label htmlFor={`${uid}-email`}>Email</label>
-          <input type="email" autoComplete="email" inputMode="email" placeholder="you@domain.com" disabled={mode === 'unavailable'} {...field('email')} />
+          <label htmlFor={`${uid}-email`}>{f.email}</label>
+          <input type="email" autoComplete="email" inputMode="email" placeholder={f.emailPlaceholder} disabled={mode === 'unavailable'} {...field('email')} />
           {renderError('email')}
         </div>
       </div>
 
       <div className="form-field">
-        <label htmlFor={`${uid}-message`}>Message</label>
-        <textarea rows={5} placeholder="What would you like to talk about?" disabled={mode === 'unavailable'} {...field('message')} />
+        <label htmlFor={`${uid}-message`}>{f.message}</label>
+        <textarea rows={5} placeholder={f.messagePlaceholder} disabled={mode === 'unavailable'} {...field('message')} />
         {renderError('message')}
       </div>
 
@@ -101,21 +110,19 @@ export function ContactForm() {
         <button type="submit" className="btn btn--primary" disabled={disabled}>
           {status.state === 'sending' ? (
             <>
-              <LoaderCircle className="spin" aria-hidden /> Sending…
+              <LoaderCircle className="spin" aria-hidden /> {f.sending}
             </>
           ) : (
             <>
-              {mode === 'mailto' ? 'Compose email' : 'Send message'} <Send aria-hidden />
+              {mode === 'mailto' ? f.compose : f.send} <Send aria-hidden />
             </>
           )}
         </button>
 
         <div className="contact-form__status" role="status" aria-live="polite">
-          {status.state === 'sent' && status.mode === 'endpoint' && <p className="is-success">Message sent — thank you. I’ll get back to you soon.</p>}
-          {status.state === 'sent' && status.mode === 'mailto' && (
-            <p className="is-info">Your email app should now be open with the message drafted. It’s only sent once you press send there.</p>
-          )}
-          {status.state === 'error' && <p className="is-error">{status.message}</p>}
+          {status.state === 'sent' && status.mode === 'endpoint' && <p className="is-success">{f.sent}</p>}
+          {status.state === 'sent' && status.mode === 'mailto' && <p className="is-info">{f.mailtoOpened}</p>}
+          {status.state === 'error' && <p className="is-error">{errorText(status.result)}</p>}
         </div>
       </div>
     </form>

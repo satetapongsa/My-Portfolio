@@ -1,0 +1,46 @@
+/*
+ * Thai typography. Thai glyphs have tall ascenders/descenders and tone marks,
+ * so they need more line-height, and they must not be letter-spaced or
+ * negatively tracked like the Latin display type.
+ */
+html[lang='th'] .wave-app {
+  line-height: 1.75;
+}
+
+html[lang='th'] .wave-app :where(h1, h2, h3, h4) {
+  letter-spacing: 0;
+  line-height: 1.32;
+}
+
+html[lang='th'] .section-head__title {
+  font-size: clamp(30px, 4.4vw, 48px);
+}
+
+html[lang='th'] .hero__tagline {
+  line-height: 1.4;
+}
+
+html[lang='th'] .about__lead {
+  font-size: clamp(19px, 2vw, 25px);
+  line-height: 1.6;
+}
+
+/* Mono labels are uppercase-tracked for Latin; Thai reads better untracked. */
+html[lang='th'] .wave-app .mono,
+html[lang='th'] .section-head__meta,
+html[lang='th'] .project-card__category,
+html[lang='th'] .footer__heading,
+html[lang='th'] .channel__label,
+html[lang='th'] .cert-card__date,
+html[lang='th'] .timeline__meta,
+html[lang='th'] .skills__legend-title,
+html[lang='th'] .pd-fact__label,
+html[lang='th'] .hero__meta {
+  letter-spacing: 0.02em;
+}
+
+html[lang='th'] .nav__link,
+html[lang='th'] .filter-btn,
+html[lang='th'] .btn {
+  letter-spacing: 0;
+}

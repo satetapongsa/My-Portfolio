@@ -269,6 +269,13 @@ html[data-phase='reveal'] .wave-app {
   font-size: 13.5px;
 }
 
+/* Touch screens and phones: keep compact buttons at a 44px target. */
+@media (pointer: coarse), (max-width: 767px) {
+  .btn--sm {
+    height: 44px;
+  }
+}
+
 .btn:active {
   transform: scale(0.98);
 }

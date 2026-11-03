@@ -1,6 +1,6 @@
 import { ArrowUpRight, Check, Copy, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { profile } from '../../data/portfolio';
+import { useI18n } from '../../i18n/I18nProvider';
 import { configuredSocials, copyText, hasEmail, isConfigured } from '../../utils/links';
 import { SocialIcon } from '../ui/BrandIcons';
 import { Reveal } from '../ui/Reveal';
@@ -10,6 +10,9 @@ import { ContactForm } from './ContactForm';
 import './contact.css';
 
 export function Contact() {
+  const { t, content } = useI18n();
+  const { profile } = content;
+  const c = t.contact;
   const socials = configuredSocials();
   const notify = useToast();
   const [copied, setCopied] = useState(false);
@@ -19,7 +22,7 @@ export function Contact() {
 
   const copyEmail = async () => {
     const ok = await copyText(profile.contact.email);
-    notify(ok ? 'Email copied to clipboard' : 'Couldn’t copy — please copy it manually', ok ? 'success' : 'error');
+    notify(ok ? c.copied : c.copyFailed, ok ? 'success' : 'error');
     if (ok) {
       setCopied(true);
       window.clearTimeout(resetTimer.current);
@@ -33,10 +36,11 @@ export function Contact() {
         <SectionHeader
           id="contact-title"
           index="06"
-          label="Contact"
+          label={c.label}
           title={
             <>
-              Let’s build <span className="gradient-text">something</span>.
+              {c.titleA} <span className="gradient-text">{c.titleAccent}</span>
+              {t.common.dot}
             </>
           }
           lead={profile.contact.availability}
@@ -50,12 +54,12 @@ export function Contact() {
                   <Mail aria-hidden />
                 </span>
                 <div className="channel__text">
-                  <p className="channel__label mono">Email</p>
+                  <p className="channel__label mono">{c.email}</p>
                   <a className="channel__value" href={`mailto:${profile.contact.email}`}>
                     {profile.contact.email}
                   </a>
                 </div>
-                <button type="button" className="icon-btn" onClick={copyEmail} aria-label={copied ? 'Email copied' : 'Copy email address'}>
+                <button type="button" className="icon-btn" onClick={copyEmail} aria-label={copied ? c.emailCopied : c.copyEmail} title={copied ? c.emailCopied : c.copyEmail}>
                   {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
                 </button>
               </div>
@@ -71,22 +75,20 @@ export function Contact() {
                   <span className="channel__value">{isConfigured(s.handle) ? s.handle : s.url.replace(/^https?:\/\//, '')}</span>
                 </span>
                 <ArrowUpRight className="channel__arrow" aria-hidden />
-                <span className="sr-only"> (opens in a new tab)</span>
+                <span className="sr-only"> {t.common.opensInNewTab}</span>
               </a>
             ))}
 
             {!hasEmail() && socials.length === 0 && (
               <div className="channel channel--pending">
                 <span className="status-dot status-dot--amber" aria-hidden="true" />
-                <p>
-                  Contact channels are being set up. Email, GitHub and LinkedIn will appear here once they’re published.
-                </p>
+                <p>{c.pending}</p>
               </div>
             )}
 
             <div className="contact__note mono">
-              <span>tip</span>
-              <p>Press Ctrl/⌘ + K anywhere to jump around the site.</p>
+              <span>{c.tip}</span>
+              <p>{c.tipText}</p>
             </div>
           </Reveal>
 

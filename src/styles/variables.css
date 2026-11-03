@@ -20,9 +20,17 @@
 
   --grad-signal: linear-gradient(100deg, var(--c-cyan) 0%, var(--c-blue) 50%, var(--c-violet) 100%);
 
-  --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Noto Sans Thai renders Thai glyphs; Latin text keeps the existing faces. */
+  --font-display: 'Space Grotesk', 'Inter', 'Noto Sans Thai', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', 'Noto Sans Thai', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Thai', monospace;
+
+  /* Shared surface tokens (dark values; light overrides in theme-light.css) */
+  --c-glass: rgba(16, 20, 28, 0.55);
+  --c-accent-soft: rgba(0, 217, 255, 0.12);
+  --c-accent-line: rgba(0, 217, 255, 0.3);
+  --c-skeleton: rgba(139, 150, 168, 0.1);
+  --c-cover-bg: #0b0f16;
 
   --radius-sm: 8px;
   --radius: 14px;

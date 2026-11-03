@@ -13,8 +13,12 @@ export interface Certificate {
   issuer: string;
   /** ISO date printed on the certificate. */
   date: string;
-  /** Path under /public. */
+  /** Original, unmodified file — used for "Open full size" and "Download". */
   image: string;
+  /** 640 px WebP for the grid. */
+  thumb: string;
+  /** 1600 px WebP for the in-page viewer. */
+  preview: string;
   width: number;
   height: number;
   /** Optional detail printed on the certificate, e.g. training hours. */
@@ -106,11 +110,11 @@ export interface SkillCategory {
 
 export type ProjectFilter = 'ai' | 'web' | 'tools' | 'iot' | 'interactive';
 
-/** completed / in-progress / experimental / archived describe repository-backed work; concept = not yet built. */
-export type ProjectStage = 'concept' | 'design' | 'in-progress' | 'experimental' | 'built' | 'completed' | 'archived';
+/** Evidence-based status of a GitHub project. */
+export type ProjectStage = 'completed' | 'in-progress' | 'experimental' | 'archived';
 
 export interface ProjectLink {
-  /** Empty string = not published yet; the button renders disabled. */
+  /** Empty string = no public URL; the button is not rendered. */
   url: string;
   label: string;
 }
@@ -120,29 +124,31 @@ export interface ArchitectureLayer {
   detail: string;
 }
 
+/** A real screenshot in two widths: `thumb` for cards, `src` for full views. */
+export interface ProjectImage {
+  src: string;
+  thumb: string;
+  width: number;
+  height: number;
+}
+
 export interface Project {
   id: string;
-  /** Repository-backed work shown in the main showcase grid; others appear under "Concepts". */
-  featured?: boolean;
-  /** Also list this project on the unstyled intro page. */
-  onRawPage?: boolean;
   /** Short identifier shown in monospace, e.g. "PRJ-01". */
   code: string;
+  /** Name exactly as in the repository README title. */
   title: string;
+  /** README subtitle (text after the em dash), if any. */
+  subtitle?: string;
+  /** Repository name on GitHub, shown for transparency. */
+  repo: string;
   summary: string;
   filter: ProjectFilter;
   categoryLabel: string;
   tech: string[];
   status: { label: string; stage: ProjectStage };
-  cover: {
-    /** Real image under /public/assets/projects/<id>/. Empty = built-in illustration. */
-    src: string;
-    alt: string;
-    /** 'screenshot' = captured from the running app; 'artwork' = preview art from the repository. */
-    kind?: 'screenshot' | 'artwork';
-    /** Built-in illustrated placeholder used while `src` is empty. */
-    placeholder: 'tank-system' | 'penthouse' | 'generic';
-  };
+  /** Real screenshot of the running project; omitted when none exists (a text fallback is shown). */
+  cover?: ProjectImage & { alt: string };
   links: {
     github: ProjectLink;
     demo: ProjectLink;
@@ -154,10 +160,8 @@ export interface Project {
     objective: string;
     architecture: ArchitectureLayer[];
     features: string[];
-    /** Real screenshots only. Empty array renders a clearly-labelled slot. */
-    screenshots: { src: string; caption: string; width?: number; height?: number }[];
-    process: string[];
-    challenges: { challenge: string; approach: string }[];
+    /** Real screenshots only. */
+    screenshots: (ProjectImage & { caption: string })[];
   };
 }
 

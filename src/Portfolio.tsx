@@ -6,6 +6,8 @@
 import './styles/variables.css';
 import './styles/global.css';
 import './styles/animations.css';
+import './styles/theme-light.css';
+import './styles/i18n.css';
 import { MotionConfig } from 'motion/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { About } from './components/About/About';
@@ -24,12 +26,11 @@ import { Skills } from './components/Skills/Skills';
 import type { TerminalActions } from './components/Terminal/commands';
 import { ToastProvider } from './components/ui/Toast';
 import { navItems } from './data/portfolio';
-import { projects } from './data/projects';
 import type { Project, SectionId } from './data/types';
 import { useActiveSection } from './hooks/useActiveSection';
 import type { BootPhase } from './hooks/useBootSequence';
+import { I18nProvider, useI18n } from './i18n/I18nProvider';
 import { scrollToSection } from './utils/links';
-
 
 const SECTION_IDS: SectionId[] = navItems.map((n) => n.id);
 
@@ -38,9 +39,20 @@ interface PortfolioProps {
   initialTarget: SectionId | null;
 }
 
-export default function Portfolio({ phase, initialTarget }: PortfolioProps) {
+export default function Portfolio(props: PortfolioProps) {
+  return (
+    <I18nProvider>
+      <PortfolioShell {...props} />
+    </I18nProvider>
+  );
+}
+
+function PortfolioShell({ phase, initialTarget }: PortfolioProps) {
+  const { t, content } = useI18n();
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  // Store the id, not the object, so an open project re-localises when the language changes.
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const activeProject = content.projects.find((p) => p.id === activeProjectId) ?? null;
   const activeSection = useActiveSection(SECTION_IDS);
 
   // The raw page may have been scrolled; always start the portfolio at the top.
@@ -71,13 +83,11 @@ export default function Portfolio({ phase, initialTarget }: PortfolioProps) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const openProjectById = useCallback((id: string) => {
-    const project = projects.find((p) => p.id === id);
-    if (project) setActiveProject(project);
-  }, []);
+  const openProjectById = useCallback((id: string) => setActiveProjectId(id), []);
+  const openProject = useCallback((project: Project) => setActiveProjectId(project.id), []);
 
   const closePalette = useCallback(() => setPaletteOpen(false), []);
-  const closeProject = useCallback(() => setActiveProject(null), []);
+  const closeProject = useCallback(() => setActiveProjectId(null), []);
   const openPalette = useCallback(() => setPaletteOpen(true), []);
 
   const terminalActions = useMemo<TerminalActions>(
@@ -90,7 +100,7 @@ export default function Portfolio({ phase, initialTarget }: PortfolioProps) {
       <ToastProvider>
         <div className="wave-app">
           <a className="skip-link" href="#main">
-            Skip to content
+            {t.common.skipToContent}
           </a>
           <Background />
           <CursorSpotlight />
@@ -100,7 +110,7 @@ export default function Portfolio({ phase, initialTarget }: PortfolioProps) {
             <Hero terminalActions={terminalActions} />
             <About />
             <Skills />
-            <Projects onOpen={setActiveProject} />
+            <Projects onOpen={openProject} />
             <Journey />
             <Credentials />
             <Contact />

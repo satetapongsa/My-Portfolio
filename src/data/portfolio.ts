@@ -86,6 +86,30 @@ export const profile: PortfolioProfile = {
   resumePath: asset('assets/legacy/resume/Resume_Satetapong_Sanguansuk.pdf'),
 };
 
+/**
+ * "Selected Projects" on the unstyled intro page — the two concepts exactly as
+ * specified for that page. They are concepts, so they are not shown in the
+ * Projects section (which lists real GitHub repositories only).
+ */
+export const introProjects = [
+  {
+    title: 'Automatic Liquid Mixing & Tank Control System',
+    category: 'Industrial Automation / PLC',
+    description:
+      'An industrial process simulation concept involving automatic and manual operating modes, alarm management, process trends, and historical data.',
+    status: 'System Design / In Progress',
+  },
+  {
+    title: 'Unreal Engine 5 Penthouse Viewer',
+    category: '3D Interactive Experience',
+    description:
+      'An interactive 3D architectural visualization concept designed to let visitors explore a realistic penthouse environment from a first-person perspective.',
+    status: 'Concept / In Progress',
+  },
+];
+
+export type IntroProject = (typeof introProjects)[number];
+
 export const navItems: NavItem[] = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },

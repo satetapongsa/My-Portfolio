@@ -15,11 +15,14 @@ export interface ContactMessage {
 
 export type DeliveryMode = 'endpoint' | 'mailto' | 'unavailable';
 
-export type ContactErrors = Partial<Record<keyof ContactMessage, string>>;
+/** Error codes, localised by the UI (see contact.form.errors in src/i18n/ui.ts). */
+export type ValidationError = 'name' | 'email' | 'messageShort' | 'messageLong';
+export type ContactErrors = Partial<Record<keyof ContactMessage, ValidationError>>;
 
 export type SendResult =
   | { ok: true; mode: 'endpoint' | 'mailto' }
-  | { ok: false; error: string };
+  | { ok: false; error: 'server'; status: number }
+  | { ok: false; error: 'network' | 'unavailable' };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -31,14 +34,15 @@ export function getDeliveryMode(): DeliveryMode {
 
 export function validateContact(data: ContactMessage): ContactErrors {
   const errors: ContactErrors = {};
-  if (data.name.trim().length < 2) errors.name = 'Please enter your name (at least 2 characters).';
-  if (!EMAIL_PATTERN.test(data.email.trim())) errors.email = 'Please enter a valid email address.';
-  if (data.message.trim().length < 10) errors.message = 'Please write a message of at least 10 characters.';
-  else if (data.message.length > 4000) errors.message = 'Please keep the message under 4000 characters.';
+  if (data.name.trim().length < 2) errors.name = 'name';
+  if (!EMAIL_PATTERN.test(data.email.trim())) errors.email = 'email';
+  if (data.message.trim().length < 10) errors.message = 'messageShort';
+  else if (data.message.length > 4000) errors.message = 'messageLong';
   return errors;
 }
 
-export async function sendContactMessage(data: ContactMessage): Promise<SendResult> {
+/** `subject` is the already-localised mail subject (used for the mailto fallback). */
+export async function sendContactMessage(data: ContactMessage, subject: string): Promise<SendResult> {
   const mode = getDeliveryMode();
   const payload = { name: data.name.trim(), email: data.email.trim(), message: data.message.trim() };
 
@@ -52,21 +56,20 @@ export async function sendContactMessage(data: ContactMessage): Promise<SendResu
         body: JSON.stringify(payload),
         signal: controller.signal,
       });
-      if (!response.ok) return { ok: false, error: `The server responded with ${response.status}. Please try again later.` };
+      if (!response.ok) return { ok: false, error: 'server', status: response.status };
       return { ok: true, mode };
     } catch {
-      return { ok: false, error: 'The message could not be sent. Check your connection and try again.' };
+      return { ok: false, error: 'network' };
     } finally {
       window.clearTimeout(timeout);
     }
   }
 
   if (mode === 'mailto') {
-    const subject = encodeURIComponent(`Portfolio contact from ${payload.name}`);
     const body = encodeURIComponent(`${payload.message}\n\n— ${payload.name} (${payload.email})`);
-    window.location.href = `mailto:${profile.contact.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${profile.contact.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
     return { ok: true, mode };
   }
 
-  return { ok: false, error: 'Messaging is not configured yet.' };
+  return { ok: false, error: 'unavailable' };
 }

@@ -1,4 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { getStoredLang } from '../i18n/lang';
+import { ui } from '../i18n/ui';
 
 interface Props {
   children: ReactNode;
@@ -22,13 +24,15 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (!this.state.error) return this.props.children;
+    // Rendered outside the language provider, so read the saved preference directly.
+    const t = ui[getStoredLang()].error;
     return (
       <div role="alert">
-        <h1>Something went wrong.</h1>
-        <p>The interface could not be loaded. Check your connection and try again.</p>
+        <h1>{t.title}</h1>
+        <p>{t.body}</p>
         <p>
           <button type="button" onClick={() => window.location.reload()}>
-            Reload
+            {t.reload}
           </button>
         </p>
       </div>

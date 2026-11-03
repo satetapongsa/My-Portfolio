@@ -1,0 +1,219 @@
+/*
+ * LIGHT THEME — opt-in via html[data-theme='light'] (set by the theme toggle and
+ * restored from localStorage before first render). The dark theme in
+ * variables.css / component CSS is the untouched reference; nothing here
+ * applies unless light is chosen, and nothing applies to the RAW page.
+ */
+
+html[data-theme='light'][data-phase='reveal'],
+html[data-theme='light'][data-phase='ready'] {
+  background: #f8fafc;
+  color-scheme: light;
+}
+
+html[data-theme='light'][data-phase='reveal'] body,
+html[data-theme='light'][data-phase='ready'] body {
+  background: #f8fafc;
+}
+
+html[data-theme='light'] .wave-app {
+  --c-bg: #f8fafc;
+  --c-bg-2: #f1f5f9;
+  --c-surface: #ffffff;
+  --c-surface-2: #f1f5f9;
+  --c-line: rgba(15, 23, 42, 0.09);
+  --c-line-strong: rgba(15, 23, 42, 0.17);
+  --c-cyan: #0891b2;
+  --c-blue: #2563eb;
+  --c-violet: #7c3aed;
+  --c-text: #111827;
+  --c-text-2: #475569;
+  --c-text-3: #64748b;
+  --c-danger: #dc2626;
+  --c-success: #059669;
+
+  --c-glass: rgba(255, 255, 255, 0.72);
+  --c-accent-soft: rgba(37, 99, 235, 0.08);
+  --c-accent-line: rgba(37, 99, 235, 0.28);
+  --c-skeleton: #e2e8f0;
+  --c-cover-bg: #eef2f7;
+
+  --shadow-lg: 0 24px 60px -28px rgba(15, 23, 42, 0.28), 0 0 0 1px var(--c-line);
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #2563eb;
+}
+
+html[data-theme='light'] .wave-app ::selection {
+  background: rgba(37, 99, 235, 0.18);
+  color: #0f172a;
+}
+
+/* ── Atmosphere ── */
+html[data-theme='light'] .bg__grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+}
+html[data-theme='light'] .bg__glow { opacity: 0.35; }
+html[data-theme='light'] .bg__vignette { background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 60%, rgba(226, 232, 240, 0.6)); }
+html[data-theme='light'] .bg__noise { opacity: 0.025; }
+html[data-theme='light'] .bg__lines span { background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.06) 20%, rgba(15, 23, 42, 0.06) 80%, transparent); }
+html[data-theme='light'] .spotlight { background: radial-gradient(circle, rgba(37, 99, 235, 0.06), rgba(124, 58, 237, 0.03) 35%, transparent 65%); }
+
+/* ── Shared components ── */
+html[data-theme='light'] .glow-card {
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -20px rgba(15, 23, 42, 0.18);
+}
+html[data-theme='light'] .glow-card::before {
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(37, 99, 235, 0.5), rgba(124, 58, 237, 0.25) 40%, transparent 70%);
+}
+html[data-theme='light'] .glow-card::after {
+  background: radial-gradient(380px circle at var(--mx) var(--my), rgba(37, 99, 235, 0.05), transparent 65%);
+}
+html[data-theme='light'] .btn--ghost { background: #ffffff; }
+html[data-theme='light'] .btn--ghost:hover { background: #f1f5ff; border-color: rgba(37, 99, 235, 0.45); }
+html[data-theme='light'] .btn--primary {
+  color: #ffffff;
+  background: linear-gradient(100deg, #0891b2, #2563eb 60%, #4f46e5);
+  box-shadow: 0 10px 24px -12px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+html[data-theme='light'] .icon-btn { background: #ffffff; }
+html[data-theme='light'] .icon-btn:hover { background: #f1f5ff; border-color: rgba(37, 99, 235, 0.4); }
+html[data-theme='light'] .chip { background: #ffffff; }
+html[data-theme='light'] .chip--accent { background: rgba(8, 145, 178, 0.07); border-color: rgba(8, 145, 178, 0.25); }
+html[data-theme='light'] .toast { background: rgba(255, 255, 255, 0.96); border-color: rgba(37, 99, 235, 0.3); }
+html[data-theme='light'] .brackets::before,
+html[data-theme='light'] .brackets::after { border-color: rgba(37, 99, 235, 0.45); }
+html[data-theme='light'] .skip-link { color: #ffffff; background: #2563eb; }
+
+/* ── Navigation ── */
+html[data-theme='light'] .nav.is-scrolled { background: rgba(248, 250, 252, 0.82); }
+html[data-theme='light'] .logo__mark {
+  background: linear-gradient(180deg, #ffffff, #f1f5f9);
+  box-shadow: inset 0 1px 0 #ffffff, 0 4px 14px -6px rgba(37, 99, 235, 0.35);
+}
+html[data-theme='light'] .nav__links ul,
+html[data-theme='light'] .nav__palette { background: rgba(255, 255, 255, 0.75); }
+html[data-theme='light'] .nav__palette kbd { background: #f1f5f9; }
+html[data-theme='light'] .nav__indicator {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.1), rgba(8, 145, 178, 0.06));
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: none;
+}
+html[data-theme='light'] .nav__mobile { background: rgba(248, 250, 252, 0.98); }
+html[data-theme='light'] .nav__progress { box-shadow: none; }
+
+/* ── Hero ── */
+html[data-theme='light'] .hero__status,
+html[data-theme='light'] .hero__float { background: rgba(255, 255, 255, 0.9); }
+html[data-theme='light'] .hero__float { box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.3); }
+html[data-theme='light'] .hero__letter { background-image: linear-gradient(180deg, #0f172a 35%, #334155 100%); }
+html[data-theme='light'] .hero__caret { box-shadow: 0 0 12px rgba(8, 145, 178, 0.6); }
+html[data-theme='light'] .hero__raw { color: #1d4ed8; }
+html[data-theme='light'] .hero__aka { background: rgba(8, 145, 178, 0.06); border-color: rgba(8, 145, 178, 0.3); }
+html[data-theme='light'] .wave-signal { opacity: 0.4; }
+
+/* The terminal stays a dark "window" in light mode — scope the dark tokens to it. */
+html[data-theme='light'] .terminal {
+  --c-text: #f4f7fb;
+  --c-text-2: #8b96a8;
+  --c-text-3: #6b7587;
+  --c-line: rgba(139, 150, 168, 0.14);
+  --c-cyan: #00d9ff;
+  --c-violet: #a78bfa;
+  --c-danger: #ff6b8a;
+  background: linear-gradient(180deg, #151b25, #0c0f15);
+  box-shadow: 0 30px 70px -36px rgba(15, 23, 42, 0.55);
+}
+
+/* ── About ── */
+html[data-theme='light'] .about__portrait { background: #e2e8f0; }
+html[data-theme='light'] .about__block-icon,
+html[data-theme='light'] .skill-card__icon,
+html[data-theme='light'] .channel__icon {
+  background: rgba(37, 99, 235, 0.07);
+  border-color: rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+}
+
+/* ── Skills ── */
+html[data-theme='light'] .skill-item { background: #f8fafc; }
+html[data-theme='light'] .skill-item:hover { background: #f1f5ff; border-color: rgba(37, 99, 235, 0.3); }
+html[data-theme='light'] .skills__pending { background: #ffffff; }
+html[data-theme='light'] .skill-item__source { color: #6d28d9; border-color: rgba(124, 58, 237, 0.3); background: rgba(124, 58, 237, 0.06); }
+html[data-theme='light'] .signal-bars i { background: rgba(15, 23, 42, 0.12); }
+html[data-theme='light'] .signal-bars i.is-on { background: #0891b2; box-shadow: none; }
+
+/* ── Projects ── */
+html[data-theme='light'] .projects__filter-group { background: rgba(255, 255, 255, 0.8); }
+html[data-theme='light'] .filter-btn__bg { background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3); }
+html[data-theme='light'] .filter-btn__count { background: rgba(15, 23, 42, 0.06); }
+html[data-theme='light'] .filter-btn.is-active .filter-btn__count { background: rgba(37, 99, 235, 0.14); color: #1d4ed8; }
+html[data-theme='light'] .cover { background: var(--c-cover-bg); }
+html[data-theme='light'] .cover__label { background: rgba(255, 255, 255, 0.88); color: #475569; }
+html[data-theme='light'] .cover--fallback {
+  background:
+    linear-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(37, 99, 235, 0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(80% 90% at 80% 10%, rgba(124, 58, 237, 0.1), transparent 60%),
+    #f1f5f9;
+}
+html[data-theme='light'] .project-card:hover { box-shadow: 0 24px 50px -28px rgba(15, 23, 42, 0.3); }
+
+/* ── Project details / dialogs ── */
+html[data-theme='light'] .dialog { background: rgba(15, 23, 42, 0.38); }
+html[data-theme='light'] .dialog__panel {
+  background: #ffffff;
+  box-shadow: 0 40px 100px -30px rgba(15, 23, 42, 0.45), 0 0 0 1px var(--c-line);
+}
+html[data-theme='light'] .pd__head { background: rgba(255, 255, 255, 0.94); }
+html[data-theme='light'] .pd-arch__index { background: #ffffff; border-color: rgba(37, 99, 235, 0.35); color: #2563eb; }
+html[data-theme='light'] .pd-features li,
+html[data-theme='light'] .pd-fact { background: #f8fafc; }
+html[data-theme='light'] .pd-features li::before { box-shadow: none; }
+
+/* ── Journey ── */
+html[data-theme='light'] .timeline__node {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.35);
+  color: #2563eb;
+  box-shadow: 0 0 0 6px var(--c-bg), 0 6px 16px -8px rgba(37, 99, 235, 0.4);
+}
+html[data-theme='light'] .timeline__period { background: rgba(8, 145, 178, 0.08); border-color: rgba(8, 145, 178, 0.25); }
+html[data-theme='light'] .timeline__fill { box-shadow: none; }
+
+/* ── Credentials ── */
+html[data-theme='light'] .cert-card__thumb {
+  background: radial-gradient(80% 90% at 70% 20%, rgba(37, 99, 235, 0.06), transparent 60%), #eef2f7;
+}
+html[data-theme='light'] .cert-card__thumb img { box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.35); }
+html[data-theme='light'] .cert-card__zoom { background: rgba(255, 255, 255, 0.92); border-color: rgba(37, 99, 235, 0.35); color: #2563eb; }
+html[data-theme='light'] .cert-viewer__image { background: #eef2f7; }
+html[data-theme='light'] .cert-img.is-loading::before {
+  background:
+    linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.7) 50%, transparent 80%) 0 0 / 200% 100%,
+    var(--c-skeleton);
+}
+html[data-theme='light'] .cred-stats b { color: #0e7490; }
+
+/* ── Contact ── */
+html[data-theme='light'] .form-field input,
+html[data-theme='light'] .form-field textarea { background: #ffffff; }
+html[data-theme='light'] .form-field input:focus-visible,
+html[data-theme='light'] .form-field textarea:focus-visible {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+html[data-theme='light'] .contact__note { background: linear-gradient(90deg, rgba(8, 145, 178, 0.06), transparent); }
+
+/* ── Command palette ── */
+html[data-theme='light'] .palette kbd { background: #f1f5f9; }
+html[data-theme='light'] .palette__icon { background: #f8fafc; }
+html[data-theme='light'] .palette__option.is-active {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.08), rgba(8, 145, 178, 0.03));
+  border-color: rgba(37, 99, 235, 0.25);
+}
+
+/* ── Footer ── */
+html[data-theme='light'] .footer { background: linear-gradient(180deg, rgba(241, 245, 249, 0.6), #eef2f7); }

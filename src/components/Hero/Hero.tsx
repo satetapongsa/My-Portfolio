@@ -1,7 +1,7 @@
 import { motion, type Variants } from 'motion/react';
 import { ArrowRight, FileDown, Mail } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { profile } from '../../data/portfolio';
+import { useI18n } from '../../i18n/I18nProvider';
 import { getSocial, hasResume, scrollToSection } from '../../utils/links';
 import type { TerminalActions } from '../Terminal/commands';
 import { Terminal } from '../Terminal/Terminal';
@@ -24,31 +24,38 @@ const item: Variants = {
  * Renders the tagline with two nods to the site's concept: "ideas" appears in
  * raw default-browser styling, "digital experiences" in the signal gradient.
  */
+const RAW_WORD = /^(ideas|ไอเดีย)$/i;
+const ACCENT = /^(digital experiences|ประสบการณ์ดิจิทัล)$/i;
+
 function Tagline({ text }: { text: string }): ReactNode {
-  return text.split(/(\bideas\b|\bdigital experiences\b)/i).map((part, i) => {
-    if (/^ideas$/i.test(part)) return <span key={i} className="hero__raw">{part}</span>;
-    if (/^digital experiences$/i.test(part)) return <span key={i} className="gradient-text">{part}</span>;
+  return text.split(/(\bideas\b|\bdigital experiences\b|ไอเดีย|ประสบการณ์ดิจิทัล)/i).map((part, i) => {
+    if (RAW_WORD.test(part)) return <span key={i} className="hero__raw">{part}</span>;
+    if (ACCENT.test(part)) return <span key={i} className="gradient-text">{part}</span>;
     return part;
   });
 }
 
 function SocialButton({ id, label, icon }: { id: 'github' | 'linkedin' | 'tiktok'; label: string; icon: ReactNode }) {
+  const { t } = useI18n();
   const social = getSocial(id);
   if (social) {
     return (
-      <a className="icon-btn" href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`}>
+      <a className="icon-btn" href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`${label} ${t.common.opensInNewTab}`}>
         {icon}
       </a>
     );
   }
   return (
-    <span className="icon-btn" role="img" aria-disabled="true" aria-label={`${label} — link coming soon`} title={`${label} — link coming soon`}>
+    <span className="icon-btn" role="img" aria-disabled="true" aria-label={`${label} — ${t.hero.linkSoon}`} title={`${label} — ${t.hero.linkSoon}`}>
       {icon}
     </span>
   );
 }
 
 export function Hero({ terminalActions }: { terminalActions: TerminalActions }) {
+  const { t, content } = useI18n();
+  const { profile } = content;
+  const h = t.hero;
   // One masked line per word; letter delays continue across lines.
   let letterIndex = 0;
   const lines = profile.fullName.split(' ').map((word) => word.split('').map((char) => ({ char, i: letterIndex++ })));
@@ -59,14 +66,14 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
         <motion.div className="hero__copy" variants={container} initial="hidden" animate="show">
           <motion.p variants={item} className="hero__status mono">
             <span className="status-dot" aria-hidden="true" />
-            <span>signal stable</span>
+            <span>{h.status}</span>
             <span className="hero__status-sep" aria-hidden="true">/</span>
             <span className="hero__status-dim">portfolio.v1</span>
           </motion.p>
 
           <h1 id="hero-title" className="hero__name">
             <motion.span variants={item} className="hero__hello mono">
-              // hello, I’m
+              {h.hello}
             </motion.span>
             <span className="sr-only">{profile.fullName}</span>
             {lines.map((letters, lineIndex) => (
@@ -89,7 +96,7 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
           </h1>
 
           <motion.p variants={item} className="hero__aka mono">
-            <span>aka</span> <b>{profile.nickname}</b>
+            <span>{h.aka}</span> <b>{profile.nickname}</b>
           </motion.p>
 
           <motion.p variants={item} className="hero__role">
@@ -104,7 +111,7 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
             {profile.heroIntro}
           </motion.p>
 
-          <motion.ul variants={item} className="hero__interests" aria-label="Technical interests">
+          <motion.ul variants={item} className="hero__interests" aria-label={h.interests}>
             {profile.interests.map((interest) => (
               <li key={interest} className="chip">
                 {interest}
@@ -115,12 +122,12 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
           <motion.div variants={item} className="hero__cta">
             <Magnetic>
               <a href="#projects" className="btn btn--primary" onClick={(e) => (e.preventDefault(), scrollToSection('projects'))}>
-                Explore Projects <ArrowRight aria-hidden />
+                {h.exploreProjects} <ArrowRight aria-hidden />
               </a>
             </Magnetic>
             <Magnetic>
               <a href="#contact" className="btn btn--ghost" onClick={(e) => (e.preventDefault(), scrollToSection('contact'))}>
-                <Mail aria-hidden /> Contact Me
+                <Mail aria-hidden /> {h.contactMe}
               </a>
             </Magnetic>
             <div className="hero__socials">
@@ -128,11 +135,11 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
               <SocialButton id="linkedin" label="LinkedIn" icon={<LinkedInIcon />} />
               <SocialButton id="tiktok" label="TikTok" icon={<TikTokIcon />} />
               {hasResume() ? (
-                <a className="icon-btn" href={profile.resumePath} download aria-label="Download résumé">
+                <a className="icon-btn" href={profile.resumePath} download="Resume_Satetapong_Sanguansuk.pdf" aria-label={h.downloadResume} title={h.downloadResume}>
                   <FileDown aria-hidden />
                 </a>
               ) : (
-                <span className="icon-btn" role="img" aria-disabled="true" aria-label="Résumé — coming soon" title="Résumé — coming soon">
+                <span className="icon-btn" role="img" aria-disabled="true" aria-label={h.resumeSoon} title={h.resumeSoon}>
                   <FileDown aria-hidden />
                 </span>
               )}
@@ -147,13 +154,13 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="hero__float hero__float--a mono" aria-hidden="true">
-            <i /> focus: automation · 3D · web
+            <i /> {h.floatFocus}
           </span>
           <span className="hero__float hero__float--b mono" aria-hidden="true">
-            {profile.education.university.toLowerCase()}
+            {profile.education.university}
           </span>
           <span className="hero__float hero__float--c mono" aria-hidden="true">
-            ⌁ try: <b>open 1</b>
+            ⌁ {h.floatTry} <b>open 1</b>
           </span>
           <Terminal actions={terminalActions} />
         </motion.div>
@@ -166,10 +173,10 @@ export function Hero({ terminalActions }: { terminalActions: TerminalActions }) 
           <b>01</b> {profile.education.field}
         </span>
         <span>
-          <b>02</b> {profile.education.university} — {profile.education.campus}
+          <b>02</b> {profile.education.university} · {profile.education.campus}
         </span>
         <span className="hero__scroll">
-          scroll <i />
+          {h.scroll} <i />
         </span>
       </div>
     </section>

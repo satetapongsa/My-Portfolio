@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
-import { certificates, formatCertDate } from '../../data/certificates';
-import { journey } from '../../data/journey';
-import { navItems, profile } from '../../data/portfolio';
-import { projects } from '../../data/projects';
-import { skillCategories, visibleSkills } from '../../data/skills';
+import { formatCertDate } from '../../data/certificates';
+import { visibleSkills } from '../../data/skills';
 import type { SectionId } from '../../data/types';
+import type { Content } from '../../i18n/content';
+import type { Lang } from '../../i18n/lang';
+import { fill, type UIStrings } from '../../i18n/ui';
 import { configuredSocials, hasEmail, hasResume } from '../../utils/links';
 
 /** Side effects a command may trigger in the surrounding page. */
@@ -19,11 +19,19 @@ export interface CommandOutput {
   clear?: boolean;
 }
 
+/** Everything a command needs: page actions plus the active language's strings and content. */
+export interface CommandContext {
+  actions: TerminalActions;
+  history: string[];
+  t: UIStrings;
+  content: Content;
+  lang: Lang;
+}
+
 interface CommandDef {
-  name: string;
+  name: keyof UIStrings['terminal']['desc'];
   usage?: string;
-  description: string;
-  run: (args: string[], actions: TerminalActions, history: string[]) => CommandOutput;
+  run: (args: string[], ctx: CommandContext) => CommandOutput;
 }
 
 const Row = ({ k, children }: { k: string; children: ReactNode }) => (
@@ -33,39 +41,42 @@ const Row = ({ k, children }: { k: string; children: ReactNode }) => (
   </div>
 );
 
-const findProject = (query: string) => {
-  const q = query.toLowerCase();
-  const index = Number.parseInt(q.replace(/^prj-?/, ''), 10);
-  return (
-    projects.find((p) => p.id === q || p.code.toLowerCase() === q) ??
-    (Number.isFinite(index) ? projects[index - 1] : undefined)
-  );
-};
+const Cmd = ({ children }: { children: ReactNode }) => <span className="term-cmd">{children}</span>;
 
-const sectionIds = navItems.map((n) => n.id);
+/** Renders a translated template with a highlighted command in place of {cmd}. */
+function withCmd(template: string, cmd: string): ReactNode {
+  const [before, after = ''] = template.split('{cmd}');
+  return (
+    <>
+      {before}
+      <Cmd>{cmd}</Cmd>
+      {after}
+    </>
+  );
+}
+
+const sectionIdsOf = (content: Content) => content.navItems.map((n) => n.id);
 
 const COMMANDS: CommandDef[] = [
   {
     name: 'help',
-    description: 'List available commands',
-    run: () => ({
+    run: (_args, { t }) => ({
       output: (
         <div className="term-help">
           {COMMANDS.map((c) => (
             <div key={c.name} className="term-row">
               <span className="term-cmd">{c.usage ?? c.name}</span>
-              <span className="term-muted">{c.description}</span>
+              <span className="term-muted">{t.terminal.desc[c.name]}</span>
             </div>
           ))}
-          <p className="term-muted term-gap">Tip: ↑/↓ browse history · Tab autocompletes.</p>
+          <p className="term-muted term-gap">{t.terminal.tip}</p>
         </div>
       ),
     }),
   },
   {
     name: 'about',
-    description: 'Who I am',
-    run: () => ({
+    run: (_args, { content: { profile } }) => ({
       output: (
         <div>
           <p>
@@ -79,19 +90,17 @@ const COMMANDS: CommandDef[] = [
   },
   {
     name: 'whoami',
-    description: 'Short identity summary',
-    run: () => ({ output: `${profile.fullName} (${profile.nickname.toLowerCase()}) · ${profile.role.toLowerCase()}` }),
+    run: (_args, { content: { profile } }) => ({ output: `${profile.fullName} (${profile.nickname}) · ${profile.role}` }),
   },
   {
     name: 'education',
-    description: 'Where I study',
-    run: () => ({
+    run: (_args, { t, content: { profile } }) => ({
       output: (
         <div>
-          <Row k="field">{profile.education.field}</Row>
-          <Row k="university">{profile.education.university}</Row>
-          <Row k="campus">{profile.education.campus}</Row>
-          {profile.education.period && <Row k="period">{profile.education.period}</Row>}
+          <Row k={t.about.spec.field}>{profile.education.field}</Row>
+          <Row k={t.about.spec.university}>{profile.education.university}</Row>
+          <Row k={t.about.spec.campus}>{profile.education.campus}</Row>
+          {profile.education.period && <Row k={t.about.spec.period}>{profile.education.period}</Row>}
         </div>
       ),
     }),
@@ -99,18 +108,12 @@ const COMMANDS: CommandDef[] = [
   {
     name: 'skills',
     usage: 'skills [category]',
-    description: 'Technologies, grouped by category',
-    run: (args) => {
+    run: (args, { t, content }) => {
       const query = args.join(' ').toLowerCase();
-      const categories = skillCategories.filter((c) => visibleSkills(c).length > 0);
-      const matched = query
-        ? categories.filter((c) => c.id.includes(query) || c.title.toLowerCase().includes(query))
-        : categories;
+      const categories = content.skillCategories.filter((c) => visibleSkills(c).length > 0);
+      const matched = query ? categories.filter((c) => c.id.includes(query) || c.title.toLowerCase().includes(query)) : categories;
       if (matched.length === 0) {
-        return {
-          error: true,
-          output: `No listed skills match "${query}". Try: ${categories.map((c) => c.id).join(', ')}`,
-        };
+        return { error: true, output: fill(t.terminal.noSkills, { query, options: categories.map((c) => c.id).join(', ') }) };
       }
       return {
         output: (
@@ -120,12 +123,12 @@ const COMMANDS: CommandDef[] = [
                 <p className="term-accent">▸ {c.title}</p>
                 {visibleSkills(c).map((s) => (
                   <Row key={s.name} k={`  ${s.name}`}>
-                    <span className="term-muted">[{s.level ?? "résumé"}]</span>
+                    <span className="term-muted">[{s.level ? t.skills.levels[s.level] : t.skills.resumeTag}]</span>
                   </Row>
                 ))}
               </div>
             ))}
-            <p className="term-muted term-gap">Tagged [résumé] = listed on my CV. Run "resume" to view it.</p>
+            <p className="term-muted term-gap">{t.terminal.skillsFoot}</p>
           </div>
         ),
       };
@@ -133,11 +136,10 @@ const COMMANDS: CommandDef[] = [
   },
   {
     name: 'projects',
-    description: 'List projects',
-    run: () => ({
+    run: (_args, { t, content }) => ({
       output: (
         <div>
-          {projects.map((p) => (
+          {content.projects.map((p) => (
             <div key={p.id} className="term-block">
               <p>
                 <span className="term-accent">{p.code}</span> {p.title}
@@ -148,9 +150,7 @@ const COMMANDS: CommandDef[] = [
               </p>
             </div>
           ))}
-          <p className="term-muted term-gap">
-            Run <span className="term-cmd">open 1</span> to view details.
-          </p>
+          <p className="term-muted term-gap">{withCmd(t.terminal.projectsFoot, 'open 1')}</p>
         </div>
       ),
     }),
@@ -158,26 +158,27 @@ const COMMANDS: CommandDef[] = [
   {
     name: 'open',
     usage: 'open <n|code>',
-    description: 'Open a project’s details',
-    run: (args, actions) => {
-      const project = args[0] ? findProject(args[0]) : undefined;
+    run: (args, { t, content, actions }) => {
+      const { projects } = content;
+      const q = (args[0] ?? '').toLowerCase();
+      const index = Number.parseInt(q.replace(/^prj-?/, ''), 10);
+      const project = q ? (projects.find((p) => p.id === q || p.code.toLowerCase() === q) ?? (Number.isFinite(index) ? projects[index - 1] : undefined)) : undefined;
       if (!project) {
-        return { error: true, output: `Usage: open <n|code>. Projects: ${projects.map((p, i) => `${i + 1}=${p.code}`).join(', ')}` };
+        return { error: true, output: fill(t.terminal.openUsage, { list: projects.map((p, i) => `${i + 1}=${p.code}`).join(', ') }) };
       }
       actions.openProject(project.id);
-      return { output: `Opening ${project.code} — ${project.title}…` };
+      return { output: fill(t.terminal.opening, { code: project.code, title: project.title }) };
     },
   },
   {
     name: 'journey',
-    description: 'My development timeline',
-    run: () => ({
+    run: (_args, { t, content }) => ({
       output: (
         <div>
-          {journey
+          {content.journey
             .filter((j) => !j.placeholder)
             .map((j) => (
-              <Row key={j.id} k={j.period || j.kind}>
+              <Row key={j.id} k={j.period || t.journey.kinds[j.kind]}>
                 {j.title}
               </Row>
             ))}
@@ -187,23 +188,15 @@ const COMMANDS: CommandDef[] = [
   },
   {
     name: 'contact',
-    description: 'How to reach me',
-    run: () => {
+    run: (_args, { t, content: { profile } }) => {
       const socials = configuredSocials();
       if (!hasEmail() && socials.length === 0) {
-        return {
-          output: (
-            <p>
-              Contact channels are being configured. Meanwhile, <span className="term-cmd">goto contact</span> shows what’s
-              available.
-            </p>
-          ),
-        };
+        return { output: <p>{withCmd(t.terminal.contactPending, 'goto contact')}</p> };
       }
       return {
         output: (
           <div>
-            {hasEmail() && <Row k="email">{profile.contact.email}</Row>}
+            {hasEmail() && <Row k={t.contact.email}>{profile.contact.email}</Row>}
             {socials.map((s) => (
               <Row key={s.id + s.url} k={s.label.toLowerCase()}>
                 {s.url}
@@ -216,26 +209,19 @@ const COMMANDS: CommandDef[] = [
   },
   {
     name: 'resume',
-    description: 'Résumé availability',
-    run: () =>
-      hasResume()
-        ? { output: 'Résumé (PDF) is available — use “View My CV” in the About section, or the command palette.' }
-        : { output: 'A downloadable résumé isn’t published yet.' },
+    run: (_args, { t }) => ({ output: hasResume() ? t.terminal.resumeYes : t.terminal.resumeNo }),
   },
   {
     name: 'certs',
-    description: 'Certifications & credentials',
-    run: () => ({
+    run: (_args, { t, content, lang }) => ({
       output: (
         <div>
-          {certificates.map((c) => (
-            <Row key={c.id} k={formatCertDate(c.date)}>
+          {content.certificates.map((c) => (
+            <Row key={c.id} k={formatCertDate(c.date, lang)}>
               {c.title} <span className="term-muted">— {c.issuer}</span>
             </Row>
           ))}
-          <p className="term-muted term-gap">
-            Run <span className="term-cmd">goto credentials</span> to see them.
-          </p>
+          <p className="term-muted term-gap">{withCmd(t.terminal.certsFoot, 'goto credentials')}</p>
         </div>
       ),
     }),
@@ -243,20 +229,19 @@ const COMMANDS: CommandDef[] = [
   {
     name: 'goto',
     usage: 'goto <section>',
-    description: 'Scroll to a section',
-    run: (args, actions) => {
+    run: (args, { t, content, actions }) => {
+      const sectionIds = sectionIdsOf(content);
       const target = args[0]?.toLowerCase() as SectionId | undefined;
       if (!target || !sectionIds.includes(target)) {
-        return { error: true, output: `Usage: goto <${sectionIds.join('|')}>` };
+        return { error: true, output: fill(t.terminal.gotoUsage, { sections: sectionIds.join('|') }) };
       }
       actions.goto(target);
-      return { output: `Navigating to #${target}…` };
+      return { output: fill(t.terminal.navigating, { section: target }) };
     },
   },
   {
     name: 'history',
-    description: 'Show command history',
-    run: (_args, _actions, history) => ({
+    run: (_args, { t, history }) => ({
       output: history.length ? (
         <div>
           {history.map((h, i) => (
@@ -266,51 +251,48 @@ const COMMANDS: CommandDef[] = [
           ))}
         </div>
       ) : (
-        'No history yet.'
+        t.terminal.noHistory
       ),
     }),
   },
   {
     name: 'date',
-    description: 'Current date & time',
-    run: () => ({ output: new Date().toString() }),
+    run: (_args, { lang }) => ({ output: new Date().toLocaleString(lang === 'th' ? 'th-TH' : 'en-US', { dateStyle: 'full', timeStyle: 'medium' }) }),
   },
   {
     name: 'echo',
     usage: 'echo <text>',
-    description: 'Print text',
     run: (args) => ({ output: args.join(' ') }),
   },
   {
     name: 'clear',
-    description: 'Clear the screen',
     run: () => ({ clear: true }),
   },
 ];
 
 const HIDDEN: Record<string, CommandDef['run']> = {
-  sudo: () => ({ error: true, output: 'Permission denied: this terminal runs in user mode. Nice try.' }),
-  ls: () => ({ output: 'about/  skills/  projects/  journey/  contact/' }),
-  exit: () => ({ output: 'There is no escape — but you can scroll down.' }),
+  sudo: (_args, { t }) => ({ error: true, output: t.terminal.sudo }),
+  ls: () => ({ output: 'about/  skills/  projects/  journey/  credentials/  contact/' }),
+  exit: (_args, { t }) => ({ output: t.terminal.exit }),
 };
 
 export const commandNames = COMMANDS.map((c) => c.name);
 
-export function runCommand(input: string, actions: TerminalActions, history: string[]): CommandOutput {
+export function runCommand(input: string, ctx: CommandContext): CommandOutput {
   const [rawName, ...args] = input.trim().split(/\s+/);
   const name = rawName.toLowerCase();
   const command = COMMANDS.find((c) => c.name === name);
-  if (command) return command.run(args, actions, history);
-  if (HIDDEN[name]) return HIDDEN[name](args, actions, history);
-  return { error: true, output: `command not found: ${rawName}. Type "help" for a list of commands.` };
+  if (command) return command.run(args, ctx);
+  if (HIDDEN[name]) return HIDDEN[name](args, ctx);
+  return { error: true, output: fill(ctx.t.terminal.notFound, { cmd: rawName }) };
 }
 
-export function autocomplete(partial: string): string | null {
+export function autocomplete(partial: string, content: Content): string | null {
   const q = partial.trim().toLowerCase();
   if (!q || q.includes(' ')) {
     const [cmd, arg = ''] = q.split(/\s+/);
     if (cmd === 'goto') {
-      const match = sectionIds.find((s) => s.startsWith(arg));
+      const match = sectionIdsOf(content).find((s) => s.startsWith(arg));
       return match ? `goto ${match}` : null;
     }
     return null;

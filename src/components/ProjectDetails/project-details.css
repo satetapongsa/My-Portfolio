@@ -341,3 +341,21 @@
   height: auto;
   object-position: 50% 0%;
 }
+
+.pd__subtitle {
+  margin-top: 8px;
+  color: var(--c-cyan);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.pd-fact__repo {
+  margin-bottom: 10px;
+  font-size: 11.5px;
+  color: var(--c-text-3);
+  word-break: break-all;
+}
+
+.pd-shots__link {
+  display: block;
+}
