@@ -1,4 +1,4 @@
-import { Box, Code2, Cpu, Database, LayoutTemplate, Server, Wrench, type LucideIcon } from 'lucide-react';
+import { Box, BrainCircuit, Code2, Cpu, Database, LayoutTemplate, Server, Wrench, type LucideIcon } from 'lucide-react';
 import { skillCategories, visibleSkills } from '../../data/skills';
 import type { ProficiencyLevel, SkillCategoryIcon } from '../../data/types';
 import { Reveal } from '../ui/Reveal';
@@ -13,6 +13,7 @@ const ICONS: Record<SkillCategoryIcon, LucideIcon> = {
   tools: Wrench,
   automation: Cpu,
   cube: Box,
+  foundations: BrainCircuit,
 };
 
 /** Ordinal scale only — a label plus 1–4 signal bars, never a percentage. */
@@ -41,7 +42,7 @@ export function Skills() {
           index="02"
           label="Skills & Technologies"
           title="The toolkit, honestly labelled."
-          lead="Grouped by discipline, with proficiency described in words rather than invented percentages. Categories fill in as I learn."
+          lead="Grouped by discipline. Proficiency is described in words, never invented percentages — skills tagged résumé are the ones listed on my CV."
         />
 
         <Reveal className="skills__legend mono" y={12}>
@@ -51,6 +52,9 @@ export function Skills() {
               <SignalBars level={level} /> {level}
             </span>
           ))}
+          <span className="skills__legend-item">
+            <span className="skill-item__source">résumé</span> listed on my CV
+          </span>
         </Reveal>
 
         <div className="skills__grid">
@@ -74,8 +78,14 @@ export function Skills() {
                       <li key={skill.name} className="skill-item">
                         <span className="skill-item__name">{skill.name}</span>
                         <span className="skill-item__level mono">
-                          <SignalBars level={skill.level} />
-                          {skill.level}
+                          {skill.level ? (
+                            <>
+                              <SignalBars level={skill.level} />
+                              {skill.level}
+                            </>
+                          ) : (
+                            <span className="skill-item__source" title="Listed on my résumé">résumé</span>
+                          )}
                         </span>
                       </li>
                     ))}

@@ -120,12 +120,12 @@ const COMMANDS: CommandDef[] = [
                 <p className="term-accent">▸ {c.title}</p>
                 {visibleSkills(c).map((s) => (
                   <Row key={s.name} k={`  ${s.name}`}>
-                    <span className="term-muted">[{s.level}]</span>
+                    <span className="term-muted">[{s.level ?? "résumé"}]</span>
                   </Row>
                 ))}
               </div>
             ))}
-            <p className="term-muted term-gap">More categories are being filled in as I learn.</p>
+            <p className="term-muted term-gap">Tagged [résumé] = listed on my CV. Run "resume" to view it.</p>
           </div>
         ),
       };

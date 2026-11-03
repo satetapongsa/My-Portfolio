@@ -1,12 +1,16 @@
 /**
  * Skills. Only confirmed technologies are visible. Entries with
- * `placeholder: true` are kept here as templates and never rendered —
- * flip the flag (and set an honest `level`) once a skill is real.
+ * `placeholder: true` are kept here as templates and never rendered.
  *
  * Levels: 'Exploring' | 'Learning' | 'Familiar With' | 'Working Knowledge'
- * No percentages, on purpose.
+ * No percentages, on purpose. Skills taken from the résumé have no `level`
+ * (the résumé doesn't state one) and render with a "résumé" tag instead —
+ * add an honest `level` to any of them to show signal bars.
  */
-import type { SkillCategory } from './types';
+import type { Skill, SkillCategory } from './types';
+
+/** Listed under "Technical Skills" in Resume_Satetapong_Sanguansuk.pdf. */
+const fromResume = (...names: string[]): Skill[] => names.map((name) => ({ name, source: 'resume' }));
 
 export const skillCategories: SkillCategory[] = [
   {
@@ -14,45 +18,42 @@ export const skillCategories: SkillCategory[] = [
     title: 'Programming Languages',
     icon: 'code',
     description: 'Languages used to write software and logic.',
-    skills: [
-      { name: 'Language name', level: 'Learning', placeholder: true }, // PLACEHOLDER
-    ],
+    skills: fromResume('TypeScript', 'JavaScript (ES6+)'),
   },
   {
     id: 'frontend',
     title: 'Frontend Development',
     icon: 'layout',
     description: 'Building interfaces people interact with.',
-    skills: [
-      { name: 'Framework name', level: 'Learning', placeholder: true }, // PLACEHOLDER
-    ],
+    skills: fromResume('React.js', 'Next.js (App Router)', 'Tailwind CSS', 'HTML5', 'CSS3'),
   },
   {
     id: 'backend',
     title: 'Backend Development',
     icon: 'server',
     description: 'Services, APIs and application logic.',
-    skills: [
-      { name: 'Runtime / framework', level: 'Exploring', placeholder: true }, // PLACEHOLDER
-    ],
+    skills: fromResume('Node.js', 'Express.js', 'REST APIs', 'JWT Authentication'),
   },
   {
     id: 'databases',
     title: 'Databases',
     icon: 'database',
     description: 'Storing and modelling data.',
-    skills: [
-      { name: 'Database name', level: 'Exploring', placeholder: true }, // PLACEHOLDER
-    ],
+    skills: fromResume('PostgreSQL', 'Prisma ORM', 'Supabase'),
   },
   {
     id: 'tools',
     title: 'Development Tools',
     icon: 'tools',
-    description: 'Editors, version control and workflow.',
-    skills: [
-      { name: 'Tool name', level: 'Familiar With', placeholder: true }, // PLACEHOLDER
-    ],
+    description: 'Editors, version control, CI/CD and cloud.',
+    skills: fromResume('Git', 'GitHub', 'GitHub Actions (CI/CD)', 'VS Code', 'Postman', 'Vercel', 'AWS (Lambda)'),
+  },
+  {
+    id: 'foundations',
+    title: 'Core Foundations',
+    icon: 'foundations',
+    description: 'Computer science fundamentals behind the code.',
+    skills: fromResume('Data Structures & Algorithms', 'Object-Oriented Programming (OOP)', 'Database Design', 'Clean Code'),
   },
   {
     id: 'automation',

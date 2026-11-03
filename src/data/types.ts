@@ -85,13 +85,16 @@ export type ProficiencyLevel = 'Exploring' | 'Learning' | 'Familiar With' | 'Wor
 
 export interface Skill {
   name: string;
-  level: ProficiencyLevel;
+  /** Omitted when no honest level is known (e.g. skills taken from the résumé). */
+  level?: ProficiencyLevel;
+  /** Where the skill is documented; 'resume' shows a résumé tag. */
+  source?: 'resume';
   /** Placeholders stay in the data file but are never rendered. */
   placeholder?: boolean;
   note?: string;
 }
 
-export type SkillCategoryIcon = 'code' | 'layout' | 'server' | 'database' | 'tools' | 'automation' | 'cube';
+export type SkillCategoryIcon = 'code' | 'layout' | 'server' | 'database' | 'tools' | 'automation' | 'cube' | 'foundations';
 
 export interface SkillCategory {
   id: string;
