@@ -1,0 +1,145 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.bg > * {
+  position: absolute;
+}
+
+.bg__grid {
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139, 150, 168, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 150, 168, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+}
+
+.bg__glow {
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+.bg__glow--a {
+  width: 620px;
+  height: 620px;
+  top: -260px;
+  left: -160px;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.28), transparent 65%);
+}
+
+.bg__glow--b {
+  width: 700px;
+  height: 700px;
+  top: 10%;
+  right: -320px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22), transparent 65%);
+}
+
+.bg__glow--c {
+  width: 520px;
+  height: 520px;
+  bottom: -280px;
+  left: 30%;
+  background: radial-gradient(circle, rgba(56, 123, 255, 0.16), transparent 65%);
+}
+
+.bg__lines {
+  inset: 0;
+}
+
+.bg__lines span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(139, 150, 168, 0.06) 20%, rgba(139, 150, 168, 0.06) 80%, transparent);
+}
+
+.bg__lines span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 140px;
+  background: linear-gradient(180deg, transparent, rgba(0, 217, 255, 0.5), transparent);
+  animation: scan-y 9s linear infinite;
+  top: 0;
+  bottom: 0;
+}
+
+.bg__lines span:nth-child(2)::after {
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+.bg__lines span:nth-child(3)::after {
+  animation-duration: 11s;
+  animation-delay: -7s;
+}
+
+@media (max-width: 860px) {
+  .bg__lines span:nth-child(2) {
+    display: none;
+  }
+}
+
+.bg__particles {
+  inset: 0;
+}
+
+.bg__particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--c-cyan);
+  box-shadow: 0 0 6px var(--c-cyan);
+  opacity: 0;
+  animation: drift linear infinite;
+  will-change: transform, opacity;
+}
+
+.bg__particle--violet {
+  background: var(--c-violet);
+  box-shadow: 0 0 6px var(--c-violet);
+}
+
+.bg__noise {
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.bg__vignette {
+  inset: 0;
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(4, 6, 10, 0.7));
+}
+
+/* Cursor spotlight (desktop only) */
+.spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 640px;
+  height: 640px;
+  margin: -320px 0 0 -320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.07), rgba(139, 92, 246, 0.035) 35%, transparent 65%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  will-change: transform;
+}
+
+.spotlight.is-active {
+  opacity: 1;
+}

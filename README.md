@@ -1,111 +1,145 @@
-# 🚀 Satetapong - Modern Interactive Portfolio
+# Satetapong Sanguansuk — Personal Portfolio
+
+A modern personal portfolio built with **React, Vite and TypeScript**.
+
+[GitHub](https://github.com/satetapongsa) · [LinkedIn](https://th.linkedin.com/in/satetapongsa) · [TikTok](https://www.tiktok.com/@wavywvy)
+
+## About
+
+I'm **Satetapong Sanguansuk**, also known as **Wave** — a Computer Engineering student at
+Sripatum University, Bang Khen, and a developer interested in software development, web
+applications, system design, industrial automation and interactive 3D technology.
+
+## Major Portfolio Upgrade
+
+This repository originally contained my earlier portfolio, a Next.js + Tailwind site. It has
+now been upgraded to a completely new React experience, while the full Git history and the
+original files were kept (see [Legacy Portfolio Archive](#legacy-portfolio-archive)).
+
+What's new:
+
+- **Complete UI/UX redesign** — a dark, futuristic developer interface with a technical grid,
+  ambient lighting, cursor spotlight and a custom "WAVE" identity.
+- **Raw HTML opening** — the site first appears as a genuinely unstyled HTML profile page
+  (no CSS applied), then…
+- **Cinematic glitch boot sequence** — a 5-second "digital system failure": CRT tearing,
+  RGB split, pixel-block corruption, a NO SIGNAL moment, a diagnostic terminal, then the
+  interface reconstructs itself and reveals the portfolio. Skippable (button or `Esc`), and
+  replaced by a calm fade for visitors who prefer reduced motion.
+- **Interactive sections** — hero with a working terminal (`help`, `about`, `projects`,
+  `open <n>`, `certs`, `goto <section>` …), command palette (`Ctrl/⌘ + K`), filterable project
+  showcase with detail dialogs, skills, development journey timeline and contact form.
+- **Résumé integration** — view or download the CV directly from the site.
+- **Certificate showcase** — a Certifications & Credentials section with previews, a full-size
+  viewer, downloads and issuer verification links.
+- **Recovered assets** — the profile photo, résumé and certificates from the original
+  portfolio are reused (see [Assets & Documents](#assets--documents)).
+- **Responsive and accessible** — layouts from 320 px phones to large desktops, keyboard
+  navigation, focus management in dialogs and visible focus states.
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" alt="Portfolio Banner" width="100%" />
+  <img src="public/assets/legacy/other/portfolio.png" alt="Screenshot of the original portfolio before the upgrade" width="70%" />
+  <br /><sub>The original portfolio, before the upgrade.</sub>
 </p>
 
-<p align="center">
-  <strong>Modern, High-Performance, Futuristic Developer Portfolio Website</strong><br />
-  สร้างสรรค์ด้วย Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion และ tsParticles
-</p>
+## Tech Stack
 
-<p align="center">
-  <a href="https://github.com/satetapongsa"><img src="https://img.shields.io/badge/GitHub-satetapongsa-181717?style=for-the-badge&logo=github" alt="GitHub" /></a>
-  <a href="https://www.linkedin.com/in/satetapong-sanguansuk/"><img src="https://img.shields.io/badge/LinkedIn-Satetapong_Sanguansuk-0077B5?style=for-the-badge&logo=linkedin" alt="LinkedIn" /></a>
-  <a href="mailto:satetapongs@gmail.com"><img src="https://img.shields.io/badge/Email-satetapongs@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
-</p>
+From `package.json`:
 
----
+| | |
+| --- | --- |
+| UI | React 19 |
+| Language | TypeScript |
+| Build / dev server | Vite (with `@vitejs/plugin-react`) |
+| Animation | Motion (`motion/react`) and CSS keyframes |
+| Icons | Lucide React |
+| Styling | Plain CSS with design tokens (no CSS framework) |
+| Hosting | Vercel (`vercel.json` pins the Vite build) |
 
-## 🌟 ฟีเจอร์หลัก (Key Features)
-
-- **🎨 Futuristic & Cyberpunk UI/UX:** ดีไซน์สไตล์ Dark Mode ทันสมัย พร้อมเอฟเฟกต์ Glassmorphism, Spotlight Mouse Follower และ Interactive Background Particles
-- **🌐 ระบบรองรับ 2 ภาษา (Dual Language i18n):** สลับเปลี่ยนภาษาไทย (TH) และอังกฤษ (EN) ได้แบบ Real-time
-- **⚡ High Performance & Animations:** ขับเคลื่อนด้วย Next.js App Router (Turbopack) และ Framer Motion ลื่นไหลทุก Interaction
-- **💼 Interactive Portfolio Dashboard:**
-  - **Projects Showcase:** แสดงผลงานเด่นพร้อมลิงก์ Live Demo และ Source Code บน GitHub
-  - **Experience & Career Journey:** ไทม์ไลน์ประวัติการทำงานและการพัฒนา
-  - **Certificates Gallery:** แสดงใบประกาศนียบัตรและเกียรติบัตร (ด้าน Cyber Security, Pentest, Data Science, AI ฯลฯ) พร้อมระบบ Modal ซูมดูภาพขนาดเต็ม
-  - **Resume Viewer:** เปิดดูและดาวน์โหลดเรซูเม่ได้ทันทีผ่านเว็บไซต์
-- **📱 Fully Responsive Design:** รองรับการแสดงผลทุกหน้าจออย่างสมบูรณ์แบบ (Desktop, Tablet, Mobile)
-
----
-
-## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
-
-### **Frontend & Frameworks**
-- **Framework:** [Next.js 16](https://nextjs.org/) (App Router + Turbopack)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Interactive Particles:** [tsParticles](https://particles.js.org/) & `react-tsparticles`
-- **Typing Effects:** [react-type-animation](https://github.com/Orlandster/react-type-animation)
-
----
-
-## 📁 โครงสร้างโปรเจกต์ (Project Structure)
+## Project Structure
 
 ```text
 My-Portfolio/
-├── app/
-│   ├── favicon.ico         # เว็บไอคอน
-│   ├── globals.css         # ไฟล์สไตล์ Global และการตั้งค่า Tailwind
-│   ├── layout.tsx          # Root Layout
-│   ├── page.tsx            # หน้าหลัก Portfolio (Interactive Components & Dashboard)
-│   └── translations.ts     # ไฟล์จัดการเนื้อหา 2 ภาษา (TH / EN)
+├── index.html                 # Entry HTML — intentionally no stylesheets (raw phase)
 ├── public/
-│   ├── certificate/        # รูปภาพใบรับรองและเกียรติบัตร
-│   └── resume.pdf          # ไฟล์เรซูเม่
-├── package.json            # รายการ Dependencies และคำสั่ง Script
-├── tsconfig.json           # การตั้งค่า TypeScript
-└── README.md               # เอกสารโปรเจกต์
+│   ├── favicon.svg
+│   ├── assets/legacy/         # Files recovered from the original portfolio
+│   │   ├── profile/           # profile.png
+│   │   ├── resume/            # Resume_Satetapong_Sanguansuk.pdf
+│   │   ├── certificates/      # 10 certificate images
+│   │   └── other/             # unused screenshots kept for reference
+│   └── projects/              # drop real project screenshots here
+├── src/
+│   ├── main.tsx, App.tsx      # phase orchestration (raw → boot → reveal → ready)
+│   ├── Portfolio.tsx          # the styled portfolio shell
+│   ├── config/boot.ts         # boot timings + diagnostic messages
+│   ├── data/                  # ALL editable content: portfolio, projects, skills,
+│   │                          #   journey, certificates (+ types)
+│   ├── hooks/                 # useBootSequence, useActiveSection, useMediaQuery
+│   ├── services/contact.ts    # contact delivery (endpoint → mailto fallback)
+│   ├── styles/                # tokens, base styles, keyframes
+│   ├── utils/                 # links, clipboard, lazy loaders, asset paths
+│   └── components/            # RawDocument, BootSequence, Navigation, Hero, Terminal,
+│                              #   About, Skills, Projects, ProjectDetails, Journey,
+│                              #   Credentials, Contact, Footer, CommandPalette, ui/
+├── docs/ASSET_INVENTORY.md    # where every recovered file came from and where it went
+├── vercel.json
+├── vite.config.ts, tsconfig.json, package.json
 ```
 
----
+## Legacy Portfolio Archive
 
-## 🚀 วิธีการติดตั้งและรันในเครื่อง (Getting Started)
+The original website is preserved, unchanged, on the branch:
 
-### 1. โคลน Repository
+```
+archive/legacy-portfolio-before-upgrade-2026-11-03
+```
+
+The upgrade was made as a normal commit on top of the existing history — no commits were
+rewritten or removed — so the old version can be browsed or restored at any time:
+
+```bash
+git checkout archive/legacy-portfolio-before-upgrade-2026-11-03
+```
+
+## Installation & Development
+
+Requires Node.js 20+.
 
 ```bash
 git clone https://github.com/satetapongsa/My-Portfolio.git
 cd My-Portfolio
-```
-
-### 2. ติดตั้ง Dependencies
-
-```bash
 npm install
-# หรือ
-yarn install
-# หรือ
-pnpm install
+npm run dev          # http://localhost:5173
 ```
 
-### 3. รัน Development Server
+Append `?intro=skip` to the URL to jump straight to the portfolio while developing.
+
+## Production Build
 
 ```bash
-npm run dev
+npm run build        # TypeScript check (tsc -b) + Vite production build → dist/
+npm run preview      # serve the production build locally
+npm run typecheck    # TypeScript only
 ```
 
-เปิดเบราว์เซอร์ไปที่ [http://localhost:3000](http://localhost:3000) เพื่อดูเว็บไซต์
+## Assets & Documents
 
-### 4. คำสั่งอื่นๆ ที่มีประโยชน์
+| What | Where | Shown in |
+| --- | --- | --- |
+| Profile photo | `public/assets/legacy/profile/profile.png` | About section |
+| Résumé / CV | `public/assets/legacy/resume/Resume_Satetapong_Sanguansuk.pdf` | About ("View My CV", "Download Resume"), hero, command palette |
+| Certificates (10) | `public/assets/legacy/certificates/` | Certifications & Credentials section |
+| Project screenshots | `public/projects/` (empty — add real screenshots and set `cover.src` in `src/data/projects.ts`) | Project cards |
 
-- `npm run build` : สร้าง Production Build สำหรับ Deploy
-- `npm run start` : รันเซิร์ฟเวอร์แบบ Production
-- `npm run lint` : ตรวจสอบ Linting และความถูกต้องของโค้ด
+See [`docs/ASSET_INVENTORY.md`](docs/ASSET_INVENTORY.md) for the full mapping.
+
+## Editing content
+
+Everything personal lives in `src/data/`:
+`portfolio.ts` (identity, bio, contact, socials, résumé), `projects.ts`, `skills.ts`,
+`journey.ts` and `certificates.ts`. Components never hard-code personal information.
 
 ---
 
-## 📬 การติดต่อ (Contact)
-
-- **ชื่อ:** Satetapong Sanguansuk
-- **Email:** [satetapongs@gmail.com](mailto:satetapongs@gmail.com)
-- **LinkedIn:** [Satetapong Sanguansuk](https://www.linkedin.com/in/satetapong-sanguansuk/)
-- **GitHub:** [@satetapongsa](https://github.com/satetapongsa)
-
----
-
-<p align="center">Made with ❤️ by Satetapong</p>
+Designed & Developed by Wave.

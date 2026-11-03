@@ -13,12 +13,17 @@
 # testing
 /coverage
 
-# next.js
+# legacy next.js output (pre-upgrade)
 /.next/
 /out/
 
-# production
+# production (Vite builds to dist/)
 /build
+/dist
+
+# local editor / tooling
+/.claude
+*.local
 
 # misc
 .DS_Store
@@ -38,4 +43,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts

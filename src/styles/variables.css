@@ -1,0 +1,41 @@
+/*
+ * Design tokens. Declared on .wave-app (not :root) so they only exist inside
+ * the portfolio, never on the RAW page.
+ */
+.wave-app {
+  --c-bg: #080a0f;
+  --c-bg-2: #10141c;
+  --c-surface: #151b25;
+  --c-surface-2: #1a2230;
+  --c-line: rgba(139, 150, 168, 0.14);
+  --c-line-strong: rgba(139, 150, 168, 0.26);
+  --c-cyan: #00d9ff;
+  --c-blue: #387bff;
+  --c-violet: #8b5cf6;
+  --c-text: #f4f7fb;
+  --c-text-2: #8b96a8;
+  --c-text-3: #6b7587;
+  --c-danger: #ff6b8a;
+  --c-success: #3ee6b0;
+
+  --grad-signal: linear-gradient(100deg, var(--c-cyan) 0%, var(--c-blue) 50%, var(--c-violet) 100%);
+
+  --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+
+  --container: 1200px;
+  --gutter: clamp(20px, 4vw, 40px);
+  --nav-h: 68px;
+  --section-pad: clamp(88px, 12vw, 148px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--c-line);
+  --focus-ring: 0 0 0 2px var(--c-bg), 0 0 0 4px var(--c-cyan);
+}

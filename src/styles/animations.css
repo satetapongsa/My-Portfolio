@@ -1,0 +1,64 @@
+/* Shared keyframes for the portfolio. Names are prefixed to avoid clashes. */
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: var(--p-opacity, 0.5); }
+  90% { opacity: var(--p-opacity, 0.5); }
+  100% { transform: translate3d(var(--p-dx, 20px), var(--p-dy, -120px), 0); opacity: 0; }
+}
+
+@keyframes signal-flow {
+  to { stroke-dashoffset: -1000; }
+}
+
+@keyframes scan-y {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes level-rise {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(0.78); }
+}
+
+@keyframes app-reveal-calm {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rotate-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes border-spin {
+  to { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-phase='reveal'] .wave-app {
+    animation: app-reveal-calm 450ms ease both;
+  }
+  .wave-app *,
+  .wave-app *::before,
+  .wave-app *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

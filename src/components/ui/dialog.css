@@ -1,0 +1,54 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 48px);
+  background: rgba(4, 6, 10, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialog--center {
+  align-items: flex-start;
+}
+
+.dialog--palette {
+  align-items: flex-start;
+  padding-top: min(16vh, 140px);
+}
+
+.dialog__panel {
+  position: relative;
+  width: 100%;
+  margin-block: auto;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, #161d29, #10141c);
+  border: 1px solid var(--c-line-strong);
+  box-shadow: 0 40px 120px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 217, 255, 0.04);
+}
+
+.dialog--palette .dialog__panel {
+  margin-block: 0;
+}
+
+.dialog__panel:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+@media (max-width: 640px) {
+  /* Bottom sheet. margin-top:auto (not align-items:flex-end) keeps tall
+     content scrollable instead of overflowing above the viewport. */
+  .dialog--center {
+    padding: 48px 0 0;
+    align-items: flex-start;
+  }
+  .dialog--center .dialog__panel {
+    margin-block: auto 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

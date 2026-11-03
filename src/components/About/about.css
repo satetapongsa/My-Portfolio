@@ -1,0 +1,234 @@
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.about__bio {
+  display: grid;
+  gap: 20px;
+  color: var(--c-text-2);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.75;
+}
+
+.about__lead {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--c-text);
+}
+
+.about__spec {
+  padding: 22px 24px 18px;
+}
+
+.about__spec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed var(--c-line-strong);
+  font-size: 12px;
+  color: var(--c-text-2);
+}
+
+.about__spec-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--c-success);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10.5px;
+}
+
+.about__spec-list {
+  display: grid;
+  margin: 0;
+}
+
+.about__spec-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--c-line);
+  font-size: 13px;
+}
+
+.about__spec-row:last-child {
+  border-bottom: 0;
+}
+
+.about__spec-row dt {
+  color: var(--c-text-3);
+}
+
+.about__spec-row dt::after {
+  content: ':';
+}
+
+.about__spec-row dd {
+  margin: 0;
+  color: var(--c-text);
+}
+
+.about__blocks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(48px, 7vw, 80px);
+}
+
+.about__block {
+  padding: 24px;
+}
+
+.about__block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.about__block-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: rgba(0, 217, 255, 0.08);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  color: var(--c-cyan);
+}
+
+.about__block-icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.about__block-index {
+  font-size: 11px;
+  color: var(--c-text-3);
+}
+
+.about__block h3 {
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.about__block ul {
+  display: grid;
+  gap: 8px;
+}
+
+.about__block li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14.5px;
+  color: var(--c-text-2);
+  line-height: 1.5;
+}
+
+.about__block li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 1px;
+  background: var(--c-cyan);
+}
+
+@media (max-width: 1024px) {
+  .about__blocks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .about__blocks {
+    grid-template-columns: 1fr;
+  }
+  .about__spec-row {
+    grid-template-columns: 90px 1fr;
+  }
+}
+
+/* Résumé CTA */
+.about__resume {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Real profile photo, framed like a system capture */
+.about__portrait {
+  position: relative;
+  margin: -22px -24px 18px;
+  aspect-ratio: 4 / 3.4;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-bottom: 1px solid var(--c-line);
+  background: #0b0f16;
+}
+
+.about__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+}
+
+.about__portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 55%, rgba(8, 10, 15, 0.85)),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+
+.about__portrait figcaption {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(8, 10, 15, 0.75);
+  border: 1px solid var(--c-line-strong);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--c-text);
+}
+
+@media (max-width: 860px) {
+  .about__spec {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 520px) {
+  .about__portrait {
+    margin: -22px -24px 16px;
+  }
+  .about__resume .btn {
+    flex: 1 1 auto;
+  }
+}
