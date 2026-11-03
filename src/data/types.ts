@@ -104,9 +104,10 @@ export interface SkillCategory {
   skills: Skill[];
 }
 
-export type ProjectFilter = 'web' | 'automation' | 'interactive' | 'other';
+export type ProjectFilter = 'ai' | 'web' | 'tools' | 'iot' | 'interactive';
 
-export type ProjectStage = 'concept' | 'design' | 'in-progress' | 'built' | 'completed';
+/** completed / in-progress / experimental / archived describe repository-backed work; concept = not yet built. */
+export type ProjectStage = 'concept' | 'design' | 'in-progress' | 'experimental' | 'built' | 'completed' | 'archived';
 
 export interface ProjectLink {
   /** Empty string = not published yet; the button renders disabled. */
@@ -121,6 +122,8 @@ export interface ArchitectureLayer {
 
 export interface Project {
   id: string;
+  /** Repository-backed work shown in the main showcase grid; others appear under "Concepts". */
+  featured?: boolean;
   /** Also list this project on the unstyled intro page. */
   onRawPage?: boolean;
   /** Short identifier shown in monospace, e.g. "PRJ-01". */
@@ -132,20 +135,27 @@ export interface Project {
   tech: string[];
   status: { label: string; stage: ProjectStage };
   cover: {
-    /** Put a real screenshot in /public/projects and set its path here. */
+    /** Real image under /public/assets/projects/<id>/. Empty = built-in illustration. */
     src: string;
     alt: string;
+    /** 'screenshot' = captured from the running app; 'artwork' = preview art from the repository. */
+    kind?: 'screenshot' | 'artwork';
     /** Built-in illustrated placeholder used while `src` is empty. */
     placeholder: 'tank-system' | 'penthouse' | 'generic';
   };
-  links: { github: ProjectLink; demo: ProjectLink };
+  links: {
+    github: ProjectLink;
+    demo: ProjectLink;
+    /** Additional public repositories that belong to the same project. */
+    related?: ProjectLink[];
+  };
   details: {
     overview: string;
     objective: string;
     architecture: ArchitectureLayer[];
     features: string[];
     /** Real screenshots only. Empty array renders a clearly-labelled slot. */
-    screenshots: { src: string; caption: string }[];
+    screenshots: { src: string; caption: string; width?: number; height?: number }[];
     process: string[];
     challenges: { challenge: string; approach: string }[];
   };

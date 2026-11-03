@@ -9,27 +9,24 @@ export const STAGE_DOT: Record<ProjectStage, string> = {
   concept: 'status-dot--violet',
   design: 'status-dot--amber',
   'in-progress': 'status-dot--amber',
+  experimental: 'status-dot--violet',
   built: 'status-dot--cyan',
   completed: '',
+  archived: 'status-dot--muted',
 };
 
+/** Renders only when the URL is real — no dead or placeholder buttons. */
 export function ProjectLinkButton({ url, label, kind }: { url: string; label: string; kind: 'github' | 'demo' }) {
-  const icon = kind === 'github' ? <GitHubIcon /> : <ExternalLink aria-hidden />;
-  if (isConfigured(url)) {
-    return (
-      <a className="btn btn--ghost btn--sm" href={url} target="_blank" rel="noopener noreferrer">
-        {icon} {label}
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
-    );
-  }
+  if (!isConfigured(url)) return null;
   return (
-    <span className="btn btn--ghost btn--sm" aria-disabled="true" title="Not published yet">
-      {icon} {label}
-      <span className="sr-only"> — not published yet</span>
-    </span>
+    <a className="btn btn--ghost btn--sm" href={url} target="_blank" rel="noopener noreferrer">
+      {kind === 'github' ? <GitHubIcon /> : <ExternalLink aria-hidden />} {label}
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
   );
 }
+
+const MAX_CHIPS = 6;
 
 interface ProjectCardProps {
   project: Project;
@@ -37,6 +34,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onOpen }: ProjectCardProps) {
+  const extra = project.tech.length - MAX_CHIPS;
   return (
     <motion.article
       layout
@@ -67,11 +65,16 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
         <p className="project-card__summary">{project.summary}</p>
 
         <ul className="project-card__tech" aria-label="Technologies">
-          {project.tech.map((t) => (
+          {project.tech.slice(0, MAX_CHIPS).map((t) => (
             <li key={t} className="chip chip--accent">
               {t}
             </li>
           ))}
+          {extra > 0 && (
+            <li className="chip" title={project.tech.slice(MAX_CHIPS).join(', ')}>
+              +{extra} more
+            </li>
+          )}
         </ul>
 
         <div className="project-card__actions">
@@ -79,7 +82,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
             View Details <ArrowUpRight aria-hidden />
             <span className="sr-only"> about {project.title}</span>
           </button>
-          <ProjectLinkButton url={project.links.github.url} label={project.links.github.label} kind="github" />
+          <ProjectLinkButton url={project.links.github.url} label="View Source" kind="github" />
           <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
         </div>
       </div>

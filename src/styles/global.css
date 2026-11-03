@@ -506,3 +506,12 @@ html[data-phase='reveal'] .wave-app {
 .status-dot--cyan::after {
   border-color: var(--c-cyan);
 }
+
+.status-dot--muted {
+  background: var(--c-text-3);
+  box-shadow: none;
+}
+
+.status-dot--muted::after {
+  display: none;
+}

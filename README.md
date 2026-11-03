@@ -42,6 +42,21 @@ What's new:
   <br /><sub>The original portfolio, before the upgrade.</sub>
 </p>
 
+## Featured Projects
+
+Selected from my public GitHub repositories after reviewing each one's README, dependencies
+and source code. Screenshots in the portfolio are captured from the projects' own deployments.
+
+| Project | What it is | Technologies | Links |
+| --- | --- | --- | --- |
+| **FinGuard AI** | Multi-agent regulatory intelligence workflow for banking compliance — detects regulation changes, maps policy impact, requires human approval, keeps a SHA-256 audit chain. *In development; demo runs on synthetic data.* | Next.js 15, React 19, TypeScript, Prisma, PostgreSQL + pgvector, Vercel AI SDK, NextAuth | [Source](https://github.com/satetapongsa/Finguard-Ai) · [Live demo](https://finguard-ai-one.vercel.app/dashboard) |
+| **WAVY IDE** | Browser-based IDE: Monaco editor, IndexedDB virtual file system, xterm.js terminal, in-browser JSX/TSX preview and an AI coding agent with diff review. *Experimental, v0.1.0.* | Next.js 16, React 19, TypeScript, Monaco, xterm.js, Sucrase, Zustand, Vitest | [Source](https://github.com/satetapongsa/WAVY_IDE) · [Live demo](https://wavy-ide-beige.vercel.app) |
+| **AI Parcel Damage Detection System** | Conveyor inspection line: YOLOv11n + OpenCV vision, ESP32 sensors and pusher, offline-capable edge gateway, cloud API and dashboards. *In progress; dashboards run in demo mode.* | Python, YOLOv11n, OpenCV, CiRA CORE, ESP32, MQTT, Node.js / Express, SQLite, Neon Postgres, React 19 | [Source](https://github.com/satetapongsa/parcel-damage-detection) · [Dashboard repo](https://github.com/satetapongsa/AI-Parcel-Box-Damage-Detection-System) · [Live demo](https://parcel-damage-detection.vercel.app) |
+| **MIRRIX — Real-World Intelligence** | Geospatial situational-awareness dashboard for Bangkok with an ingestion pipeline for geocoding, deduplication and data freshness. *Experimental prototype on seeded sample data.* | Next.js 16, React 19, TypeScript, MapLibre GL, Turf.js, WebSocket | [Source](https://github.com/satetapongsa/alertbkk-map) |
+| **SPARE CHANGE** | Narrative street-life simulator game — 15 real cities, 266 events, 40 endings, Thai / English. *Completed and playable online.* | Next.js 14, React 18, TypeScript, Tailwind CSS, Neon Postgres | [Source](https://github.com/satetapongsa/beggarsrole) · [Play](https://beggarsrole.vercel.app/) |
+
+All repositories: [github.com/satetapongsa](https://github.com/satetapongsa?tab=repositories)
+
 ## Tech Stack
 
 From `package.json`:
@@ -68,7 +83,7 @@ My-Portfolio/
 │   │   ├── resume/            # Resume_Satetapong_Sanguansuk.pdf
 │   │   ├── certificates/      # 10 certificate images
 │   │   └── other/             # unused screenshots kept for reference
-│   └── projects/              # drop real project screenshots here
+│   └── assets/projects/       # screenshots of the featured GitHub projects
 ├── src/
 │   ├── main.tsx, App.tsx      # phase orchestration (raw → boot → reveal → ready)
 │   ├── Portfolio.tsx          # the styled portfolio shell
@@ -130,7 +145,7 @@ npm run typecheck    # TypeScript only
 | Profile photo | `public/assets/legacy/profile/profile.png` | About section |
 | Résumé / CV | `public/assets/legacy/resume/Resume_Satetapong_Sanguansuk.pdf` | About ("View My CV", "Download Resume"), hero, command palette |
 | Certificates (10) | `public/assets/legacy/certificates/` | Certifications & Credentials section |
-| Project screenshots | `public/projects/` (empty — add real screenshots and set `cover.src` in `src/data/projects.ts`) | Project cards |
+| Project screenshots | `public/assets/projects/<project>/` | Featured Works cards and project detail views |
 
 See [`docs/ASSET_INVENTORY.md`](docs/ASSET_INVENTORY.md) for the full mapping.
 

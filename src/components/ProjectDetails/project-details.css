@@ -331,3 +331,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+.pd-fact__value {
+  color: var(--c-text-2);
+  font-size: 14px;
+}
+
+.pd-shots img {
+  height: auto;
+  object-position: 50% 0%;
+}

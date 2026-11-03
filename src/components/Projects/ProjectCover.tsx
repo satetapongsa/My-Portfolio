@@ -117,8 +117,11 @@ export function ProjectCover({ project, priority = false }: { project: Project; 
   const { cover } = project;
   if (cover.src) {
     return (
-      <div className="cover">
-        <img src={cover.src} alt={cover.alt} loading={priority ? 'eager' : 'lazy'} decoding="async" width={800} height={500} />
+      <div className={`cover cover--image${cover.kind === 'artwork' ? ' cover--artwork' : ''}`}>
+        <img src={cover.src} alt={cover.alt} loading={priority ? 'eager' : 'lazy'} decoding="async" width={1440} height={900} />
+        {cover.kind && (
+          <span className="cover__label mono">{cover.kind === 'screenshot' ? 'live screenshot' : 'project artwork'}</span>
+        )}
       </div>
     );
   }

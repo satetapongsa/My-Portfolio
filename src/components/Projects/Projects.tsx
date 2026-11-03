@@ -1,10 +1,13 @@
 import { AnimatePresence, motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { projectFilters, projects } from '../../data/projects';
+import { conceptProjects, featuredProjects, githubReposUrl, projectFilters } from '../../data/projects';
 import type { Project, ProjectFilter } from '../../data/types';
+import { GitHubIcon } from '../ui/BrandIcons';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
-import { ProjectCard } from './ProjectCard';
+import { ProjectCard, STAGE_DOT } from './ProjectCard';
+import { ProjectCover } from './ProjectCover';
 import './projects.css';
 
 type FilterId = ProjectFilter | 'all';
@@ -13,12 +16,15 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
   const [filter, setFilter] = useState<FilterId>('all');
 
   const counts = useMemo(() => {
-    const map = new Map<FilterId, number>([['all', projects.length]]);
-    projects.forEach((p) => map.set(p.filter, (map.get(p.filter) ?? 0) + 1));
+    const map = new Map<FilterId, number>([['all', featuredProjects.length]]);
+    featuredProjects.forEach((p) => map.set(p.filter, (map.get(p.filter) ?? 0) + 1));
     return map;
   }, []);
 
-  const visible = useMemo(() => (filter === 'all' ? projects : projects.filter((p) => p.filter === filter)), [filter]);
+  const visible = useMemo(
+    () => (filter === 'all' ? featuredProjects : featuredProjects.filter((p) => p.filter === filter)),
+    [filter],
+  );
   const activeLabel = projectFilters.find((f) => f.id === filter)?.label ?? 'All';
 
   return (
@@ -30,10 +36,10 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
           label="Featured Works"
           title={
             <>
-              Systems in <span className="gradient-text">progress</span>.
+              Built, shipped, <span className="gradient-text">iterating</span>.
             </>
           }
-          lead="Engineering projects I’m actively designing and building. Each one is documented as it develops — concepts are labelled as concepts."
+          lead="Five projects selected from my GitHub for engineering depth and range. Screenshots come from each project’s own live deployment, and every status is stated as it is."
         />
 
         <Reveal className="projects__filters" y={12}>
@@ -75,7 +81,7 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
                 exit={{ opacity: 0 }}
               >
                 <p className="mono projects__empty-code">0 results</p>
-                <p>No {activeLabel.toLowerCase()} projects published yet — new work will appear here.</p>
+                <p>No featured {activeLabel.toLowerCase()} projects yet.</p>
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setFilter('all')}>
                   Show all projects
                 </button>
@@ -83,6 +89,39 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
             )}
           </AnimatePresence>
         </motion.div>
+
+        <Reveal className="projects__more" y={12}>
+          <a className="btn btn--ghost" href={githubReposUrl} target="_blank" rel="noopener noreferrer">
+            <GitHubIcon /> View all repositories on GitHub
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </Reveal>
+
+        {conceptProjects.length > 0 && (
+          <Reveal className="projects__concepts" y={16}>
+            <div className="projects__concepts-head">
+              <h3>Concepts in development</h3>
+              <p className="mono">design stage · no public repository yet</p>
+            </div>
+            <div className="projects__concepts-grid">
+              {conceptProjects.map((project) => (
+                <button key={project.id} type="button" className="concept-card glow-card" onClick={() => onOpen(project)}>
+                  <ProjectCover project={project} />
+                  <span>
+                    <span className="concept-card__title">{project.title}</span>
+                    <span className="concept-card__meta mono">
+                      <span className={`status-dot ${STAGE_DOT[project.status.stage]}`} aria-hidden="true" />
+                      {project.categoryLabel}
+                    </span>
+                    <span className="concept-card__cta">
+                      View concept <ArrowRight aria-hidden />
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

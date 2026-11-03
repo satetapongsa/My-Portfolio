@@ -24,6 +24,17 @@ the actual certificates and were corrected.
 | `public/mai.png` | `public/assets/legacy/other/mai.png` | Not displayed — screenshot of a "MYRIOX Enterprise AI" dashboard that does not match any listed project |
 | `public/portfolio.png` | `public/assets/legacy/other/portfolio.png` | README — screenshot of the original portfolio |
 
+## Featured project images (added from GitHub)
+
+| File | Source | Used for |
+| --- | --- | --- |
+| `public/assets/projects/finguard-ai/dashboard.png` | Screenshot of https://finguard-ai-one.vercel.app/dashboard (headless Edge, 1440×900) | FinGuard AI cover + detail |
+| `public/assets/projects/wavy-ide/workspace.png` | Screenshot of https://wavy-ide-beige.vercel.app | WAVY IDE cover + detail |
+| `public/assets/projects/parcel-damage-detection/inspector-dashboard.png` | Screenshot of https://parcel-damage-detection.vercel.app (demo mode) | Parcel system cover + detail |
+| `public/assets/projects/parcel-damage-detection/conveyor-hub.png` | Screenshot of https://ai-parcel-box-damage-detection-syst.vercel.app | Parcel system detail |
+| `public/assets/projects/spare-change/title-screen.png` | Screenshot of https://beggarsrole.vercel.app | SPARE CHANGE cover + detail |
+| `public/assets/projects/mirrix/artwork.jpg` | `public/og-preview.jpg` from github.com/satetapongsa/alertbkk-map (project artwork, not a UI screenshot) | MIRRIX cover |
+
 ## Not migrated
 
 | File | Reason |

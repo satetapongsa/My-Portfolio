@@ -359,3 +359,111 @@
     align-items: flex-start;
   }
 }
+
+/* Real covers: screenshots are anchored to the top of the UI */
+.cover--image img {
+  object-position: 50% 0%;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.cover--artwork img {
+  object-position: 50% 50%;
+}
+
+@media (hover: hover) {
+  .project-card:hover .cover--image img {
+    transform: scale(1.03);
+  }
+}
+
+.projects__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* Concepts in development */
+.projects__concepts {
+  margin-top: clamp(56px, 8vw, 88px);
+}
+
+.projects__concepts-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--c-line-strong);
+}
+
+.projects__concepts-head h3 {
+  font-size: 20px;
+}
+
+.projects__concepts-head p {
+  color: var(--c-text-3);
+  font-size: 13px;
+}
+
+.projects__concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+}
+
+.concept-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 14px;
+  text-align: left;
+  width: 100%;
+  border-radius: var(--radius-lg);
+}
+
+.concept-card .cover {
+  border-radius: 10px;
+}
+
+.concept-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16.5px;
+  line-height: 1.3;
+}
+
+.concept-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--c-text-2);
+}
+
+.concept-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--c-cyan);
+}
+
+.concept-card__cta svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 520px) {
+  .concept-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.concept-card__title {
+  display: block;
+}

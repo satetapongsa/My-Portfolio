@@ -62,15 +62,23 @@ export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
 
           <div className="pd__layout">
             <div className="pd__main">
-              <Block index="01" title="Project Overview">
+              <Block index="01" title="Overview">
                 <p>{project.details.overview}</p>
               </Block>
 
-              <Block index="02" title="Objective">
+              <Block index="02" title="Problem / Objective">
                 <p>{project.details.objective}</p>
               </Block>
 
-              <Block index="03" title="System Architecture">
+              <Block index="03" title="Key Features">
+                <ul className="pd-features">
+                  {project.details.features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+              </Block>
+
+              <Block index="04" title="Technical Implementation">
                 <ol className="pd-arch">
                   {project.details.architecture.map((layer, i) => (
                     <li key={layer.name} className="pd-arch__node">
@@ -84,20 +92,12 @@ export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
                 </ol>
               </Block>
 
-              <Block index="04" title="Key Features">
-                <ul className="pd-features">
-                  {project.details.features.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-              </Block>
-
               <Block index="05" title="Screenshots">
                 {project.details.screenshots.length > 0 ? (
                   <div className="pd-shots">
                     {project.details.screenshots.map((shot) => (
                       <figure key={shot.src}>
-                        <img src={shot.src} alt={shot.caption} loading="lazy" decoding="async" />
+                        <img src={shot.src} alt={shot.caption} loading="lazy" decoding="async" width={shot.width} height={shot.height} />
                         <figcaption>{shot.caption}</figcaption>
                       </figure>
                     ))}
@@ -150,14 +150,14 @@ export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
 
             <aside className="pd__aside" aria-label="Project facts">
               <div className="pd-fact">
-                <p className="pd-fact__label mono">Status</p>
+                <p className="pd-fact__label mono">Project Status</p>
                 <p className="pd-fact__value pd-fact__status">
                   <span className={`status-dot ${STAGE_DOT[project.status.stage]}`} aria-hidden="true" />
                   {project.status.label}
                 </p>
               </div>
               <div className="pd-fact">
-                <p className="pd-fact__label mono">Technologies Used</p>
+                <p className="pd-fact__label mono">Technology Stack</p>
                 <ul className="pd-fact__tech">
                   {project.tech.map((t) => (
                     <li key={t} className="chip chip--accent">
@@ -167,11 +167,18 @@ export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
                 </ul>
               </div>
               <div className="pd-fact">
-                <p className="pd-fact__label mono">Links</p>
-                <div className="pd-fact__links">
-                  <ProjectLinkButton url={project.links.github.url} label={project.links.github.label} kind="github" />
-                  <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
-                </div>
+                <p className="pd-fact__label mono">{project.links.github.url ? 'GitHub Source' : 'Source'}</p>
+                {project.links.github.url || project.links.demo.url ? (
+                  <div className="pd-fact__links">
+                    <ProjectLinkButton url={project.links.github.url} label="View Source" kind="github" />
+                    {project.links.related?.map((link) => (
+                      <ProjectLinkButton key={link.url} url={link.url} label={link.label} kind="github" />
+                    ))}
+                    <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
+                  </div>
+                ) : (
+                  <p className="pd-fact__value">No public repository yet — this project is at the concept stage.</p>
+                )}
               </div>
             </aside>
           </div>
