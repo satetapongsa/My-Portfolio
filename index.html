@@ -7,8 +7,9 @@
     <meta name="description" content="Satetapong Sanguansuk (Wave) is a Computer Engineering student at Sripatum University, Bang Khen, building web applications, AI and IoT systems, and interactive experiences. Case studies, engineering notes and live experiments." />
     <meta name="author" content="Satetapong Sanguansuk" />
     <meta name="theme-color" content="#080A0F" />
-    <!-- Production URL on Vercel. If a custom domain is added later, update it here,
-         in src/config/site.ts, public/robots.txt and public/sitemap.xml (docs/CUSTOM_DOMAIN_SETUP.md). -->
+    <!-- Home-page defaults. `npm run build` (scripts/prerender.mjs) writes one HTML file per
+         route with its own title, description, canonical, social tags and JSON-LD from
+         src/seo/routeMeta.ts, plus 404.html. Production URL lives in src/config/site.ts. -->
     <link rel="canonical" href="https://satetapong-portfolio.vercel.app/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -34,7 +35,7 @@
     <meta name="twitter:image:alt" content="Satetapong Sanguansuk — Wave — Computer Engineering Student &amp; Developer" />
 
     <!-- Structured data: only verifiable facts (no employers, titles or awards). -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="site-ld">
       {
         "@context": "https://schema.org",
         "@graph": [

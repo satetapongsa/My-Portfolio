@@ -15,9 +15,9 @@ a **placeholder**, not a real or reserved domain.
 | Custom domains supported? | Yes — Vercel supports custom domains on all plans, including the free Hobby plan |
 | HTTPS | Automatic: Vercel issues and renews the TLS certificate once DNS points to it |
 
-The site is a single-page app. `vercel.json` rewrites every path without a file
-extension to `index.html`, so routes such as `/projects/wavy-ide` keep working
-on any domain.
+Every valid route is prerendered to its own HTML file at build time
+(`scripts/prerender.mjs`), and `vercel.json` uses `cleanUrls`, so routes such as
+`/projects/wavy-ide` work on any domain and unknown paths return a real 404.
 
 ## 1. Buy a domain
 
@@ -72,10 +72,9 @@ replace `https://satetapong-portfolio.vercel.app` with the new address in:
 
 | File | What uses it |
 | --- | --- |
-| `src/config/site.ts` (`SITE_URL`) | canonical links, Open Graph URLs, article share links |
-| `index.html` | canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD |
+| `src/config/site.ts` (`SITE_URL`) | canonical links, Open Graph URLs, JSON-LD and the sitemap of every prerendered page (`npm run build`) |
+| `index.html` | home-page defaults and the site-wide JSON-LD |
 | `public/robots.txt` | sitemap location |
-| `scripts/generate-sitemap.mjs` (`SITE`) | sitemap URLs (regenerated on every build) |
 | `scripts/generate-og.mjs` (`url`) | the address printed on the share image — then run `npm run og` |
 
 Then commit and push; Vercel redeploys automatically. Keep the

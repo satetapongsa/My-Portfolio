@@ -1,7 +1,7 @@
 import type { Lang } from '../../i18n/lang';
 
 const en = {
-  metaSuffix: 'Case study · Satetapong Sanguansuk (Wave)',
+  metaSuffix: 'Case Study · Satetapong Sanguansuk',
   breadcrumb: 'Breadcrumb',
   home: 'Home',
   projects: 'Projects',
@@ -49,7 +49,7 @@ const en = {
 export type CaseStudyStrings = typeof en;
 
 const th: CaseStudyStrings = {
-  metaSuffix: 'กรณีศึกษา · เศรษฐพงศ์ สงวนสุข (Wave)',
+  metaSuffix: 'กรณีศึกษา · เศรษฐพงศ์ สงวนสุข',
   breadcrumb: 'เส้นทางนำทาง',
   home: 'หน้าแรก',
   projects: 'ผลงาน',

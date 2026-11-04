@@ -53,10 +53,11 @@ export default function ArticlePage({ slug }: { slug: string }) {
   const canShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
   useDocumentMeta({
-    title: article ? `${article.title} · ${s.metaTitle}` : s.notFound,
-    description: article?.description ?? s.metaDescription,
+    title: article ? `${article.title} · ${s.articleSuffix}` : '',
+    description: article?.description ?? '',
     path: routePaths.article(slug),
     type: 'article',
+    disabled: !article,
   });
 
   // Highlight the heading currently being read in the table of contents.

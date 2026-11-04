@@ -5,12 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.mjs && tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs",
     "typecheck": "tsc -b --noEmit",
     "preview": "vite preview",
     "images": "node scripts/optimize-images.mjs",
-    "og": "node scripts/generate-og.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "og": "node scripts/generate-og.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.67.0",

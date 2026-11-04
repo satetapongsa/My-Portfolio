@@ -148,3 +148,75 @@ html[lang='th'] .page-head__title {
   overflow-wrap: anywhere;
 }
 
+
+/* ── 404 (in the shell chunk so a direct visit to an unknown URL is styled) ── */
+.page-404 {
+  min-height: 72vh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+  padding-top: calc(var(--nav-h) + 48px);
+  padding-bottom: 80px;
+}
+
+.page-404__code {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+}
+
+.page-404__title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6.4vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  overflow-wrap: anywhere;
+}
+
+.page-404__title:focus {
+  outline: none;
+}
+
+.page-404__body {
+  color: var(--c-text-2);
+  max-width: 52ch;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+}
+
+.page-404__path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--c-text-2);
+  max-width: 100%;
+}
+
+.page-404__path code {
+  padding: 1px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--c-line);
+  background: var(--c-bg-2);
+  color: var(--c-text);
+  overflow-wrap: anywhere;
+}
+
+.page-404__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+html[lang='th'] .page-404__code {
+  letter-spacing: 0.02em;
+}
+
+html[lang='th'] .page-404__title {
+  letter-spacing: 0;
+  line-height: 1.25;
+}

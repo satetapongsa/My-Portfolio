@@ -4,6 +4,7 @@ import { MediaGallery } from '../../components/ProjectCaseStudy/MediaGallery';
 import { STAGE_DOT } from '../../components/Projects/ProjectCard';
 import { ProjectCover } from '../../components/Projects/ProjectCover';
 import { useDocumentMeta } from '../../components/SEO/useDocumentMeta';
+import { absoluteUrl, projectOgImagePath } from '../../config/site';
 import { GitHubIcon } from '../../components/ui/BrandIcons';
 import { caseStudies, languageSnapshot, LANGUAGE_SNAPSHOT_DATE } from '../../data/caseStudies';
 import { useI18n } from '../../i18n/I18nProvider';
@@ -27,9 +28,13 @@ export default function ProjectCaseStudyPage({ slug }: { slug: string }) {
   const study = project ? caseStudies[project.id]?.[lang] : undefined;
 
   useDocumentMeta({
-    title: project ? `${project.title} — ${s.metaSuffix}` : s.notFoundTitle,
-    description: project ? project.summary : s.notFoundBody,
+    title: project ? `${project.title} — ${s.metaSuffix}` : '',
+    description: project?.summary ?? '',
     path: routePaths.project(slug),
+    type: 'article',
+    image: project?.cover ? absoluteUrl(projectOgImagePath(project.id)) : undefined,
+    // An unknown slug renders the 404 page, which owns the metadata.
+    disabled: !project || !study,
   });
 
   if (!project || !study) return <NotFoundPage />;

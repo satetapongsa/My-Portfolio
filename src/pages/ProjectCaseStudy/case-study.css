@@ -765,37 +765,6 @@
   gap: 12px;
 }
 
-/* ── 404 ── */
-.page-404 {
-  min-height: 70vh;
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  gap: 18px;
-  padding-top: calc(var(--nav-h) + 48px);
-  padding-bottom: 80px;
-}
-
-.page-404__code {
-  font-size: 12px;
-  color: var(--c-text-2);
-  overflow-wrap: anywhere;
-}
-
-.page-404__title {
-  font-family: var(--font-display);
-  font-size: clamp(40px, 7vw, 76px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-}
-
-.page-404__body {
-  color: var(--c-text-2);
-  max-width: 52ch;
-  line-height: 1.7;
-}
-
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .cs-layout {
