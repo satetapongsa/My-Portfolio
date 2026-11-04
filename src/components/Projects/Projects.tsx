@@ -43,7 +43,8 @@ export function Projects({ onQuickView }: { onQuickView: (project: Project) => v
 
         <Reveal className="projects__filters" y={12}>
           <div role="group" aria-label={t.projects.filterGroup} className="projects__filter-group">
-            {projectFilters.map((f) => {
+            {/* Categories with no featured project are hidden rather than shown as "0". */}
+            {projectFilters.filter((f) => (counts.get(f.id) ?? 0) > 0).map((f) => {
               const count = counts.get(f.id) ?? 0;
               const isActive = f.id === filter;
               return (
@@ -69,7 +70,13 @@ export function Projects({ onQuickView }: { onQuickView: (project: Project) => v
         <motion.div layout className="projects__grid">
           <AnimatePresence initial={false}>
             {visible.map((project, i) => (
-              <ProjectCard key={project.id} project={project} onQuickView={onQuickView} priority={filter === 'all' && i < 2} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onQuickView={onQuickView}
+                priority={filter === 'all' && i < 2}
+                featured={filter === 'all' && project.rank === 1}
+              />
             ))}
             {visible.length === 0 && (
               <motion.div

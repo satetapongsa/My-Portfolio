@@ -31,9 +31,17 @@ const shot = (path: string): ProjectImage => ({
   height: 900,
 });
 
+/** A 640×480 synthetic test image from the parcel repository's datasets/synthetic folder. */
+const sample = (name: 'tear' | 'printed'): ProjectImage => {
+  const src = asset(`assets/projects/parcel-damage-detection/synthetic-${name}-640.webp`);
+  return { src, thumb: src, width: 640, height: 480 };
+};
+
+/** Featured projects, strongest first (see `rank`). */
 export const projects: Project[] = [
   {
     id: 'finguard-ai',
+    rank: 1,
     code: 'PRJ-01',
     title: 'FinGuard AI',
     subtitle: 'Autonomous Regulatory Intelligence & Policy Mapping Agent',
@@ -47,7 +55,7 @@ export const projects: Project[] = [
     cover: { ...shot('finguard-ai/dashboard'), alt: 'FinGuard AI compliance dashboard showing the detect, diff, impact, review and audit workflow' },
     links: {
       github: { url: 'https://github.com/satetapongsa/Finguard-Ai', label: 'Source' },
-      demo: { url: 'https://finguard-ai-one.vercel.app/dashboard', label: 'Live Demo' },
+      demo: { url: 'https://finguard-ai-one.vercel.app/dashboard', label: 'Live Demo', verifiedOn: '2026-11-04' },
     },
     details: {
       overview:
@@ -74,6 +82,7 @@ export const projects: Project[] = [
   },
   {
     id: 'wavy-ide',
+    rank: 2,
     code: 'PRJ-02',
     title: 'WAVY IDE',
     repo: 'WAVY_IDE',
@@ -86,7 +95,7 @@ export const projects: Project[] = [
     cover: { ...shot('wavy-ide/workspace'), alt: 'WAVY IDE workspace with file explorer, editor tabs and the integrated terminal' },
     links: {
       github: { url: 'https://github.com/satetapongsa/WAVY_IDE', label: 'Source' },
-      demo: { url: 'https://wavy-ide-beige.vercel.app', label: 'Live Demo' },
+      demo: { url: 'https://wavy-ide-beige.vercel.app', label: 'Live Demo', verifiedOn: '2026-11-04' },
     },
     details: {
       overview:
@@ -113,89 +122,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'parcel-damage-detection',
-    code: 'PRJ-03',
-    title: 'AI Parcel Box Damage Detection System',
-    repo: 'parcel-damage-detection',
-    team: 'Team project (4) · my role: dashboard & UI',
-    summary:
-      'An end-to-end inspection line that sorts damaged parcels before shipping: cameras and a YOLOv11n model classify boxes, an ESP32 drives sensors and a pusher, and an offline-capable edge gateway syncs results to a cloud API and dashboards.',
-    filter: 'iot',
-    categoryLabel: 'Edge AI / IoT / Embedded',
-    tech: ['Python', 'YOLOv11n', 'OpenCV', 'CiRA CORE', 'ESP32 (Arduino)', 'MQTT (Aedes)', 'Node.js / Express', 'SQLite', 'Neon Postgres', 'React 19', 'Vite'],
-    status: { label: 'In progress · dashboards live in demo mode', stage: 'in-progress' },
-    cover: { ...shot('parcel-damage-detection/inspector-dashboard'), alt: 'AI Parcel Damage Inspector dashboard with pass/reject counts, hourly volume chart and station status' },
-    links: {
-      github: { url: 'https://github.com/satetapongsa/parcel-damage-detection', label: 'Source' },
-      demo: { url: 'https://parcel-damage-detection.vercel.app', label: 'Live Demo' },
-      related: [{ url: 'https://github.com/satetapongsa/AI-Parcel-Box-Damage-Detection-System', label: 'Conveyor dashboard repo' }],
-    },
-    details: {
-      overview:
-        'Boxes ride a conveyor past an IR trigger and two cameras. A YOLOv11n model (normal / damaged) plus OpenCV checks for wet or deformed boxes produce a verdict; an ESP32 controller reads a load cell and drives the servo pusher, tower light and buzzer. An edge gateway makes the final PASS / REJECT decision, keeps working without internet and forwards records to a cloud API. A hardware simulator lets the whole pipeline run without the physical rig.',
-      objective:
-        'Catch dents, tears, deformation and water damage before parcels enter the delivery network, with a line that keeps sorting safely even when the network or the AI is unavailable.',
-      architecture: [
-        { name: 'Vision', detail: 'Python scripts for CiRA CORE and a stand-alone YOLOv11n detector with OpenCV condition checks (cira/).' },
-        { name: 'Embedded control', detail: 'ESP32 firmware for the IR sensor, load cell, servo pusher, tower light, buzzer and conveyor (firmware/).' },
-        { name: 'Edge gateway', detail: 'Node.js decision engine with fail-safe actions on AI timeout or vision fault, local SQLite (node:sqlite) and store-and-forward sync; MQTT via an embedded Aedes broker.' },
-        { name: 'Cloud & dashboards', detail: 'Express cloud API on Neon Postgres, a web dashboard, and a separate React 19 + Vite conveyor dashboard.' },
-        { name: 'Verification', detail: 'Automated tests for the decision logic, offline fail-safe behaviour and Postgres storage, plus a camera/AI/ESP32 simulator.' },
-      ],
-      features: [
-        'Damage classes: dent, tear, deformation and wet — normal boxes pass',
-        'Dual-camera capture triggered by an IR beam',
-        'Fail-safe decisions when the AI times out or vision faults',
-        'Offline store-and-forward with local SQLite',
-        'Live monitoring dashboards with pass / reject analytics',
-        'Full hardware simulator for demos without the rig',
-      ],
-      screenshots: [
-        { ...shot('parcel-damage-detection/inspector-dashboard'), caption: 'Inspector dashboard (demo mode — simulated station data)' },
-        { ...shot('parcel-damage-detection/conveyor-hub'), caption: 'Conveyor inspection hub from the companion dashboard repository' },
-      ],
-    },
-  },
-  {
-    id: 'mirrix',
-    code: 'PRJ-04',
-    title: 'MIRRIX',
-    subtitle: 'Real-World Intelligence',
-    repo: 'alertbkk-map',
-    summary:
-      'A geospatial situational-awareness dashboard for Bangkok that layers incidents, traffic cameras, flood zones and critical services on a MapLibre map, backed by an ingestion pipeline with geocoding, deduplication and data-age tracking.',
-    filter: 'web',
-    categoryLabel: 'Geospatial / Real-Time Dashboard',
-    tech: ['Next.js 16', 'React 19', 'TypeScript', 'MapLibre GL', 'Turf.js', 'WebSocket (ws)'],
-    status: { label: 'Experimental prototype · seeded sample data', stage: 'experimental' },
-    links: {
-      github: { url: 'https://github.com/satetapongsa/alertbkk-map', label: 'Source' },
-      demo: { url: '', label: 'Live Demo' },
-    },
-    details: {
-      overview:
-        'MIRRIX ("mirror + matrix") is a tactical map interface for answering what is happening, where, how recent it is and which public sensors and services are nearby. The current prototype runs on an in-memory spatial database seeded with Bangkok sample data; the ingestion modules are structured so public data adapters can be plugged in later.',
-      objective:
-        'Bring scattered public-safety signals — incidents, cameras, flood information and emergency services — into one map-centric view with clear provenance and data freshness.',
-      architecture: [
-        { name: 'Map client', detail: 'MapLibre GL map with 2D / 3D views, panels and a heads-up display (src/components).' },
-        { name: 'Ingestion pipeline', detail: 'Source registry, bilingual normalizer, geocoding, spatial-temporal deduplication, data-age, provenance and health-monitor modules (src/lib/ingestion).' },
-        { name: 'Spatial queries', detail: 'Radius and bounding-box area scans implemented in TypeScript with Turf.js over an in-memory store.' },
-        { name: 'API & realtime', detail: '12 Next.js route handlers (incidents, cameras, POIs, search, sources, analytics) and a ws-based WebSocket event bus.' },
-      ],
-      features: [
-        'Incident, camera, flood-zone and point-of-interest layers',
-        'Radial area scanner around any map point',
-        'Spatial and temporal duplicate merging',
-        'Data-age states (live / recent / stale / offline) per source',
-        'Source health and provenance tracking',
-      ],
-      screenshots: [],
-    },
-  },
-  {
     id: 'spare-change',
-    code: 'PRJ-05',
+    rank: 3,
+    code: 'PRJ-03',
     title: 'SPARE CHANGE',
     subtitle: 'A Street Life Simulator',
     repo: 'beggarsrole',
@@ -208,7 +137,7 @@ export const projects: Project[] = [
     cover: { ...shot('spare-change/title-screen'), alt: 'SPARE CHANGE title screen with pixel-art character under a street lamp' },
     links: {
       github: { url: 'https://github.com/satetapongsa/beggarsrole', label: 'Source' },
-      demo: { url: 'https://beggarsrole.vercel.app/', label: 'Play Online' },
+      demo: { url: 'https://beggarsrole.vercel.app/', label: 'Play Online', verifiedOn: '2026-11-04' },
     },
     details: {
       overview:
@@ -233,7 +162,97 @@ export const projects: Project[] = [
       screenshots: [{ ...shot('spare-change/title-screen'), caption: 'Live game — title screen (Thai UI)' }],
     },
   },
+  {
+    id: 'vision-training-studio',
+    rank: 4,
+    code: 'PRJ-04',
+    title: 'Vision Training Studio',
+    subtitle: 'Production Deep Learning System & KDel 4.0 Architecture',
+    repo: 'training',
+    summary:
+      'A full-stack computer-vision training platform: import an image folder, annotate boxes in the browser, train a custom PyTorch object detector (KDel 4.0) or a YOLO / classification model, and watch loss curves stream live over WebSockets.',
+    filter: 'ai',
+    categoryLabel: 'Computer Vision / ML Platform',
+    tech: ['Python', 'PyTorch', 'FastAPI', 'SQLAlchemy', 'WebSockets', 'Ultralytics YOLO', 'OpenCV', 'React 19', 'Vite'],
+    status: { label: 'In development · runs locally, no public deployment', stage: 'in-progress' },
+    links: {
+      github: { url: 'https://github.com/satetapongsa/training', label: 'Source' },
+      demo: { url: '', label: 'Live Demo' },
+    },
+    details: {
+      overview:
+        'Vision Training Studio covers the whole loop of training an object detector on your own images. Datasets are imported from a local folder, validated, split and augmented; boxes are drawn on an HTML5 canvas annotator and exported as COCO, VOC or YOLO; training runs in a background worker that streams epoch, loss and hardware telemetry to the browser; trained weights are registered, exported and used for single or batch inference. Its own detector, KDel 4.0, is written from scratch in PyTorch.',
+      objective:
+        'Make detector training transparent end to end — from raw images and annotations to a trained, exportable model — without hiding the network behind a third-party training wrapper.',
+      architecture: [
+        { name: 'KDel 4.0 model', detail: 'Custom PyTorch detector: convolutional backbone with spatial/channel attention and residual blocks, a PANet neck and a decoupled anchor-free head (app/models/kdel.py).' },
+        { name: 'Training', detail: 'Trainer registry with KDel, Ultralytics YOLO and image-classification trainers; AdamW, cosine schedule, mixed precision and checkpointing; jobs run in a background worker.' },
+        { name: 'Data pipeline', detail: 'Dataset manager, validator, splitter and augmentor, plus COCO / VOC / YOLO annotation converters.' },
+        { name: 'API & telemetry', detail: 'FastAPI routers for projects, datasets, annotations, training, models, inference and system status; SQLAlchemy models; WebSocket event stream.' },
+        { name: 'Web studio', detail: 'React 19 + Vite views for datasets, annotation, training (live curves) and inference.' },
+      ],
+      features: [
+        'Local folder import with dataset validation, splitting and augmentation',
+        'In-browser bounding-box annotation with COCO / VOC / YOLO export',
+        'Custom KDel 4.0 detector plus YOLO and classification trainers',
+        'Background training jobs with live WebSocket telemetry',
+        'Model registry, export and single / batch inference with visualisation',
+      ],
+      screenshots: [],
+    },
+  },
+  {
+    id: 'parcel-damage-detection',
+    rank: 5,
+    code: 'PRJ-05',
+    title: 'AI Parcel Box Damage Detection System',
+    repo: 'parcel-damage-detection',
+    team: 'Team project (4) · my role: dashboard & UI',
+    summary:
+      'An end-to-end inspection line that sorts damaged parcels before shipping: cameras and a pretrained YOLOv11n model classify boxes, an ESP32 drives sensors and a pusher, and an offline-capable edge gateway syncs results to a cloud API and dashboards.',
+    filter: 'iot',
+    categoryLabel: 'Edge AI / IoT / Embedded',
+    tech: ['Python', 'YOLOv11n (pretrained)', 'OpenCV', 'CiRA CORE', 'ESP32 (Arduino)', 'MQTT (Aedes)', 'Node.js / Express', 'SQLite', 'Neon Postgres', 'React 19', 'Vite'],
+    status: { label: 'In progress · dashboards live in demo mode', stage: 'in-progress' },
+    cover: { ...shot('parcel-damage-detection/inspector-dashboard'), alt: 'AI Parcel Damage Inspector dashboard with pass/reject counts, hourly volume chart and station status' },
+    links: {
+      github: { url: 'https://github.com/satetapongsa/parcel-damage-detection', label: 'Source' },
+      demo: { url: 'https://parcel-damage-detection.vercel.app', label: 'Live Demo', verifiedOn: '2026-11-04' },
+      related: [{ url: 'https://github.com/satetapongsa/AI-Parcel-Box-Damage-Detection-System', label: 'Conveyor dashboard repo' }],
+    },
+    details: {
+      overview:
+        'Boxes ride a conveyor past an IR trigger and two cameras. A pretrained, third-party YOLOv11n model (normal / damaged) plus OpenCV checks for wet or deformed boxes produce a verdict; an ESP32 controller reads a load cell and drives the servo pusher, tower light and buzzer. An edge gateway makes the final PASS / REJECT decision, keeps working without internet and forwards records to a cloud API. A hardware simulator lets the whole pipeline run without the physical rig.',
+      objective:
+        'Catch dents, tears, deformation and water damage before parcels enter the delivery network, with a line that keeps sorting safely even when the network or the AI is unavailable.',
+      architecture: [
+        { name: 'Vision', detail: 'Python scripts for CiRA CORE and a stand-alone YOLOv11n detector with OpenCV condition checks (cira/). The YOLO weights are a third-party pretrained model (cvtechniques/PackageDamage, MIT) bundled in models/ — not trained by the team.' },
+        { name: 'Embedded control', detail: 'ESP32 firmware for the IR sensor, load cell, servo pusher, tower light, buzzer and conveyor (firmware/).' },
+        { name: 'Edge gateway', detail: 'Node.js decision engine with fail-safe actions on AI timeout or vision fault, local SQLite (node:sqlite) and store-and-forward sync; MQTT via an embedded Aedes broker.' },
+        { name: 'Cloud & dashboards', detail: 'Express cloud API on Neon Postgres, a web dashboard, and a separate React 19 + Vite conveyor dashboard.' },
+        { name: 'Verification', detail: 'Automated tests for the decision logic, offline fail-safe behaviour and Postgres storage, plus a camera/AI/ESP32 simulator.' },
+      ],
+      features: [
+        'Damage classes: dent, tear, deformation and wet — normal boxes pass',
+        'Dual-camera capture triggered by an IR beam',
+        'Fail-safe decisions when the AI times out or vision faults',
+        'Offline store-and-forward with local SQLite',
+        'Live monitoring dashboards with pass / reject analytics',
+        'Full hardware simulator for demos without the rig',
+      ],
+      screenshots: [
+        { ...shot('parcel-damage-detection/inspector-dashboard'), caption: 'Inspector dashboard (demo mode — simulated station data)' },
+        { ...shot('parcel-damage-detection/conveyor-hub'), caption: 'Conveyor inspection hub from the companion dashboard repository' },
+        { ...sample('tear'), caption: 'Synthetic “tear” test image generated by the repository’s simulator (not a photograph)' },
+        { ...sample('printed'), caption: 'Synthetic printed-graphic box from the false-positive test — must PASS (simulator output)' },
+      ],
+    },
+  },
 ];
 
 /** Link to every public repository, for the "view all" button. */
 export const githubReposUrl = 'https://github.com/satetapongsa?tab=repositories';
+
+/** The project's live demo, only if its production URL has been verified (see ProjectLink.verifiedOn). */
+export const verifiedDemo = (project: Project) =>
+  project.links.demo.url.trim() && project.links.demo.verifiedOn ? project.links.demo : null;

@@ -537,3 +537,67 @@
   height: 14px;
   color: var(--c-cyan);
 }
+
+/* Flagship (first-ranked) card: full width, cover beside the text on wide screens */
+.project-card__flag {
+  margin-left: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--c-accent-line);
+  background: var(--c-accent-soft);
+  color: var(--c-cyan);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 960px) {
+  .project-card--featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .project-card--featured .project-card__cover {
+    height: 100%;
+    border-bottom: 0;
+    border-right: 1px solid var(--c-line);
+  }
+  .project-card--featured .project-card__cover .cover {
+    height: 100%;
+    min-height: 340px;
+    aspect-ratio: auto;
+  }
+  .project-card--featured .project-card__body {
+    align-self: center;
+  }
+  .project-card--featured .project-card__title {
+    font-size: clamp(26px, 2.6vw, 32px);
+  }
+}
+
+/* Live demo: accent outline so it reads as the "open the real app" action */
+.btn--demo {
+  border-color: var(--c-accent-line);
+  color: var(--c-text);
+}
+
+.btn--demo svg {
+  color: var(--c-cyan);
+}
+
+.project-card__quick {
+  width: 38px;
+  height: 38px;
+}
+
+@media (pointer: coarse), (max-width: 767px) {
+  .project-card__quick {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+html[lang='th'] .project-card__flag {
+  letter-spacing: 0.02em;
+}

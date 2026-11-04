@@ -117,6 +117,12 @@ export interface ProjectLink {
   /** Empty string = no public URL; the button is not rendered. */
   url: string;
   label: string;
+  /**
+   * Live demos only: ISO date on which the production URL was opened and its
+   * rendered content confirmed to be this project. No date = not verified,
+   * and no Live Demo button is shown.
+   */
+  verifiedOn?: string;
 }
 
 export interface ArchitectureLayer {
@@ -133,7 +139,10 @@ export interface ProjectImage {
 }
 
 export interface Project {
+  /** URL slug: /projects/<id>. */
   id: string;
+  /** 1 = strongest; the first-ranked project gets the prominent card. */
+  rank: number;
   /** Short identifier shown in monospace, e.g. "PRJ-01". */
   code: string;
   /** Name exactly as in the repository README title. */

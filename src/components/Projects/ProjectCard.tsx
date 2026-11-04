@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowUpRight, Eye, ExternalLink, Users } from 'lucide-react';
+import { verifiedDemo } from '../../data/projects';
 import type { Project, ProjectStage } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Link } from '../../router/Link';
@@ -34,12 +35,15 @@ interface ProjectCardProps {
   /** Opens the in-page quick-view dialog. */
   onQuickView: (project: Project) => void;
   priority?: boolean;
+  /** The first-ranked project: a wide card at the top of the grid. */
+  featured?: boolean;
 }
 
-export function ProjectCard({ project, onQuickView, priority }: ProjectCardProps) {
+export function ProjectCard({ project, onQuickView, priority, featured = false }: ProjectCardProps) {
   const { t } = useI18n();
   const extra = project.tech.length - MAX_CHIPS;
   const caseStudy = routePaths.project(project.id);
+  const demo = verifiedDemo(project);
   return (
     <motion.article
       layout
@@ -47,16 +51,19 @@ export function ProjectCard({ project, onQuickView, priority }: ProjectCardProps
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="project-card glow-card"
+      className={`project-card glow-card ${featured ? 'project-card--featured' : ''}`}
       aria-labelledby={`project-${project.id}`}
     >
       <Link to={caseStudy} className="project-card__cover" tabIndex={-1} aria-hidden="true">
-        <ProjectCover project={project} priority={priority} />
+        <ProjectCover project={project} priority={priority} sizes={featured ? '(max-width: 960px) 100vw, 640px' : undefined} />
       </Link>
 
       <div className="project-card__body">
         <div className="project-card__meta mono">
-          <span className="project-card__code">{project.code}</span>
+          <span className="project-card__code">
+            {project.code}
+            {featured && <span className="project-card__flag">{t.projects.flagship}</span>}
+          </span>
           <span className="project-card__status">
             <span className={`status-dot ${STAGE_DOT[project.status.stage]}`} aria-hidden="true" />
             {project.status.label}
@@ -96,15 +103,25 @@ export function ProjectCard({ project, onQuickView, priority }: ProjectCardProps
               {t.projects.about} {project.title}
             </span>
           </Link>
-          <button type="button" className="btn btn--ghost btn--sm" onClick={() => onQuickView(project)}>
-            <Eye aria-hidden /> {t.projects.quickView}
-            <span className="sr-only">
-              {' '}
-              {t.projects.about} {project.title}
-            </span>
+          {demo && (
+            <a className="btn btn--ghost btn--sm btn--demo" href={demo.url} target="_blank" rel="noopener noreferrer">
+              <ExternalLink aria-hidden /> {demo.label}
+              <span className="sr-only">
+                {' '}
+                {project.title} {t.common.opensInNewTab}
+              </span>
+            </a>
+          )}
+          <ProjectLinkButton url={project.links.github.url} label="GitHub" kind="github" />
+          <button
+            type="button"
+            className="icon-btn project-card__quick"
+            onClick={() => onQuickView(project)}
+            aria-label={`${t.projects.quickView} ${t.projects.about} ${project.title}`}
+            title={t.projects.quickView}
+          >
+            <Eye aria-hidden />
           </button>
-          <ProjectLinkButton url={project.links.github.url} label={t.projects.viewSource} kind="github" />
-          <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
         </div>
       </div>
     </motion.article>

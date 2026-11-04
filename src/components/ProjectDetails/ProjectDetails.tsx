@@ -1,5 +1,6 @@
 import { ArrowRight, ImageIcon, X } from 'lucide-react';
 import { useRef, type ReactNode } from 'react';
+import { verifiedDemo } from '../../data/projects';
 import type { Project } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
 import { ProjectCover } from '../Projects/ProjectCover';
@@ -150,7 +151,7 @@ export function ProjectDetails({ project, onClose, onOpenCaseStudy }: ProjectDet
                   {project.links.related?.map((link) => (
                     <ProjectLinkButton key={link.url} url={link.url} label={link.label} kind="github" />
                   ))}
-                  <ProjectLinkButton url={project.links.demo.url} label={project.links.demo.label} kind="demo" />
+                  <ProjectLinkButton url={verifiedDemo(project)?.url ?? ''} label={project.links.demo.label} kind="demo" />
                 </div>
               </div>
             </aside>

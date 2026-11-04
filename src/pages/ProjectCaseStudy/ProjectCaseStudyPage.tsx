@@ -10,7 +10,7 @@ import { caseStudies, languageSnapshot, LANGUAGE_SNAPSHOT_DATE } from '../../dat
 import { useI18n } from '../../i18n/I18nProvider';
 import { Link } from '../../router/Link';
 import { routePaths } from '../../router/router';
-import { isConfigured } from '../../utils/links';
+import { verifiedDemo } from '../../data/projects';
 import { NotFoundPage } from '../NotFound/NotFoundPage';
 import { caseStudyStrings } from './strings';
 import './case-study.css';
@@ -42,7 +42,7 @@ export default function ProjectCaseStudyPage({ slug }: { slug: string }) {
   const prev = content.projects[(index - 1 + content.projects.length) % content.projects.length];
   const next = content.projects[(index + 1) % content.projects.length];
   const languages = languageSnapshot[project.id] ?? [];
-  const hasDemo = isConfigured(project.links.demo.url);
+  const hasDemo = verifiedDemo(project) !== null;
   const sectionId = (key: (typeof SECTION_KEYS)[number]) => `cs-${key}`;
   const num = (key: (typeof SECTION_KEYS)[number]) => String(SECTION_KEYS.indexOf(key) + 1).padStart(2, '0');
 

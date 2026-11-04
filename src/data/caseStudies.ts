@@ -68,11 +68,11 @@ export const languageSnapshot: Record<string, { name: string; share: number }[]>
     { name: 'Python', share: 5.4 },
     { name: 'C++', share: 3.7 },
   ],
-  mirrix: [
-    { name: 'TypeScript', share: 85.0 },
-    { name: 'JavaScript', share: 7.1 },
-    { name: 'CSS', share: 6.3 },
-    { name: 'PLpgSQL', share: 1.7 },
+  'vision-training-studio': [
+    { name: 'JavaScript', share: 47.4 },
+    { name: 'Python', share: 42.1 },
+    { name: 'HTML', share: 5.9 },
+    { name: 'CSS', share: 4.4 },
   ],
   'spare-change': [
     { name: 'TypeScript', share: 98.9 },
@@ -554,7 +554,7 @@ export const caseStudies: Studies = {
             {
               title: 'Inference',
               nodes: [
-                { label: 'CiRA CORE or YOLOv11n', detail: 'normal / damaged', tone: 'process' },
+                { label: 'CiRA CORE or YOLOv11n', detail: 'pretrained third-party model · normal / damaged', tone: 'process' },
                 { label: 'OpenCV checks', detail: 'wet · deformed', tone: 'process' },
               ],
               link: 'MQTT / HTTP',
@@ -604,7 +604,7 @@ export const caseStudies: Studies = {
         {
           area: 'Vision & embedded',
           points: [
-            'Python bridges for CiRA CORE plus a stand-alone YOLOv11n detector.',
+            'Python bridges for CiRA CORE plus a stand-alone YOLOv11n detector. The YOLO weights are a pretrained third-party model (cvtechniques/PackageDamage on Hugging Face, MIT licence) included in models/; the team’s own CiRA CORE model is meant to be added there.',
             'ESP32 firmware (ArduinoJson, ESP32Servo, HX711) owns the pusher timing.',
           ],
         },
@@ -672,7 +672,7 @@ export const caseStudies: Studies = {
             {
               title: 'ประมวลผล AI',
               nodes: [
-                { label: 'CiRA CORE หรือ YOLOv11n', detail: 'ปกติ / ชำรุด', tone: 'process' },
+                { label: 'CiRA CORE หรือ YOLOv11n', detail: 'โมเดลสำเร็จรูปจากภายนอก · ปกติ / ชำรุด', tone: 'process' },
                 { label: 'ตรวจด้วย OpenCV', detail: 'เปียก · ผิดรูป', tone: 'process' },
               ],
               link: 'MQTT / HTTP',
@@ -710,7 +710,7 @@ export const caseStudies: Studies = {
           area: 'Edge และคลาวด์',
           points: ['Gateway ด้วย Node.js มี MQTT broker (Aedes) ในตัว SQLite ในเครื่อง (node:sqlite) และส่งต่อขึ้น Cloud API แบบ store-and-forward', 'Endpoint รับข้อมูลจาก edge ป้องกันด้วย header x-api-key'],
         },
-        { area: 'Vision และระบบฝังตัว', points: ['สคริปต์ Python เชื่อม CiRA CORE และตัวตรวจจับ YOLOv11n แบบแยกอิสระ', 'เฟิร์มแวร์ ESP32 (ArduinoJson, ESP32Servo, HX711) เป็นผู้จับเวลาแขนปัด'] },
+        { area: 'Vision และระบบฝังตัว', points: ['สคริปต์ Python เชื่อม CiRA CORE และตัวตรวจจับ YOLOv11n แบบแยกอิสระ โดยน้ำหนักโมเดล YOLO เป็นโมเดลสำเร็จรูปจากภายนอก (cvtechniques/PackageDamage บน Hugging Face, สัญญาอนุญาต MIT) ที่ใส่ไว้ใน models/ ส่วนโมเดล CiRA CORE ของทีมจะเพิ่มในโฟลเดอร์เดียวกัน', 'เฟิร์มแวร์ ESP32 (ArduinoJson, ESP32Servo, HX711) เป็นผู้จับเวลาแขนปัด'] },
         { area: 'การตรวจสอบ', points: ['ทดสอบอัตโนมัติรวมการทดสอบ fail-safe ตอนออฟไลน์ และตัวจำลองความผิดพลาดของกล้อง AI และ ESP32 (กล้องมืด, ปิด AI, สายพานติด)'] },
       ],
       planned: ['แผนของแดชบอร์ดคู่กัน: รับข้อมูลจาก CiRA CORE ผ่าน MQTT โดยตรง', 'แผนของแดชบอร์ดคู่กัน: เชื่อมเซนเซอร์ / PLC และระบบ sync ของ SQLite', 'แผนของแดชบอร์ดคู่กัน: ติดตั้งจริงที่ศูนย์โลจิสติกส์ทดสอบ'],
@@ -741,187 +741,6 @@ export const caseStudies: Studies = {
         { label: 'แดชบอร์ดสายพานคู่กัน', url: gh('AI-Parcel-Box-Damage-Detection-System', '#readme') },
       ],
       evidence: 'อ้างอิงจาก README แผนทดสอบ และซอร์สโค้ดของ parcel-damage-detection และ AI-Parcel-Box-Damage-Detection-System',
-    },
-  },
-
-  mirrix: {
-    en: {
-      problem: {
-        problem:
-          'Public-safety information in Bangkok is spread across many agencies — city traffic, expressways, highways, weather, disaster prevention, traffic police — each with its own format and update rate.',
-        why: 'MIRRIX (“mirror + matrix”) asks what is happening, where, how recent it is, which public sensors are nearby and where the closest services are — and tries to answer all of it on one map.',
-        outcome:
-          'A working map prototype with incident, camera, flood and service layers, a radial area scanner, duplicate merging and data-age states. It currently runs on seeded sample data.',
-      },
-      diagrams: [
-        {
-          title: 'Ingestion to map',
-          caption: 'Only modules present in src/ are shown. Storage and caching run in memory in the current code.',
-          stages: [
-            {
-              title: 'Public sources',
-              nodes: [
-                { label: '8 adapter classes', detail: 'BMA traffic · EXAT · DOH · TMD · DDPM · traffic police · webcams · flood drainage', tone: 'source' },
-                { label: 'Source registry', detail: 'attributes · latency tracking', tone: 'store' },
-              ],
-            },
-            {
-              title: 'Ingestion pipeline',
-              nodes: [
-                { label: 'Normalizer', detail: 'Thai / English · severity', tone: 'process' },
-                { label: 'Geocoding', detail: 'Bangkok gazetteer', tone: 'process' },
-                { label: 'Deduplication', detail: '350 m · 60 min', tone: 'process' },
-                { label: 'Data age & provenance', detail: 'LIVE · RECENT · STALE · OFFLINE', tone: 'process' },
-              ],
-            },
-            {
-              title: 'Query layer',
-              nodes: [
-                { label: 'Spatial query engine', detail: 'radius & bbox scans in TypeScript (Turf.js)', tone: 'store' },
-                { label: 'TTL cache', detail: 'in-memory', tone: 'store' },
-              ],
-            },
-            {
-              title: 'Delivery',
-              nodes: [
-                { label: 'Next.js route handlers', detail: 'incidents · cameras · POIs · search · analytics', tone: 'process' },
-                { label: 'WebSocket event bus', detail: 'ws', tone: 'process' },
-              ],
-            },
-            {
-              title: 'Client',
-              nodes: [{ label: 'MapLibre GL map', detail: '2D / 3D · HUD · area scanner', tone: 'output' }],
-            },
-          ],
-        },
-      ],
-      implementation: [
-        {
-          area: 'Map client',
-          points: ['MapLibre GL with true top-down 2D and a separate 3D mode, one-shot GPS zoom, and a window manager that keeps panels from overlapping.'],
-        },
-        {
-          area: 'Ingestion',
-          points: [
-            'Registry, normalizer, geocoder, deduplicator, data-age, provenance and health-monitor modules under src/lib/ingestion.',
-            'Duplicates are merged when incidents are within 350 m and 60 minutes of each other; data age is LIVE under 60 s, RECENT up to 15 min, STALE up to 60 min, then OFFLINE.',
-          ],
-        },
-        {
-          area: 'APIs',
-          points: ['12 Next.js route handlers and a ws-based WebSocket server for streaming events.'],
-        },
-        {
-          area: 'Tests',
-          points: ['Node test files for ingestion, intelligence and location logic.'],
-        },
-      ],
-      planned: [
-        'Connect the adapters to live public endpoints (they currently produce sample data)',
-        'Persist to PostGIS — a schema.sql is included, but no database driver is wired up yet',
-        'Use Redis for caching — the cache currently runs its in-memory fallback',
-      ],
-      challenges: [
-        {
-          title: 'The same incident from several agencies',
-          challenge: 'One accident can be reported by multiple sources with slightly different positions and times.',
-          approach: 'A spatial-temporal deduplicator merges reports within 350 m and 60 minutes and keeps their provenance.',
-        },
-        {
-          title: 'Old data that looks current',
-          challenge: 'A map marker gives no hint of how stale it is.',
-          approach: 'Every record carries a data-age state from LIVE to OFFLINE, and sources are health-monitored.',
-        },
-        {
-          title: 'Situational awareness without surveillance',
-          challenge: 'Camera aggregation can drift into privacy problems.',
-          approach: 'The documented policy rejects private-network camera streams, uses only public sources and does no facial or licence-plate recognition.',
-        },
-      ],
-      docs: [{ label: 'README', url: gh('alertbkk-map', '#readme') }],
-      evidence: 'Based on the alertbkk-map README and source (src/lib/ingestion, package.json). Where the README describes PostGIS and Redis, the source was checked and both run in memory today.',
-    },
-    th: {
-      problem: {
-        problem: 'ข้อมูลความปลอดภัยสาธารณะในกรุงเทพฯ กระจายอยู่หลายหน่วยงาน ทั้งจราจรของเมือง ทางด่วน ทางหลวง สภาพอากาศ ปภ. และตำรวจจราจร แต่ละแห่งมีรูปแบบและความถี่อัปเดตต่างกัน',
-        why: 'MIRRIX (“mirror + matrix”) ตั้งคำถามว่าเกิดอะไรขึ้น ที่ไหน ข้อมูลใหม่แค่ไหน มีเซนเซอร์สาธารณะอะไรอยู่ใกล้ และหน่วยบริการที่ใกล้ที่สุดอยู่ที่ไหน แล้วพยายามตอบทั้งหมดบนแผนที่เดียว',
-        outcome: 'ต้นแบบแผนที่ที่ใช้งานได้ มีเลเยอร์เหตุการณ์ กล้อง พื้นที่น้ำท่วม และหน่วยบริการ ตัวสแกนรัศมี การรวมข้อมูลซ้ำ และสถานะอายุข้อมูล ปัจจุบันใช้ข้อมูลตัวอย่าง',
-      },
-      diagrams: [
-        {
-          title: 'จากการนำเข้าถึงแผนที่',
-          caption: 'แสดงเฉพาะโมดูลที่มีอยู่จริงใน src/ ส่วนจัดเก็บและแคชในโค้ดปัจจุบันทำงานในหน่วยความจำ',
-          stages: [
-            {
-              title: 'แหล่งข้อมูลสาธารณะ',
-              nodes: [
-                { label: 'Adapter 8 คลาส', detail: 'จราจร กทม. · กทพ. · ทล. · อุตุฯ · ปภ. · ตำรวจจราจร · เว็บแคม · ระบายน้ำ', tone: 'source' },
-                { label: 'Source registry', detail: 'คุณสมบัติแหล่ง · ติดตาม latency', tone: 'store' },
-              ],
-            },
-            {
-              title: 'ไปป์ไลน์นำเข้า',
-              nodes: [
-                { label: 'Normalizer', detail: 'ไทย / อังกฤษ · ระดับความรุนแรง', tone: 'process' },
-                { label: 'Geocoding', detail: 'ฐานชื่อสถานที่ กทม.', tone: 'process' },
-                { label: 'รวมข้อมูลซ้ำ', detail: '350 ม. · 60 นาที', tone: 'process' },
-                { label: 'อายุข้อมูลและแหล่งที่มา', detail: 'LIVE · RECENT · STALE · OFFLINE', tone: 'process' },
-              ],
-            },
-            {
-              title: 'ชั้น Query',
-              nodes: [
-                { label: 'Spatial query engine', detail: 'สแกนรัศมีและกรอบพื้นที่ใน TypeScript (Turf.js)', tone: 'store' },
-                { label: 'TTL cache', detail: 'ในหน่วยความจำ', tone: 'store' },
-              ],
-            },
-            {
-              title: 'ส่งข้อมูล',
-              nodes: [
-                { label: 'Next.js route handlers', detail: 'เหตุการณ์ · กล้อง · POI · ค้นหา · analytics', tone: 'process' },
-                { label: 'WebSocket event bus', detail: 'ws', tone: 'process' },
-              ],
-            },
-            { title: 'ไคลเอนต์', nodes: [{ label: 'แผนที่ MapLibre GL', detail: '2D / 3D · HUD · สแกนพื้นที่', tone: 'output' }] },
-          ],
-        },
-      ],
-      implementation: [
-        { area: 'แผนที่', points: ['MapLibre GL มีมุมมอง 2D จากด้านบนจริงและโหมด 3D แยกกัน ซูมไปตำแหน่ง GPS ในครั้งเดียว และตัวจัดหน้าต่างที่ป้องกันแผงทับกัน'] },
-        {
-          area: 'การนำเข้าข้อมูล',
-          points: [
-            'โมดูล registry, normalizer, geocoder, deduplicator, data-age, provenance และ health monitor ใน src/lib/ingestion',
-            'รวมเหตุการณ์ซ้ำเมื่ออยู่ห่างกันไม่เกิน 350 ม. และ 60 นาที อายุข้อมูลเป็น LIVE เมื่อต่ำกว่า 60 วินาที, RECENT ถึง 15 นาที, STALE ถึง 60 นาที จากนั้นเป็น OFFLINE',
-          ],
-        },
-        { area: 'API', points: ['Route handler ของ Next.js 12 ตัว และเซิร์ฟเวอร์ WebSocket ด้วย ws สำหรับสตรีมเหตุการณ์'] },
-        { area: 'การทดสอบ', points: ['ไฟล์ทดสอบ Node สำหรับตรรกะการนำเข้า การวิเคราะห์ และตำแหน่ง'] },
-      ],
-      planned: [
-        'เชื่อม adapter กับแหล่งข้อมูลสาธารณะจริง (ปัจจุบันสร้างข้อมูลตัวอย่าง)',
-        'จัดเก็บใน PostGIS — มี schema.sql แล้วแต่ยังไม่ได้ต่อไดรเวอร์ฐานข้อมูล',
-        'ใช้ Redis เป็นแคช — ปัจจุบันใช้โหมดสำรองในหน่วยความจำ',
-      ],
-      challenges: [
-        {
-          title: 'เหตุการณ์เดียวจากหลายหน่วยงาน',
-          challenge: 'อุบัติเหตุหนึ่งครั้งอาจถูกรายงานจากหลายแหล่งด้วยตำแหน่งและเวลาที่ต่างกันเล็กน้อย',
-          approach: 'ตัวรวมข้อมูลซ้ำเชิงพื้นที่และเวลารวมรายงานที่ห่างกันไม่เกิน 350 ม. และ 60 นาที โดยเก็บแหล่งที่มาไว้',
-        },
-        {
-          title: 'ข้อมูลเก่าที่ดูเหมือนใหม่',
-          challenge: 'หมุดบนแผนที่ไม่บอกว่าข้อมูลเก่าแค่ไหน',
-          approach: 'ทุกรายการมีสถานะอายุข้อมูลตั้งแต่ LIVE ถึง OFFLINE และมีการตรวจสุขภาพของแหล่งข้อมูล',
-        },
-        {
-          title: 'รู้สถานการณ์โดยไม่สอดแนม',
-          challenge: 'การรวมกล้องอาจกลายเป็นปัญหาความเป็นส่วนตัว',
-          approach: 'นโยบายที่บันทึกไว้ปฏิเสธสตรีมกล้องจากเครือข่ายส่วนตัว ใช้เฉพาะแหล่งสาธารณะ และไม่มีการจดจำใบหน้าหรือป้ายทะเบียน',
-        },
-      ],
-      docs: [{ label: 'README', url: gh('alertbkk-map', '#readme') }],
-      evidence: 'อ้างอิงจาก README และซอร์สโค้ดของ alertbkk-map (src/lib/ingestion, package.json) ส่วนที่ README กล่าวถึง PostGIS และ Redis ได้ตรวจซอร์สแล้ว ปัจจุบันทั้งคู่ทำงานในหน่วยความจำ',
     },
   },
 
@@ -1082,6 +901,188 @@ export const caseStudies: Studies = {
       ],
       docs: [{ label: 'README', url: gh('beggarsrole', '#readme') }],
       evidence: 'อ้างอิงจาก README, package.json และโฟลเดอร์ data/ ของ beggarsrole (จำนวนนับจากไฟล์ JSON)',
+    },
+  },
+  'vision-training-studio': {
+    en: {
+      problem: {
+        problem:
+          'Training an object detector on your own images usually means stitching together a labelling tool, format-conversion scripts, a training framework and separate inference code — and treating the network itself as a black box.',
+        why: 'Vision Training Studio puts that whole loop behind one API and one web studio, and implements its own detector, KDel 4.0, directly in PyTorch instead of only calling a training library.',
+        outcome:
+          'A locally run platform where a dataset can be imported, annotated, trained (with KDel 4.0, YOLO or a classifier), monitored live and then used for inference — all from the browser.',
+      },
+      diagrams: [
+        {
+          title: 'From folder to trained model',
+          caption: 'Modules from app/ and frontend/src in the repository; the platform runs locally (there is no public deployment).',
+          stages: [
+            {
+              title: 'Data in',
+              nodes: [
+                { label: 'Local image folder', detail: 'imported from the browser', tone: 'source' },
+                { label: 'Canvas annotator', detail: 'boxes · COCO / VOC / YOLO converters', tone: 'human' },
+              ],
+            },
+            {
+              title: 'Dataset pipeline',
+              nodes: [
+                { label: 'Validator & splitter', detail: 'train / val / test', tone: 'process' },
+                { label: 'Augmentor', tone: 'process' },
+                { label: 'SQLAlchemy store', detail: 'projects · datasets · jobs · models', tone: 'store' },
+              ],
+              link: 'start job',
+            },
+            {
+              title: 'Training worker',
+              nodes: [
+                { label: 'KDel 4.0 trainer', detail: 'custom PyTorch detector · AdamW · cosine · AMP', tone: 'process' },
+                { label: 'YOLO trainer', detail: 'Ultralytics', tone: 'process' },
+                { label: 'Classification trainer', tone: 'process' },
+              ],
+              link: 'events over WebSocket',
+            },
+            {
+              title: 'Monitor',
+              nodes: [{ label: 'React 19 studio', detail: 'live loss curves · telemetry', tone: 'output' }],
+            },
+            {
+              title: 'Use the model',
+              nodes: [
+                { label: 'Model registry & exporter', detail: 'checkpoints', tone: 'store' },
+                { label: 'Predictor', detail: 'single / batch · visualiser', tone: 'output' },
+              ],
+            },
+          ],
+        },
+      ],
+      implementation: [
+        {
+          area: 'KDel 4.0 network',
+          points: [
+            'Convolution + batch-norm blocks with residual units and a combined channel / spatial attention module in the backbone.',
+            'A PANet neck fuses three scales; a decoupled anchor-free head predicts class, box and objectness separately, trained with a composite multi-task loss (KDelLoss).',
+          ],
+        },
+        {
+          area: 'Training',
+          points: [
+            'A trainer registry selects KDel, Ultralytics YOLO or image classification.',
+            'AdamW with cosine annealing, mixed precision with gradient scaling, and checkpointing; jobs run in a background worker and publish progress events.',
+          ],
+        },
+        {
+          area: 'Backend',
+          points: ['FastAPI routers for projects, datasets, annotations, training, models, inference and system status, with Pydantic v2 schemas and SQLAlchemy models; a command-line interface (app/cli.py).'],
+        },
+        {
+          area: 'Web studio',
+          points: ['React 19 + Vite views for datasets, annotation, training and inference; JSZip for packaging data in the browser.'],
+        },
+      ],
+      challenges: [
+        {
+          title: 'Turning grid outputs into boxes',
+          challenge: 'An anchor-free head predicts per grid cell at three resolutions, not boxes in image coordinates.',
+          approach: 'The model decodes each scale with its stride back into image-space boxes before scoring (_decode_predictions in kdel.py).',
+        },
+        {
+          title: 'Long training without a frozen API',
+          challenge: 'A training run can take minutes or hours, while the UI still needs to respond and show progress.',
+          approach: 'Jobs run in a background worker that emits events; the browser follows them over a WebSocket instead of polling.',
+        },
+        {
+          title: 'Many annotation formats',
+          challenge: 'Datasets arrive labelled for different tools.',
+          approach: 'Dedicated COCO, Pascal VOC and YOLO converters (app/annotations) normalise annotations in one place.',
+        },
+      ],
+      docs: [{ label: 'README — architecture, maths and workflow', url: gh('training', '#readme') }],
+      evidence:
+        'Based on the repository README and source (app/models/kdel.py, app/training, app/api, frontend/src). The README mentions automated tests, but the repository contains no test files yet, so none are claimed here.',
+    },
+    th: {
+      problem: {
+        problem: 'การฝึกโมเดลตรวจจับวัตถุด้วยภาพของตัวเองมักต้องต่อหลายเครื่องมือเข้าด้วยกัน ทั้งเครื่องมือ label สคริปต์แปลงรูปแบบ เฟรมเวิร์กฝึก และโค้ดทำนายแยกต่างหาก และมักมองโครงข่ายเป็นกล่องดำ',
+        why: 'Vision Training Studio รวมทั้งกระบวนการไว้หลัง API และเว็บสตูดิโอเดียว และเขียนโมเดลตรวจจับของตัวเอง KDel 4.0 ด้วย PyTorch โดยตรง แทนการเรียกใช้ไลบรารีฝึกเพียงอย่างเดียว',
+        outcome: 'แพลตฟอร์มที่รันในเครื่อง สามารถนำเข้า ทำ annotation ฝึก (ด้วย KDel 4.0, YOLO หรือตัวจำแนกภาพ) ติดตามแบบสด และนำโมเดลไปทำนายได้จากเบราว์เซอร์',
+      },
+      diagrams: [
+        {
+          title: 'จากโฟลเดอร์สู่โมเดลที่ฝึกแล้ว',
+          caption: 'โมดูลจาก app/ และ frontend/src ใน repository แพลตฟอร์มนี้รันในเครื่อง (ยังไม่มีเว็บสาธารณะ)',
+          stages: [
+            {
+              title: 'ข้อมูลเข้า',
+              nodes: [
+                { label: 'โฟลเดอร์ภาพในเครื่อง', detail: 'นำเข้าจากเบราว์เซอร์', tone: 'source' },
+                { label: 'ตัววาดกรอบบน canvas', detail: 'กรอบวัตถุ · แปลง COCO / VOC / YOLO', tone: 'human' },
+              ],
+            },
+            {
+              title: 'ไปป์ไลน์ชุดข้อมูล',
+              nodes: [
+                { label: 'ตรวจสอบและแบ่งชุด', detail: 'train / val / test', tone: 'process' },
+                { label: 'เพิ่มข้อมูล (augment)', tone: 'process' },
+                { label: 'ที่เก็บ SQLAlchemy', detail: 'โปรเจกต์ · ชุดข้อมูล · งานฝึก · โมเดล', tone: 'store' },
+              ],
+              link: 'เริ่มงานฝึก',
+            },
+            {
+              title: 'Worker ฝึกโมเดล',
+              nodes: [
+                { label: 'Trainer KDel 4.0', detail: 'โมเดล PyTorch ที่เขียนเอง · AdamW · cosine · AMP', tone: 'process' },
+                { label: 'Trainer YOLO', detail: 'Ultralytics', tone: 'process' },
+                { label: 'Trainer จำแนกภาพ', tone: 'process' },
+              ],
+              link: 'เหตุการณ์ผ่าน WebSocket',
+            },
+            { title: 'ติดตาม', nodes: [{ label: 'สตูดิโอ React 19', detail: 'กราฟ loss สด · telemetry', tone: 'output' }] },
+            {
+              title: 'ใช้งานโมเดล',
+              nodes: [
+                { label: 'ทะเบียนโมเดลและตัวส่งออก', detail: 'checkpoint', tone: 'store' },
+                { label: 'ตัวทำนาย', detail: 'ทีละภาพ / เป็นชุด · แสดงผล', tone: 'output' },
+              ],
+            },
+          ],
+        },
+      ],
+      implementation: [
+        {
+          area: 'โครงข่าย KDel 4.0',
+          points: [
+            'บล็อก convolution + batch-norm พร้อม residual unit และโมดูล attention เชิงช่องสัญญาณ / พื้นที่ใน backbone',
+            'Neck แบบ PANet รวมสามสเกล และ head แบบ anchor-free ที่แยกทำนายคลาส กรอบ และ objectness ฝึกด้วย loss แบบหลายงาน (KDelLoss)',
+          ],
+        },
+        {
+          area: 'การฝึก',
+          points: ['ทะเบียน trainer เลือกได้ระหว่าง KDel, Ultralytics YOLO หรือการจำแนกภาพ', 'AdamW กับ cosine annealing, mixed precision พร้อม gradient scaling และ checkpoint งานฝึกรันใน worker เบื้องหลังและส่งเหตุการณ์ความคืบหน้า'],
+        },
+        { area: 'แบ็กเอนด์', points: ['Router ของ FastAPI สำหรับโปรเจกต์ ชุดข้อมูล annotation การฝึก โมเดล การทำนาย และสถานะระบบ พร้อม schema แบบ Pydantic v2 โมเดล SQLAlchemy และ CLI (app/cli.py)'] },
+        { area: 'เว็บสตูดิโอ', points: ['หน้าจอ React 19 + Vite สำหรับชุดข้อมูล annotation การฝึก และการทำนาย ใช้ JSZip รวมไฟล์ข้อมูลในเบราว์เซอร์'] },
+      ],
+      challenges: [
+        {
+          title: 'แปลงผลลัพธ์จาก grid เป็นกรอบ',
+          challenge: 'Head แบบ anchor-free ทำนายต่อช่อง grid ในสามความละเอียด ไม่ได้ให้กรอบในพิกัดภาพโดยตรง',
+          approach: 'โมเดลถอดรหัสแต่ละสเกลด้วย stride กลับเป็นกรอบในพิกัดภาพก่อนให้คะแนน (_decode_predictions ใน kdel.py)',
+        },
+        {
+          title: 'ฝึกนานโดยไม่ทำให้ API ค้าง',
+          challenge: 'การฝึกหนึ่งรอบอาจใช้เวลาหลายนาทีถึงหลายชั่วโมง แต่หน้าจอยังต้องตอบสนองและแสดงความคืบหน้า',
+          approach: 'งานฝึกรันใน worker เบื้องหลังที่ส่งเหตุการณ์ออกมา และเบราว์เซอร์ติดตามผ่าน WebSocket แทนการถามซ้ำ',
+        },
+        {
+          title: 'รูปแบบ annotation ที่หลากหลาย',
+          challenge: 'ชุดข้อมูลมักถูก label มาสำหรับเครื่องมือต่างกัน',
+          approach: 'ตัวแปลง COCO, Pascal VOC และ YOLO โดยเฉพาะ (app/annotations) ปรับ annotation ให้เป็นรูปแบบเดียวกันในที่เดียว',
+        },
+      ],
+      docs: [{ label: 'README — สถาปัตยกรรม คณิตศาสตร์ และขั้นตอนการทำงาน', url: gh('training', '#readme') }],
+      evidence:
+        'อ้างอิงจาก README และซอร์สโค้ดของ repository (app/models/kdel.py, app/training, app/api, frontend/src) README กล่าวถึงการทดสอบอัตโนมัติ แต่ใน repository ยังไม่มีไฟล์ทดสอบ จึงไม่ได้อ้างถึงที่นี่',
     },
   },
 };
