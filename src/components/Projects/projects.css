@@ -515,3 +515,25 @@
   font-size: 11px;
   color: var(--c-text-3);
 }
+
+.project-card__team {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--c-accent-line);
+  background: var(--c-accent-soft);
+  color: var(--c-text);
+  font-size: 12.5px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.project-card__team svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--c-cyan);
+}

@@ -117,6 +117,7 @@ export const projects: Project[] = [
     code: 'PRJ-03',
     title: 'AI Parcel Box Damage Detection System',
     repo: 'parcel-damage-detection',
+    team: 'Team project (4) · my role: dashboard & UI',
     summary:
       'An end-to-end inspection line that sorts damaged parcels before shipping: cameras and a YOLOv11n model classify boxes, an ESP32 drives sensors and a pusher, and an offline-capable edge gateway syncs results to a cloud API and dashboards.',
     filter: 'iot',

@@ -276,7 +276,48 @@
 }
 
 /* Tighten the desktop bar before it collapses into the menu */
-@media (max-width: 1240px) {
+.nav__divider {
+  width: 1px;
+  height: 18px;
+  margin: 0 6px;
+  background: var(--c-line-strong);
+  align-self: center;
+}
+
+.nav__mobile-pages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.nav__mobile-page {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--c-line);
+  background: var(--c-glass);
+  color: var(--c-text);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav__mobile-page svg {
+  width: 18px;
+  height: 18px;
+  color: var(--c-cyan);
+}
+
+.nav__mobile-page.is-active {
+  border-color: var(--c-accent-line);
+  background: var(--c-accent-soft);
+}
+
+@media (max-width: 1360px) {
   .nav__link {
     padding: 0 11px;
     font-size: 13.5px;
@@ -291,7 +332,7 @@
   }
 }
 
-@media (max-width: 1099px) {
+@media (max-width: 1199px) {
   .nav__links,
   .nav__desktop-only {
     display: none;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { SectionId } from '../data/types';
 
 /** Tracks which section sits in the reading band near the middle of the viewport. */
-export function useActiveSection(ids: SectionId[]): SectionId {
+export function useActiveSection(ids: SectionId[], watchKey?: string): SectionId {
   const [active, setActive] = useState<SectionId>(ids[0]);
 
   useEffect(() => {
@@ -18,7 +18,8 @@ export function useActiveSection(ids: SectionId[]): SectionId {
     );
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [ids]);
+    // watchKey re-binds the observer when the sections remount (e.g. returning to the home route).
+  }, [ids, watchKey]);
 
   return active;
 }

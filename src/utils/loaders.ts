@@ -15,6 +15,25 @@ const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap';
 
 let fontsRequested = false;
+let fontSheet: HTMLLinkElement | null = null;
+
+/**
+ * Resolves once the main web fonts are usable, or after `timeout` ms —
+ * whichever comes first. Deep links use it so text doesn't reflow (a layout
+ * shift) when the fonts arrive; the home page hides font loading behind RAW.
+ */
+export function fontsReady(timeout = 900): Promise<void> {
+  loadFonts();
+  const sheetLoaded = new Promise<void>((resolve) => {
+    if (!fontSheet || fontSheet.sheet) return resolve();
+    fontSheet.addEventListener('load', () => resolve(), { once: true });
+    fontSheet.addEventListener('error', () => resolve(), { once: true });
+  });
+  const faces = sheetLoaded.then(() =>
+    Promise.all(['400 16px Inter', '600 16px "Space Grotesk"', '400 16px "JetBrains Mono"'].map((f) => document.fonts.load(f))),
+  );
+  return Promise.race([faces.then(() => undefined), new Promise<void>((r) => setTimeout(r, timeout))]).catch(() => undefined);
+}
 
 /** Injects the web fonts once, only when the styled phases begin. */
 export function loadFonts() {
@@ -33,4 +52,5 @@ export function loadFonts() {
   sheet.rel = 'stylesheet';
   sheet.href = FONTS_HREF;
   document.head.appendChild(sheet);
+  fontSheet = sheet;
 }

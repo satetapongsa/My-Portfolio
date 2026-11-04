@@ -91,6 +91,7 @@ type ProjectTh = {
   status: string;
   alt?: string;
   demoLabel?: string;
+  team?: string;
   relatedLabels?: string[];
   overview: string;
   objective: string;
@@ -158,6 +159,7 @@ export const projectsTh: Record<Project['id'], ProjectTh> = {
     summary:
       'สายการตรวจสอบครบวงจรที่คัดแยกพัสดุชำรุดก่อนจัดส่ง กล้องและโมเดล YOLOv11n จำแนกสภาพกล่อง ESP32 ควบคุมเซนเซอร์และแขนปัด และ edge gateway ที่ทำงานได้แม้ออฟไลน์จะซิงก์ผลไปยัง cloud API และแดชบอร์ด',
     categoryLabel: 'Edge AI / IoT / ระบบฝังตัว',
+    team: 'โปรเจกต์ทีม (4 คน) · ส่วนของผม: แดชบอร์ดและ UI',
     status: 'อยู่ระหว่างพัฒนา · แดชบอร์ดออนไลน์ในโหมดเดโม',
     alt: 'แดชบอร์ด AI Parcel Damage Inspector แสดงจำนวนผ่าน/คัดออก กราฟปริมาณรายชั่วโมง และสถานะสถานี',
     relatedLabels: ['repo แดชบอร์ดสายพาน'],

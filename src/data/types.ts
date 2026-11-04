@@ -142,6 +142,8 @@ export interface Project {
   subtitle?: string;
   /** Repository name on GitHub, shown for transparency. */
   repo: string;
+  /** Set for team projects: team size and my documented role. */
+  team?: string;
   summary: string;
   filter: ProjectFilter;
   categoryLabel: string;

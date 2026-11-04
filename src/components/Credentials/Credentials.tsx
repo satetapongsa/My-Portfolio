@@ -4,6 +4,7 @@ import { formatCertDate } from '../../data/certificates';
 import type { Certificate } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
 import { fill } from '../../i18n/ui';
+import { ResumeCard } from '../Resume/ResumeCard';
 import { Dialog } from '../ui/Dialog';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeader } from '../ui/SectionHeader';
@@ -92,7 +93,7 @@ export function Credentials() {
       <div className="container">
         <SectionHeader
           id="credentials-title"
-          index="05"
+          index="06"
           label={c.label}
           title={
             <>
@@ -102,6 +103,8 @@ export function Credentials() {
           }
           lead={c.lead}
         />
+
+        <ResumeCard />
 
         <Reveal className="cred-stats mono" y={12}>
           <span>

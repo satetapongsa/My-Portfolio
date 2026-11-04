@@ -24,7 +24,7 @@ export function Journey() {
   return (
     <section id="journey" className="section journey" aria-labelledby="journey-title">
       <div className="container">
-        <SectionHeader id="journey-title" index="04" label={j.label} title={j.title} lead={j.lead} />
+        <SectionHeader id="journey-title" index="05" label={j.label} title={j.title} lead={j.lead} />
 
         <div ref={listRef} className="timeline">
           <span className="timeline__track" aria-hidden="true">

@@ -35,7 +35,7 @@ export function Contact() {
       <div className="container">
         <SectionHeader
           id="contact-title"
-          index="06"
+          index="07"
           label={c.label}
           title={
             <>

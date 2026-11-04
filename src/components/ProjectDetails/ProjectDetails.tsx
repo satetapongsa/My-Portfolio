@@ -1,4 +1,4 @@
-import { ImageIcon, X } from 'lucide-react';
+import { ArrowRight, ImageIcon, X } from 'lucide-react';
 import { useRef, type ReactNode } from 'react';
 import type { Project } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
@@ -10,6 +10,7 @@ import './project-details.css';
 interface ProjectDetailsProps {
   project: Project | null;
   onClose: () => void;
+  onOpenCaseStudy: (id: string) => void;
 }
 
 function Block({ index, title, children }: { index: string; title: string; children: ReactNode }) {
@@ -24,7 +25,7 @@ function Block({ index, title, children }: { index: string; title: string; child
   );
 }
 
-export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
+export function ProjectDetails({ project, onClose, onOpenCaseStudy }: ProjectDetailsProps) {
   const { t } = useI18n();
   const d = t.projectDetails;
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -121,6 +122,9 @@ export function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
             </div>
 
             <aside className="pd__aside" aria-label={d.facts}>
+              <button type="button" className="btn btn--primary pd__case-study" onClick={() => onOpenCaseStudy(project.id)}>
+                {d.caseStudy} <ArrowRight aria-hidden />
+              </button>
               <div className="pd-fact">
                 <p className="pd-fact__label mono">{d.status}</p>
                 <p className="pd-fact__value pd-fact__status">

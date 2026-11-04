@@ -1,20 +1,24 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'motion/react';
-import { Command, Menu, Moon, Sun, X } from 'lucide-react';
+import { Command, FlaskConical, Menu, Moon, NotebookPen, Sun, X } from 'lucide-react';
 import { useEffect, useState, type MouseEvent } from 'react';
 import type { SectionId } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
 import type { Lang } from '../../i18n/lang';
+import { Link } from '../../router/Link';
+import { routePaths, type Route } from '../../router/router';
 import { scrollToSection } from '../../utils/links';
 import { Logo } from './Logo';
 import './navigation.css';
 
 interface NavigationProps {
-  active: SectionId;
+  /** Section in view on the home page; null on other routes. */
+  active: SectionId | null;
+  route: Route;
   onOpenPalette: () => void;
 }
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
-const DESKTOP_QUERY = '(min-width: 1100px)';
+const DESKTOP_QUERY = '(min-width: 1200px)';
 
 /** EN / TH segmented switch. */
 function LanguageSwitch({ className = '' }: { className?: string }) {
@@ -55,8 +59,12 @@ function ThemeToggle({ withLabel = false }: { withLabel?: boolean }) {
   );
 }
 
-export function Navigation({ active, onOpenPalette }: NavigationProps) {
+export function Navigation({ active, route, onOpenPalette }: NavigationProps) {
   const { t, content } = useI18n();
+  const pages = [
+    { to: routePaths.journal, label: t.nav.journal, current: route.name === 'journal' || route.name === 'article', Icon: NotebookPen },
+    { to: routePaths.lab, label: t.nav.lab, current: route.name === 'lab', Icon: FlaskConical },
+  ];
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
@@ -90,7 +98,7 @@ export function Navigation({ active, onOpenPalette }: NavigationProps) {
   return (
     <header className={`nav ${scrolled || menuOpen ? 'is-scrolled' : ''}`}>
       <div className="nav__inner container">
-        <a href="#home" className="nav__brand" onClick={go('home')} aria-label={`Wave — ${t.nav.backToTop}`}>
+        <a href="/" className="nav__brand" onClick={go('home')} aria-label={`Wave — ${t.nav.backToTop}`}>
           <Logo />
         </a>
 
@@ -99,7 +107,7 @@ export function Navigation({ active, onOpenPalette }: NavigationProps) {
             {content.navItems.map((item) => (
               <li key={item.id}>
                 <a
-                  href={`#${item.id}`}
+                  href={`/#${item.id}`}
                   onClick={go(item.id)}
                   className={`nav__link ${active === item.id ? 'is-active' : ''}`}
                   aria-current={active === item.id ? 'location' : undefined}
@@ -109,6 +117,17 @@ export function Navigation({ active, onOpenPalette }: NavigationProps) {
                   )}
                   <span className="nav__link-text">{item.label}</span>
                 </a>
+              </li>
+            ))}
+            <li className="nav__divider" aria-hidden="true" />
+            {pages.map((page) => (
+              <li key={page.to}>
+                <Link to={page.to} className={`nav__link nav__link--page ${page.current ? 'is-active' : ''}`} aria-current={page.current ? 'page' : undefined}>
+                  {page.current && (
+                    <motion.span layoutId="nav-active" className="nav__indicator" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+                  )}
+                  <span className="nav__link-text">{page.label}</span>
+                </Link>
               </li>
             ))}
           </ul>
@@ -152,12 +171,25 @@ export function Navigation({ active, onOpenPalette }: NavigationProps) {
             <ul className="container">
               {content.navItems.map((item, i) => (
                 <motion.li key={item.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.03 * i }}>
-                  <a href={`#${item.id}`} onClick={go(item.id)} className={`nav__mobile-link ${active === item.id ? 'is-active' : ''}`}>
+                  <a href={`/#${item.id}`} onClick={go(item.id)} className={`nav__mobile-link ${active === item.id ? 'is-active' : ''}`}>
                     <span className="mono">{String(i + 1).padStart(2, '0')}</span>
                     {item.label}
                   </a>
                 </motion.li>
               ))}
+              <li className="nav__mobile-pages" aria-label={t.nav.explore}>
+                {pages.map((page) => (
+                  <Link
+                    key={page.to}
+                    to={page.to}
+                    onClick={() => setMenuOpen(false)}
+                    className={`nav__mobile-page ${page.current ? 'is-active' : ''}`}
+                    aria-current={page.current ? 'page' : undefined}
+                  >
+                    <page.Icon aria-hidden /> {page.label}
+                  </Link>
+                ))}
+              </li>
               <li className="nav__mobile-prefs" aria-label={t.nav.preferences}>
                 <LanguageSwitch />
                 <ThemeToggle withLabel />

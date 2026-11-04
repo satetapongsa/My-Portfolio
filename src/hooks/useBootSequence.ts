@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useReducer } from 'react';
 import { BOOT_DURATION, RAW_DURATION, REVEAL_DURATION, SKIP_INTRO_PARAM } from '../config/boot';
 import type { SectionId } from '../data/types';
-import { loadBootSequence, loadFonts, loadPortfolio } from '../utils/loaders';
+import { preloadRoute } from '../router/routeChunks';
+import { fontsReady, loadBootSequence, loadFonts, loadPortfolio } from '../utils/loaders';
 
 export type BootPhase = 'raw' | 'boot' | 'reveal' | 'ready';
 
@@ -18,6 +19,7 @@ type BootAction =
   | { type: 'BOOT_MOUNTED' }
   | { type: 'BOOT_DONE' }
   | { type: 'SKIP'; target: SectionId | null }
+  | { type: 'DIRECT' }
   | { type: 'REVEAL_DONE' };
 
 const initialState: BootState = { phase: 'raw', bootMounted: false, target: null };
@@ -36,6 +38,9 @@ function reducer(state: BootState, action: BootAction): BootState {
       return state.phase === 'boot' && !state.bootMounted ? { ...state, bootMounted: true } : state;
     case 'BOOT_DONE':
       return state.phase === 'boot' ? { ...state, phase: 'reveal' } : state;
+    case 'DIRECT':
+      // Deep link: no intro and no reveal wipe — the page appears as soon as it is loaded.
+      return state.phase === 'raw' ? { ...state, phase: 'ready' } : state;
     case 'SKIP':
       if (state.phase !== 'raw' && state.phase !== 'boot') return state;
       return { ...state, phase: 'reveal', target: action.target ?? state.target };
@@ -54,13 +59,23 @@ const prefersReducedMotion = () =>
 
 const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+/**
+ * The RAW → glitch intro belongs to the home page. A visitor opening a deep
+ * link (a case study, an article, the lab) goes straight to that page.
+ */
+export const isDirectEntry = () =>
+  typeof window !== 'undefined' && (window.location.pathname.replace(/\/+$/, '') || '/') !== '/';
+
 export function useBootSequence() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { phase, bootMounted } = state;
 
   // Expose the phase on <html>; all boot/portfolio CSS is scoped to it.
   useEffect(() => {
-    document.documentElement.dataset.phase = phase;
+    const root = document.documentElement;
+    root.dataset.phase = phase;
+    // main.tsx paints a temporary background for deep links; the stylesheet owns it from here.
+    if (phase === 'ready') root.style.removeProperty('background');
   }, [phase]);
 
   const startBoot = useCallback((target: SectionId | null = null) => {
@@ -82,6 +97,13 @@ export function useBootSequence() {
   // RAW: wait out the remainder of RAW_DURATION from first display.
   useEffect(() => {
     if (phase !== 'raw') return;
+    if (isDirectEntry()) {
+      // Shell, page chunk and fonts in parallel; the boot overlay is never needed.
+      Promise.all([loadPortfolio(), preloadRoute(window.location.pathname), fontsReady()])
+        .catch(() => undefined) // the ErrorBoundary surfaces load failures
+        .then(() => dispatch({ type: 'DIRECT' }));
+      return;
+    }
     if (new URLSearchParams(window.location.search).get(SKIP_INTRO_PARAM) === 'skip') {
       skip();
       return;

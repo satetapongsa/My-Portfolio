@@ -1,4 +1,5 @@
 import { profile } from '../data/portfolio';
+import { isHomePath, navigate } from '../router/router';
 import type { SectionId, SocialLink } from '../data/types';
 
 /** Content fields use '' for "not configured yet". */
@@ -16,8 +17,15 @@ export const hasResume = () => isConfigured(profile.resumePath);
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Smooth-scrolls to a section and keeps the URL hash in sync without jumping. */
+/**
+ * Smooth-scrolls to a home-page section and keeps the URL hash in sync. From
+ * another route it navigates home first; the home page scrolls to the hash.
+ */
 export function scrollToSection(id: SectionId) {
+  if (!isHomePath()) {
+    navigate(id === 'home' ? '/' : `/#${id}`);
+    return;
+  }
   const el = document.getElementById(id);
   if (!el) return;
   el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });

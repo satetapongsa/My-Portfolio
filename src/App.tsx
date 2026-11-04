@@ -1,7 +1,7 @@
 import { useEffect, useState, type ComponentType } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { RawDocument } from './components/RawDocument/RawDocument';
-import { useBootSequence } from './hooks/useBootSequence';
+import { isDirectEntry, useBootSequence } from './hooks/useBootSequence';
 import { loadBootSequence, loadPortfolio } from './utils/loaders';
 
 /**
@@ -26,12 +26,15 @@ function usePreloaded<P>(loader: () => Promise<{ default: ComponentType<P> }>) {
   return component;
 }
 
+/** Captured once: a deep link never shows the RAW document, even while its chunks load. */
+const directEntry = isDirectEntry();
+
 function Phases() {
   const { phase, target, startBoot, skip, markBootMounted } = useBootSequence();
   const BootSequence = usePreloaded(loadBootSequence);
   const Portfolio = usePreloaded(loadPortfolio);
 
-  const showRaw = phase === 'raw' || phase === 'boot';
+  const showRaw = !directEntry && (phase === 'raw' || phase === 'boot');
   const showOverlay = phase === 'boot' || phase === 'reveal';
   const showPortfolio = phase === 'reveal' || phase === 'ready';
 

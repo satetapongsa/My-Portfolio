@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { documentTitles, getContent, type Content } from './content';
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { getContent, type Content } from './content';
 import { applyDocumentPreferences, getStoredLang, getStoredTheme, storeLang, storeTheme, type Lang, type Theme } from './lang';
 import { ui, type UIStrings } from './ui';
 
@@ -39,9 +39,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     [lang],
   );
 
-  useEffect(() => {
-    document.title = documentTitles[lang];
-  }, [lang]);
+  // <title> and meta tags are owned per route by useDocumentMeta.
 
   const value = useMemo<I18nValue>(
     () => ({ lang, setLang, theme, setTheme, t: ui[lang], content: getContent(lang) }),

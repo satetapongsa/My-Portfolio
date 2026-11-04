@@ -42,13 +42,29 @@ html.wave-scroll-lock {
   text-rendering: optimizeLegibility;
 }
 
+/*
+ * The shell only fades: a transform or filter on .wave-app would make it the
+ * containing block of the fixed background and navigation, which then jump
+ * when the animation ends (a large layout shift). The blur/scale settle is
+ * applied to the in-flow content instead.
+ */
 html[data-phase='reveal'] .wave-app {
+  animation: app-reveal-fade 800ms var(--ease-out) both;
+}
+
+html[data-phase='reveal'] .wave-main,
+html[data-phase='reveal'] .footer {
   animation: app-reveal 800ms var(--ease-out) both;
 }
 
+@keyframes app-reveal-fade {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+
 @keyframes app-reveal {
-  from { opacity: 0.35; filter: blur(10px) saturate(1.6); transform: scale(1.015); }
-  to { opacity: 1; filter: none; transform: none; }
+  from { filter: blur(10px) saturate(1.6); transform: scale(1.015); }
+  to { filter: none; transform: none; }
 }
 
 .wave-app *,

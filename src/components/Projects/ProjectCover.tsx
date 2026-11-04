@@ -21,6 +21,7 @@ export function ProjectCover({ project, priority = false, sizes }: { project: Pr
           width={cover.width}
           height={cover.height}
           loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
           decoding="async"
         />
         <span className="cover__label mono">{t.projects.liveScreenshot}</span>

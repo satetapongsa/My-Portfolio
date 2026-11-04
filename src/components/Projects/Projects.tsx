@@ -11,7 +11,7 @@ import './projects.css';
 
 type FilterId = ProjectFilter | 'all';
 
-export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
+export function Projects({ onQuickView }: { onQuickView: (project: Project) => void }) {
   const { t, content } = useI18n();
   const { projects, projectFilters } = content;
   const [filter, setFilter] = useState<FilterId>('all');
@@ -69,7 +69,7 @@ export function Projects({ onOpen }: { onOpen: (project: Project) => void }) {
         <motion.div layout className="projects__grid">
           <AnimatePresence initial={false}>
             {visible.map((project, i) => (
-              <ProjectCard key={project.id} project={project} onOpen={onOpen} priority={filter === 'all' && i < 2} />
+              <ProjectCard key={project.id} project={project} onQuickView={onQuickView} priority={filter === 'all' && i < 2} />
             ))}
             {visible.length === 0 && (
               <motion.div

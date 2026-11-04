@@ -1,0 +1,14 @@
+{
+  "name": "Wave — Satetapong Sanguansuk",
+  "short_name": "Wave",
+  "description": "Portfolio of Satetapong Sanguansuk (Wave), Computer Engineering Student & Developer.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#080A0F",
+  "theme_color": "#080A0F",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

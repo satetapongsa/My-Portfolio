@@ -1,0 +1,150 @@
+/* Shared by case studies, GitHub activity, the journal and the lab. */
+
+/* Programming-language swatches (GitHub-style colours) */
+.lang-dot {
+  display: inline-block;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--lang-color, var(--c-text-2));
+}
+
+.wave-app [data-lang='TypeScript'] { --lang-color: #3178c6; }
+.wave-app [data-lang='JavaScript'] { --lang-color: #e6c84a; }
+.wave-app [data-lang='Python'] { --lang-color: #3572a5; }
+.wave-app [data-lang='HTML'] { --lang-color: #e34c26; }
+.wave-app [data-lang='CSS'] { --lang-color: #8b5cf6; }
+.wave-app [data-lang='C++'] { --lang-color: #f34b7d; }
+.wave-app [data-lang='C'] { --lang-color: #8a8f98; }
+.wave-app [data-lang='PLpgSQL'] { --lang-color: #336790; }
+.wave-app [data-lang='Shell'] { --lang-color: #89e051; }
+.wave-app [data-lang='Java'] { --lang-color: #b07219; }
+.wave-app [data-lang='Go'] { --lang-color: #00add8; }
+.wave-app [data-lang='Dart'] { --lang-color: #00b4ab; }
+
+/* Placeholder while a route chunk downloads */
+.route-loading {
+  min-height: 100vh;
+}
+
+/* Sub-page shell: clears the fixed navigation */
+.page {
+  padding-top: calc(var(--nav-h) + clamp(24px, 4vw, 48px));
+  padding-bottom: var(--section-pad);
+}
+
+.page-head {
+  max-width: 780px;
+  margin-bottom: clamp(36px, 6vw, 64px);
+}
+
+.page-head__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+}
+
+.page-head__title {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 68px);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.page-head__lead {
+  margin-top: 18px;
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: var(--c-text-2);
+}
+
+html[lang='th'] .page-head__meta {
+  letter-spacing: 0.02em;
+}
+
+html[lang='th'] .page-head__title {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+/* Breadcrumbs and link cards (case studies, journal) */
+.cs-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 12px;
+  color: var(--c-text-2);
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.cs-crumbs li + li::before {
+  content: '/';
+  margin-right: 10px;
+  opacity: 0.6;
+}
+
+.cs-crumbs a {
+  color: var(--c-text-2);
+  text-decoration: underline;
+  text-decoration-color: var(--c-line-strong);
+  text-underline-offset: 3px;
+}
+
+.cs-crumbs a:hover {
+  color: var(--c-cyan);
+}
+
+.cs-crumbs [aria-current] {
+  color: var(--c-text);
+}
+
+.cs-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 14px 18px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  background: var(--c-glass);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.cs-link:hover {
+  border-color: var(--c-accent-line);
+  background: var(--c-accent-soft);
+}
+
+.cs-link > svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--c-cyan);
+}
+
+.cs-link > span:not(.sr-only) {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cs-link strong {
+  color: var(--c-text);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.cs-link span span {
+  color: var(--c-text-2);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+

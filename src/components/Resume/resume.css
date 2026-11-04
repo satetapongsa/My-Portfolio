@@ -1,0 +1,127 @@
+/* ── Résumé card (top of the Credentials section) ── */
+.resume {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 44px);
+  align-items: center;
+  padding: clamp(18px, 3vw, 28px);
+  margin-bottom: clamp(36px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+}
+
+.resume__preview {
+  position: relative;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--c-line-strong);
+  background: #fff;
+  aspect-ratio: 960 / 1358;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.resume__preview:hover {
+  transform: translateY(-3px) rotate(-0.4deg);
+}
+
+.resume__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.resume__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+}
+
+.resume__eyebrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+.resume__title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+}
+
+.resume__title span {
+  color: var(--c-text-2);
+  font-weight: 500;
+}
+
+.resume__lead {
+  margin-top: 8px;
+  color: var(--c-text-2);
+  line-height: 1.65;
+}
+
+.resume__notice {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--c-accent-line);
+  background: var(--c-accent-soft);
+  color: var(--c-text);
+  font-size: 14px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.resume__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 20px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--c-line);
+}
+
+.resume__facts-wide {
+  grid-column: 1 / -1;
+}
+
+.resume__facts dt {
+  font-size: 12px;
+  color: var(--c-text-2);
+}
+
+.resume__facts dd {
+  margin-top: 4px;
+  color: var(--c-text);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.resume__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+@media (max-width: 760px) {
+  .resume {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .resume__preview {
+    width: min(240px, 70%);
+  }
+  .resume__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+html[lang='th'] .resume__eyebrow {
+  letter-spacing: 0.02em;
+}

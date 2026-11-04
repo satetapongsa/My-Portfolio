@@ -48,6 +48,7 @@ const th: Content = {
       ...p,
       summary: t.summary,
       categoryLabel: t.categoryLabel,
+      team: t.team ?? p.team,
       status: { ...p.status, label: t.status },
       cover: p.cover && { ...p.cover, alt: t.alt ?? p.cover.alt },
       links: {
@@ -88,4 +89,10 @@ export const getContent = (lang: Lang): Content => byLang[lang];
 export const documentTitles: Record<Lang, string> = {
   en: 'Satetapong Sanguansuk (Wave) — Computer Engineering Student & Developer',
   th: profileTh.documentTitle,
+};
+
+/** Home-page meta description per language; English matches index.html. */
+export const homeDescriptions: Record<Lang, string> = {
+  en: 'Satetapong Sanguansuk (Wave) is a Computer Engineering student at Sripatum University, Bang Khen, building web applications, AI and IoT systems, and interactive experiences. Case studies, engineering notes and live experiments.',
+  th: 'เศรษฐพงศ์ สงวนสุข (Wave) นักศึกษาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยศรีปทุม บางเขน ผู้พัฒนาเว็บแอปพลิเคชัน ระบบ AI และ IoT และประสบการณ์แบบอินเทอร์แอกทีฟ พร้อมกรณีศึกษา บันทึกทางวิศวกรรม และการทดลองที่ใช้งานได้จริง',
 };

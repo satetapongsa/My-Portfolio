@@ -4,22 +4,72 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Satetapong Sanguansuk (Wave) — Computer Engineering Student &amp; Developer</title>
-    <meta name="description" content="Satetapong Sanguansuk (Wave) is a Computer Engineering student at Sripatum University, Bang Khen, building web applications, industrial automation concepts and interactive 3D experiences." />
+    <meta name="description" content="Satetapong Sanguansuk (Wave) is a Computer Engineering student at Sripatum University, Bang Khen, building web applications, AI and IoT systems, and interactive experiences. Case studies, engineering notes and live experiments." />
     <meta name="author" content="Satetapong Sanguansuk" />
     <meta name="theme-color" content="#080A0F" />
+    <!-- Production URL on Vercel. If a custom domain is added later, update it here,
+         in src/config/site.ts, public/robots.txt and public/sitemap.xml (docs/CUSTOM_DOMAIN_SETUP.md). -->
+    <link rel="canonical" href="https://satetapong-portfolio.vercel.app/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph / social preview -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Wave — Satetapong Sanguansuk" />
+    <meta property="og:url" content="https://satetapong-portfolio.vercel.app/" />
     <meta property="og:title" content="Satetapong Sanguansuk (Wave) — Computer Engineering Student &amp; Developer" />
-    <meta property="og:description" content="From raw HTML to digital identity. The personal portfolio of Satetapong Sanguansuk (Wave), Computer Engineering student & developer." />
-    <meta property="og:site_name" content="Wave" />
-    <!-- PLACEHOLDER: add og:url and og:image (1200x630) once the site is deployed, e.g.
-    <meta property="og:url" content="https://your-domain.com/" />
-    <meta property="og:image" content="https://your-domain.com/og-image.png" /> -->
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:description" content="From raw HTML to digital identity. Project case studies, an engineering journal and interactive experiments by Satetapong Sanguansuk (Wave)." />
+    <meta property="og:image" content="https://satetapong-portfolio.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Satetapong Sanguansuk — Wave — Computer Engineering Student &amp; Developer, Sripatum University" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="th_TH" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Satetapong Sanguansuk (Wave) — Computer Engineering Student &amp; Developer" />
-    <meta name="twitter:description" content="From raw HTML to digital identity." />
+    <meta name="twitter:description" content="From raw HTML to digital identity. Case studies, engineering notes and live experiments." />
+    <meta name="twitter:image" content="https://satetapong-portfolio.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Satetapong Sanguansuk — Wave — Computer Engineering Student &amp; Developer" />
+
+    <!-- Structured data: only verifiable facts (no employers, titles or awards). -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://satetapong-portfolio.vercel.app/#person",
+            "name": "Satetapong Sanguansuk",
+            "alternateName": ["Wave", "เศรษฐพงศ์ สงวนสุข"],
+            "url": "https://satetapong-portfolio.vercel.app/",
+            "image": "https://satetapong-portfolio.vercel.app/assets/legacy/profile/profile.png",
+            "jobTitle": "Computer Engineering Student & Developer",
+            "description": "Computer Engineering student at Sripatum University, Bang Khen, building web applications, AI and IoT systems, and interactive experiences.",
+            "affiliation": {
+              "@type": "CollegeOrUniversity",
+              "name": "Sripatum University",
+              "address": { "@type": "PostalAddress", "addressLocality": "Bang Khen, Bangkok", "addressCountry": "TH" }
+            },
+            "knowsAbout": ["Computer Engineering", "Web Development", "React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "IoT"],
+            "sameAs": [
+              "https://github.com/satetapongsa",
+              "https://th.linkedin.com/in/satetapongsa",
+              "https://www.tiktok.com/@wavywvy"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://satetapong-portfolio.vercel.app/#website",
+            "url": "https://satetapong-portfolio.vercel.app/",
+            "name": "Wave — Satetapong Sanguansuk",
+            "inLanguage": ["en", "th"],
+            "author": { "@id": "https://satetapong-portfolio.vercel.app/#person" }
+          }
+        ]
+      }
+    </script>
     <!-- NOTE: intentionally no stylesheets here. The RAW phase must render with
          native browser styles; boot + portfolio CSS are loaded lazily. -->
   </head>
@@ -28,8 +78,8 @@
     <noscript>
       <h1>Satetapong Sanguansuk</h1>
       <p>Nickname: Wave</p>
-      <p>Computer Engineering Student &amp; Developer.</p>
-      <p>This site needs JavaScript to boot the full interface.</p>
+      <p>Computer Engineering Student &amp; Developer, Sripatum University.</p>
+      <p>This site needs JavaScript to boot the full interface. Code: <a href="https://github.com/satetapongsa">github.com/satetapongsa</a></p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>

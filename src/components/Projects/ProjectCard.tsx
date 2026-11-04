@@ -1,7 +1,9 @@
 import { motion } from 'motion/react';
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, Eye, ExternalLink, Users } from 'lucide-react';
 import type { Project, ProjectStage } from '../../data/types';
 import { useI18n } from '../../i18n/I18nProvider';
+import { Link } from '../../router/Link';
+import { routePaths } from '../../router/router';
 import { isConfigured } from '../../utils/links';
 import { GitHubIcon } from '../ui/BrandIcons';
 import { ProjectCover } from './ProjectCover';
@@ -29,13 +31,15 @@ const MAX_CHIPS = 6;
 
 interface ProjectCardProps {
   project: Project;
-  onOpen: (project: Project) => void;
+  /** Opens the in-page quick-view dialog. */
+  onQuickView: (project: Project) => void;
   priority?: boolean;
 }
 
-export function ProjectCard({ project, onOpen, priority }: ProjectCardProps) {
+export function ProjectCard({ project, onQuickView, priority }: ProjectCardProps) {
   const { t } = useI18n();
   const extra = project.tech.length - MAX_CHIPS;
+  const caseStudy = routePaths.project(project.id);
   return (
     <motion.article
       layout
@@ -46,9 +50,9 @@ export function ProjectCard({ project, onOpen, priority }: ProjectCardProps) {
       className="project-card glow-card"
       aria-labelledby={`project-${project.id}`}
     >
-      <button type="button" className="project-card__cover" onClick={() => onOpen(project)} tabIndex={-1} aria-hidden="true">
+      <Link to={caseStudy} className="project-card__cover" tabIndex={-1} aria-hidden="true">
         <ProjectCover project={project} priority={priority} />
-      </button>
+      </Link>
 
       <div className="project-card__body">
         <div className="project-card__meta mono">
@@ -64,6 +68,11 @@ export function ProjectCard({ project, onOpen, priority }: ProjectCardProps) {
           {project.title}
         </h3>
         {project.subtitle && <p className="project-card__subtitle">{project.subtitle}</p>}
+        {project.team && (
+          <p className="project-card__team">
+            <Users aria-hidden /> {project.team}
+          </p>
+        )}
         <p className="project-card__summary">{project.summary}</p>
 
         <ul className="project-card__tech" aria-label={t.projects.technologies}>
@@ -80,8 +89,15 @@ export function ProjectCard({ project, onOpen, priority }: ProjectCardProps) {
         </ul>
 
         <div className="project-card__actions">
-          <button type="button" className="btn btn--primary btn--sm" onClick={() => onOpen(project)}>
-            {t.projects.viewDetails} <ArrowUpRight aria-hidden />
+          <Link to={caseStudy} className="btn btn--primary btn--sm">
+            {t.projects.viewCaseStudy} <ArrowUpRight aria-hidden />
+            <span className="sr-only">
+              {' '}
+              {t.projects.about} {project.title}
+            </span>
+          </Link>
+          <button type="button" className="btn btn--ghost btn--sm" onClick={() => onQuickView(project)}>
+            <Eye aria-hidden /> {t.projects.quickView}
             <span className="sr-only">
               {' '}
               {t.projects.about} {project.title}
