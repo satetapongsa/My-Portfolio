@@ -7,7 +7,7 @@ import './resume.css';
 const copy = {
   en: {
     heading: 'Résumé',
-    lead: 'One page covering technical skills, featured projects and education.',
+    lead: 'One page covering technical skills, projects, activities and education — currently seeking a co-op internship (5 Jan – 30 Apr 2027).',
     format: 'Format',
     file: 'File name',
     size: 'Size',
@@ -23,7 +23,7 @@ const copy = {
   },
   th: {
     heading: 'เรซูเม่',
-    lead: 'หนึ่งหน้า สรุปทักษะทางเทคนิค ผลงานเด่น และการศึกษา',
+    lead: 'หนึ่งหน้า สรุปทักษะทางเทคนิค ผลงาน กิจกรรม และการศึกษา — กำลังหาที่ฝึกงานสหกิจ (5 ม.ค. – 30 เม.ย. 2570)',
     format: 'รูปแบบไฟล์',
     file: 'ชื่อไฟล์',
     size: 'ขนาด',

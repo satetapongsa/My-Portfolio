@@ -22,10 +22,10 @@ export interface ResumeFile {
 export const resumes: ResumeFile[] = [
   {
     lang: 'en',
-    headline: 'Full-Stack Developer',
+    headline: 'Full-Stack Developer Intern',
     url: asset('assets/legacy/resume/Resume_Satetapong_Sanguansuk.pdf'),
     fileName: 'Resume_Satetapong_Sanguansuk.pdf',
-    sizeBytes: 75567,
+    sizeBytes: 46140,
     pages: 1,
     preview: {
       src: asset('assets/optimized/resume/resume-page1-960.webp'),
