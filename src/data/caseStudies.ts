@@ -90,6 +90,11 @@ type Studies = Record<string, Record<Lang, CaseStudy>>;
 export const caseStudies: Studies = {
   'finguard-ai': {
     en: {
+      role: {
+        label: 'Competition team project · 3 members',
+        detail:
+          'Entered in the Digital Innovation Challenge 2026 (BFSI track) as a team of three. The code lives in my GitHub repository; my part, as listed on my résumé, is the multi-step AI workflow, the source-citation guardrails, role-based access with the human-approval step and the hash-chained audit log.',
+      },
       problem: {
         problem:
           'When a regulator such as the Bank of Thailand publishes a new circular, a bank’s compliance team has to read it, compare it clause by clause with the previous version and work out which internal policies are affected. It is slow, manual and easy to get wrong.',
@@ -208,6 +213,11 @@ export const caseStudies: Studies = {
       evidence: 'Based on the Finguard-Ai README, docs/ and source (src/lib/agents, src/lib/security, prisma/schema.prisma).',
     },
     th: {
+      role: {
+        label: 'โปรเจกต์ทีมแข่งขัน · 3 คน',
+        detail:
+          'ส่งเข้าแข่งขัน Digital Innovation Challenge 2026 (สาย BFSI) ในทีม 3 คน โค้ดอยู่ใน GitHub repository ของผม ส่วนของผมตามที่ระบุในเรซูเม่คือเวิร์กโฟลว์ AI หลายขั้นตอน guardrail ที่บังคับให้อ้างอิงข้อกฎหมายต้นทาง ระบบสิทธิ์ตามบทบาทพร้อมขั้นตอนอนุมัติโดยเจ้าหน้าที่ และ audit log แบบ hash chain',
+      },
       problem: {
         problem:
           'เมื่อหน่วยงานกำกับอย่างธนาคารแห่งประเทศไทยออกประกาศใหม่ ทีม Compliance ของธนาคารต้องอ่าน เทียบกับฉบับก่อนทีละข้อ และหาว่านโยบายภายในข้อใดได้รับผลกระทบ ซึ่งช้า ทำด้วยมือ และผิดพลาดได้ง่าย',

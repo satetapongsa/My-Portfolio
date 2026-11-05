@@ -46,6 +46,7 @@ export const projects: Project[] = [
     title: 'FinGuard AI',
     subtitle: 'Autonomous Regulatory Intelligence & Policy Mapping Agent',
     repo: 'Finguard-Ai',
+    team: 'Competition team (3) · Digital Innovation Challenge 2026',
     summary:
       'A multi-agent regulatory intelligence workflow for banking compliance: it detects Bank of Thailand regulation changes, diffs them, maps the impact onto internal policies and holds every remediation for human approval.',
     filter: 'ai',
